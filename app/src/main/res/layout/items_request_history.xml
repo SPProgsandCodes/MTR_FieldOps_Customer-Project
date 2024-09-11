@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:background="@drawable/items_bg">
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_request_history"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:text="Requested"
+        android:gravity="center"
+        android:textColor="@color/green"
+        android:textAllCaps="false"
+        android:fontFamily="@font/inter"
+        android:textSize="12sp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/request_history_btn_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imvProfileVendorImg" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_view_status"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_marginEnd="16dp"
+        android:text="View Status"
+        android:textColor="@color/text_color3"
+        android:gravity="center"
+        android:textAllCaps="false"
+        android:fontFamily="@font/inter"
+        android:textSize="12sp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/btn_view_status_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_request_history" />
+
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imvProfileVendorImg"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_margin="20dp"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/men_face"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/rounded_rectangle"
+        app:strokeColor="@null" />
+
+    <TextView
+        android:id="@+id/txt_vendor_work_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/inter_semibold"
+        android:text="Electrical Wire Repairing"
+        android:maxLines="2"
+        android:textColor="@color/text_color2"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/btn_request_history"
+        app:layout_constraintStart_toEndOf="@+id/imvProfileVendorImg"
+        app:layout_constraintTop_toTopOf="@+id/imvProfileVendorImg" />
+
+    <TextView
+        android:id="@+id/txt_vendor_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_bold"
+        android:text="$100.00"
+        android:textColor="@color/green"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/txt_vendor_work_name"
+        app:layout_constraintTop_toBottomOf="@+id/txt_vendor_work_name" />
+
+    <TextView
+        android:id="@+id/txt_vendor_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter"
+        android:text="12 Oct, 2020"
+        android:textColor="@color/black"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="@+id/txt_vendor_price"
+        app:layout_constraintTop_toBottomOf="@+id/txt_vendor_price" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

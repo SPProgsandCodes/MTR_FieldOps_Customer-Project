@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfileSettingsScreen.FragmentProfileSettings">
+
+
+    <RelativeLayout
+        android:id="@+id/rectangle_3"
+        android:layout_width="match_parent"
+        android:layout_height="319dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:background="#032F59">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/img_profile_image_profile_page"
+            android:layout_width="124dp"
+            android:layout_height="124dp"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="83dp"
+            android:padding="2dp"
+            android:src="@drawable/men_face"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/Circular"
+            app:strokeColor="@color/white"
+            app:strokeWidth="1dp" />
+
+        <ImageView
+            android:id="@+id/imgViewEditProfilePhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/img_profile_image_profile_page"
+            android:layout_alignBottom="@+id/img_profile_image_profile_page"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/edit_photo_vector" />
+
+        <TextView
+            android:id="@+id/text_profile_name_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/img_profile_image_profile_page"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/inter_bold"
+            android:gravity="top"
+            android:text="@string/profile_name"
+            android:textAppearance="@style/darlene_rob" />
+
+
+        <TextView
+            android:id="@+id/michelle_ri"
+            android:layout_width="169dp"
+            android:layout_height="15dp"
+            android:layout_below="@+id/text_profile_name_settings"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:text="@string/profile_email"
+            android:textAppearance="@style/profile_email" />
+
+
+        <RelativeLayout
+            android:id="@+id/layoutTopBar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="25dp">
+
+            <TextView
+                android:id="@+id/txt_top_bar_profile_settings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/inter_bold"
+                android:text="@string/profile_settings"
+                android:textAppearance="@style/profile_set"
+                app:layout_constraintBottom_toBottomOf="@+id/imageViewBackButton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/imageViewBackButton" />
+
+
+            <ImageButton
+                android:id="@+id/img_button_alert_req_ser_pg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/alert_badge"
+                android:src="@drawable/notification_icon" />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:background="@drawable/profile_settings_acc_bg"
+        android:id="@+id/layout_profile_settings"
+        android:layout_below="@+id/rectangle_3"
+        android:layout_height="78dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="42dp"
+        android:layout_width="match_parent">
+
+        <TextView
+            android:gravity="top"
+            android:id="@+id/account_typ"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:text="@string/account_type"
+            android:textAppearance="@style/account_type" />
+
+
+        <TextView
+            android:fontFamily="@font/inter_bold"
+            android:gravity="top"
+            android:id="@+id/client"
+            android:layout_alignStart="@+id/account_typ"
+            android:layout_below="@+id/account_typ"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/client"
+            android:textAppearance="@style/client" />
+
+
+        <ImageView
+            android:id="@+id/imgSettingsGearIcon"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="23dp"
+            android:layout_width="wrap_content"
+            android:src="@drawable/settings_gear_icon_vector" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:background="@drawable/profile_settings_page_bg"
+        android:id="@+id/layout_signout_button"
+        android:layout_alignEnd="@+id/layout_profile_settings"
+        android:layout_alignStart="@+id/layout_profile_settings"
+        android:layout_below="@+id/layout_profile_settings"
+        android:layout_height="44dp"
+        android:layout_marginTop="26dp"
+        android:layout_width="match_parent">
+
+        <ImageView
+            android:id="@+id/imgSignOut"
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_width="wrap_content"
+            android:src="@drawable/logout_icon"
+            app:tint="#4E4E4E" />
+
+        <TextView
+            android:gravity="top"
+            android:id="@+id/sign_out"
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/imgSignOut"
+            android:layout_width="wrap_content"
+            android:text="@string/sign_out"
+            android:textAppearance="@style/sign_out" />
+
+
+
+
+    </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBarProfileSettings"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+
+
+        android:layout_below="@+id/layout_signout_button"
+
+        android:layout_alignStart="@+id/layout_signout_button"
+
+        android:layout_alignEnd="@+id/layout_signout_button"
+
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="@color/btn_color"
+        android:visibility="gone" /> <!-- Initially hidden -->
+
+    <TextView
+        android:id="@+id/txt_loading_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/progressBarProfileSettings"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:layout_marginTop="5dp"
+        android:text="@string/loading_details"
+        android:fontFamily="@font/inter"
+        android:textColor="#4E4E4E"
+        />
+</RelativeLayout>

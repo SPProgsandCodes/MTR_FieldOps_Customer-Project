@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ResetPassword.ActivityForgotPasswdReset">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="90dp"
+        android:src="@drawable/mtr_logo_fieldops_for_light_background"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/reset_passw"
+        android:layout_width="wrap_content"
+        android:layout_height="29dp"
+        android:layout_below="@+id/logo"
+        android:layout_alignStart="@+id/logo"
+        android:layout_alignEnd="@+id/logo"
+        android:fontFamily="@font/inter_semibold"
+        android:gravity="center"
+        android:layout_marginTop="16dp"
+        android:lineHeight="29dp"
+        android:text="@string/reset_passw"
+        android:textAppearance="@style/reset_passw" />
+
+    <LinearLayout
+        android:id="@+id/layoutEmailandPasswd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/reset_passw"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtResetPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/inter"
+            android:gravity="top"
+            android:paddingStart="2dp"
+            android:text="@string/password"
+            android:textAppearance="@style/password" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/frame_1">
+
+
+            <ImageView
+                android:id="@+id/visibleEyeIconVector"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="19dp"
+                android:src="@drawable/vector_passwd_eye" />
+
+            <EditText
+                android:id="@+id/editTextForgotResetPassword"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@+id/visibleEyeIconVector"
+                android:background="#00000000"
+                android:fontFamily="@font/inter"
+                android:inputType="textPassword"
+                android:paddingStart="10dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/hint1"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txtLoginPasswd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/inter"
+            android:gravity="top"
+            android:paddingStart="2dp"
+            android:text="@string/password"
+            android:textAppearance="@style/password" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/frame_1">
+
+
+            <ImageView
+                android:id="@+id/visibleEyeIconVector1"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="19dp"
+                android:src="@drawable/vector_passwd_eye" />
+
+            <EditText
+                android:id="@+id/editTextForgotPasswdConfReset"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@+id/visibleEyeIconVector1"
+                android:background="#00000000"
+                android:fontFamily="@font/inter"
+                android:inputType="textPassword"
+                android:paddingStart="10dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/hint1"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSignUp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layoutEmailandPasswd"
+        android:layout_alignStart="@+id/layoutEmailandPasswd"
+        android:layout_alignEnd="@+id/layoutEmailandPasswd"
+        android:layout_marginTop="29dp"
+
+        android:background="@drawable/btn_frame"
+        android:fontFamily="@font/inter"
+        android:text="@string/reset_passw"
+        android:textAppearance="@style/btn_sign_up" />
+
+
+</RelativeLayout>

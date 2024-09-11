@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/AppBottomSheetDialog"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <RelativeLayout
+        android:id="@+id/line_status_green"
+        android:layout_width="match_parent"
+        android:layout_height="121dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="30dp"
+
+        >
+
+        <TextView
+            android:id="@+id/txt_date"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_bold"
+            android:gravity="end"
+            android:maxLines="2"
+            android:text="8th March, 2024"
+            android:textColor="@color/black"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/txt_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_date"
+            android:layout_alignEnd="@+id/txt_date"
+            android:layout_marginTop="3dp"
+            android:fontFamily="@font/inter"
+            android:text="10:50 AM"
+            android:textColor="@color/black"
+            android:textSize="9sp" />
+
+        <View
+            android:id="@+id/viewLineGreen"
+            android:layout_width="11dp"
+            android:layout_height="121dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="7dp"
+            android:layout_toEndOf="@+id/txt_date"
+            android:background="@drawable/status_line_green" />
+
+        <View
+            android:id="@+id/viewLineGrey"
+            android:layout_width="11dp"
+            android:layout_height="121dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="7dp"
+            android:visibility="gone"
+            android:layout_toEndOf="@+id/txt_date"
+            android:background="@drawable/status_line_grey" />
+
+        <RelativeLayout
+            android:id="@+id/layout_status"
+            android:layout_width="wrap_content"
+            android:paddingHorizontal="5dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="12dp"
+            android:layout_toEndOf="@+id/viewLineGreen"
+            android:background="@drawable/green_text_bg"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/txt_status_white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter"
+                android:text="Viewed"
+                android:textColor="@color/white"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/txt_status_grey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter"
+                android:text=""
+                android:visibility="gone"
+                android:textColor="@color/white"
+                android:textSize="10sp" />
+
+            <ImageView
+                android:id="@+id/drawable_status_white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/txt_status_white"
+                android:layout_alignBottom="@+id/txt_status_white"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/txt_status_white"
+                android:backgroundTint="@color/white"
+                android:src="@drawable/vector_eye_white" />
+
+            <ImageView
+                android:id="@+id/drawable_status_grey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/txt_status_grey"
+                android:layout_alignBottom="@+id/txt_status_grey"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/txt_status_grey"
+                android:backgroundTint="@color/grey"
+                android:visibility="gone"
+                android:src="@drawable/vector_eye_grey" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_status"
+            android:layout_alignStart="@+id/layout_status"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <RelativeLayout
+                android:id="@+id/txt_request_sender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5">
+
+                <TextView
+                    android:id="@+id/txt_request_has_been_viewed_static"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+
+                    android:fontFamily="@font/inter"
+                    android:maxLines="2"
+                    android:text="Request has been viewed by"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/txt_request_viewed_by"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_request_has_been_viewed_static"
+
+                    android:layout_marginTop="1dp"
+                    android:fontFamily="@font/inter_bold"
+                    android:text="Laslie Alexandra"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.5">
+
+                <LinearLayout
+                    android:id="@+id/btn_chat_with_support"
+                    android:layout_width="wrap_content"
+                    android:layout_height="33dp"
+
+
+                    android:background="@drawable/btn_chat_bg_frame"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="7dp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/txt_btn_chat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginEnd="5dp"
+                        android:fontFamily="@font/inter_semibold"
+                        android:gravity="bottom"
+                        android:text="Chat"
+                        android:textAppearance="@style/chat"
+                        android:textColor="@color/white" />
+
+                    <ImageView
+                        android:id="@+id/img_chat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toStartOf="@+id/txt_btn_chat"
+                        app:srcCompat="@drawable/chat_icon_vector" />
+
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/green_dot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/viewLineGreen"
+            android:layout_alignEnd="@+id/viewLineGreen"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/track_status_circle_green"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/grey_dot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/viewLineGreen"
+            android:layout_alignEnd="@+id/viewLineGreen"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/track_status_circle_grey"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+
+</RelativeLayout>

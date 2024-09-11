@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfileSettingsScreen.FragmentProfileSettings">
+
+    <TextView
+        android:id="@+id/request_ser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imageViewBackButton"
+        android:layout_alignBottom="@+id/imageViewBackButton"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="0dp"
+        android:fontFamily="@font/inter_bold"
+        android:gravity="center"
+        android:text="@string/payment_history"
+        android:textAppearance="@style/request_ser"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewBackButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageViewBackButton" />
+
+
+    <ImageButton
+        android:id="@+id/img_button_alert_payment_hist_page"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/alert_badge"
+        android:src="@drawable/notification_icon" />
+
+    <ImageView
+        android:id="@+id/imageViewBackButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/img_button_alert_payment_hist_page"
+        android:layout_alignBottom="@+id/img_button_alert_payment_hist_page"
+        android:layout_marginStart="23dp"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/vector_arrow_left" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPaymentHistory"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/request_ser"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="16dp"
+        />
+
+    <ProgressBar
+        android:id="@+id/progressBarPaymentHistActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/btn_color"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        />
+
+    <TextView
+        android:id="@+id/loading_details_txt_payment_hist_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/loading_details"
+        android:textSize="12sp"
+        android:visibility="gone"
+        android:fontFamily="@font/inter"
+        android:textColor="@color/btn_color"
+        android:layout_below="@+id/progressBarPaymentHistActivity"
+        android:layout_centerHorizontal="true"
+        />
+
+</RelativeLayout>

@@ -1,0 +1,614 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/sub_relativelayout_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center_horizontal"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true">
+
+
+
+
+
+
+
+
+            <ImageView
+                android:id="@+id/imageViewBackButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="23dp"
+                android:layout_marginTop="36dp"
+                app:srcCompat="@drawable/vector_arrow_left" />
+
+            <TextView
+                android:id="@+id/txt_home_electrician_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="35dp"
+                android:fontFamily="@font/inter_bold"
+                android:gravity="top|center_horizontal"
+                android:text="@string/home_electrician"
+                android:textAppearance="@style/request_service" />
+
+            <TextView
+                android:id="@+id/txt_home_electrician"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/imageViewServiceImage"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/inter_bold"
+                android:gravity="top|center_horizontal"
+                android:text="@string/home_electrician"
+                android:textAppearance="@style/request_service" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnViewStatusReqHist"
+                android:layout_width="wrap_content"
+                android:layout_height="26dp"
+                android:layout_below="@+id/txt_home_electrician"
+                android:layout_alignStart="@+id/txt_home_electrician"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/btn_frame_width_78"
+                android:fontFamily="@font/inter"
+                android:padding="5dp"
+                android:text="@string/view_status"
+                android:textAppearance="@style/view_status" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="26dp"
+                android:layout_below="@+id/txt_home_electrician"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_toEndOf="@+id/btnViewStatusReqHist"
+                android:background="@drawable/btn_frame_light_red"
+                android:fontFamily="@font/inter"
+                android:padding="5dp"
+                android:text="@string/ongoing"
+                android:textAppearance="@style/ongoing" />
+
+
+
+            <TextView
+                android:id="@+id/txt_service_request_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btnViewStatusReqHist"
+                android:layout_alignStart="@+id/btnViewStatusReqHist"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/inter_bold"
+                android:gravity="top"
+                android:lineSpacingExtra="6sp"
+                android:text="@string/service_request_description"
+                android:textAppearance="@style/service_request_description"
+                android:translationY="-2.95sp" />
+
+
+            <View
+                android:id="@+id/line_27"
+                android:layout_width="0dp"
+                android:layout_height="0.5dp"
+                android:layout_below="@+id/txt_service_request_description"
+                android:layout_alignStart="@+id/txt_service_request_description"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="26dp"
+                android:background="@drawable/line_bg" />
+
+
+
+
+            <TextView
+                android:id="@+id/txt_dummy_description"
+                android:layout_width="0dp"
+                android:layout_height="90dp"
+                android:layout_below="@+id/line_27"
+                android:layout_alignStart="@+id/line_27"
+                android:layout_alignEnd="@+id/line_27"
+                android:layout_marginTop="10dp"
+                android:gravity="top"
+                android:lineSpacingExtra="6sp"
+                android:text="@string/lorem_ipsum"
+                android:textAppearance="@style/lorem_ipsum"
+                android:translationY="-2.95sp" />
+
+            <TextView
+                android:id="@+id/txt_no_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/service_request_no_description"
+                android:layout_below="@id/line_27"
+                android:layout_marginTop="30dp"
+                android:visibility="gone"
+                />
+
+
+
+
+
+            <ImageButton
+                android:id="@+id/img_button_alert_req_hist_ViewMore_pg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/alert_badge"
+                android:src="@drawable/notification_icon" />
+
+            <ImageView
+                android:id="@+id/imageViewServiceImage"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_below="@+id/img_button_alert_req_hist_ViewMore_pg"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="35dp"
+                android:layout_marginEnd="16dp"
+                app:srcCompat="@drawable/sample" />
+
+            <RelativeLayout
+                android:id="@+id/rel_layout_service_provider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_dummy_description"
+                android:visibility="gone"
+                android:layout_alignStart="@+id/txt_dummy_description"
+                android:layout_alignEnd="@+id/imageViewServiceImage">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/img_profile_pic"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:layout_below="@+id/line_28"
+                    android:layout_alignStart="@+id/txt_about_the_service_provider"
+
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/men_face"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:shapeAppearanceOverlay="@style/Circular" />
+
+                <TextView
+                    android:id="@+id/txt_about_the_service_provider"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/inter_bold"
+                    android:gravity="top"
+                    android:lineSpacingExtra="6sp"
+                    android:text="@string/about_the_service_provider"
+                    android:textAppearance="@style/about_the_service_provider"
+                    android:translationY="-2.95sp" />
+
+                <RelativeLayout
+                    android:id="@+id/rel_layout_serv_provider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/kenzi_lawso"
+                    android:visibility="gone"
+                    android:layout_marginTop="21dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/rel_layout_bg"
+                        android:orientation="vertical">
+
+                        <TableLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:padding="10dp"
+                            android:stretchColumns="1">
+
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1">
+
+                                <TextView
+                                    android:id="@+id/address"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/inter"
+                                    android:paddingStart="10dp"
+                                    android:paddingEnd="10dp"
+                                    android:text="@string/address"
+                                    android:textAppearance="@style/address" />
+
+                                <TextView
+                                    android:id="@+id/royal_ln_me"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="end|center_vertical"
+                                    android:layout_weight="1"
+                                    android:ellipsize="end"
+                                    android:fontFamily="@font/inter_bold"
+                                    android:gravity="end"
+                                    android:maxLines="2"
+                                    android:paddingStart="10dp"
+                                    android:paddingEnd="10dp"
+                                    android:singleLine="false"
+                                    android:text="@string/royal_ln_me"
+                                    android:textAppearance="@style/royal_ln_me" />
+
+
+                            </TableRow>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginBottom="5dp"
+                                android:background="#C2C2C2" />
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1">
+
+                                <TextView
+                                    android:id="@+id/date_started_head"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/inter"
+                                    android:paddingStart="10dp"
+                                    android:paddingEnd="10dp"
+                                    android:text="@string/date_started"
+                                    android:textAppearance="@style/address" />
+
+                                <TextView
+                                    android:id="@+id/date_started"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="end|center_vertical"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/inter_bold"
+                                    android:gravity="end|top"
+                                    android:maxLines="2"
+                                    android:paddingStart="10dp"
+                                    android:paddingEnd="10dp"
+                                    android:singleLine="false"
+                                    android:text="@string/november_16_2024"
+                                    android:textAppearance="@style/royal_ln_me" />
+
+                            </TableRow>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginBottom="5dp"
+                                android:background="#C2C2C2" />
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1">
+
+                                <TextView
+                                    android:id="@+id/date_completed_head"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/inter"
+                                    android:paddingStart="10dp"
+                                    android:paddingEnd="10dp"
+                                    android:text="@string/date_completion"
+                                    android:textAppearance="@style/address" />
+
+                                <TextView
+                                    android:id="@+id/date_completed"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="end|center_vertical"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/inter_bold"
+                                    android:gravity="end|top"
+                                    android:maxLines="2"
+                                    android:paddingStart="10dp"
+                                    android:paddingEnd="10dp"
+                                    android:singleLine="false"
+                                    android:text="@string/november_16_2024"
+                                    android:textAppearance="@style/royal_ln_me" />
+
+                            </TableRow>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginBottom="5dp"
+                                android:background="#C2C2C2" />
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1">
+
+                                <TextView
+                                    android:id="@+id/customer_head"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/inter"
+                                    android:paddingStart="10dp"
+                                    android:paddingEnd="10dp"
+                                    android:text="@string/customer"
+                                    android:textAppearance="@style/address" />
+
+                                <TextView
+                                    android:id="@+id/txt_customer"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="end|center_vertical"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/inter_bold"
+                                    android:gravity="end|top"
+                                    android:maxLines="2"
+                                    android:paddingStart="10dp"
+                                    android:paddingEnd="10dp"
+                                    android:singleLine="false"
+                                    android:text="@string/aubrey"
+                                    android:textAppearance="@style/royal_ln_me" />
+
+                            </TableRow>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginBottom="5dp"
+                                android:background="#C2C2C2" />
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1">
+
+                                <TextView
+                                    android:id="@+id/payment_method_head"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/inter"
+                                    android:paddingStart="10dp"
+                                    android:paddingEnd="10dp"
+                                    android:text="@string/payment_method"
+                                    android:textAppearance="@style/address" />
+
+                                <FrameLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="1">
+
+                                    <ImageView
+                                        android:id="@+id/img_view_payment_method"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="end|center_vertical"
+                                        android:fontFamily="@font/inter_bold"
+                                        android:paddingStart="10dp"
+                                        android:paddingEnd="10dp"
+                                        android:src="@drawable/stripe_logo_vector" />
+                                </FrameLayout>
+
+                            </TableRow>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginBottom="5dp"
+                                android:background="#C2C2C2" />
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1">
+
+                                <TextView
+                                    android:id="@+id/payment_status_head"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/inter"
+                                    android:paddingStart="10dp"
+                                    android:paddingEnd="10dp"
+                                    android:text="@string/payment_status"
+                                    android:textAppearance="@style/address" />
+
+                                <TextView
+                                    android:id="@+id/payment_status"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="end|center_vertical"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/inter_bold"
+                                    android:gravity="end|top"
+                                    android:maxLines="2"
+                                    android:paddingStart="10dp"
+                                    android:paddingEnd="10dp"
+                                    android:singleLine="false"
+                                    android:text="@string/pending"
+                                    android:textAppearance="@style/pending" />
+
+
+                                <!-- strings.xml -->
+
+
+                            </TableRow>
+                        </TableLayout>
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/line_28"
+                    android:layout_width="0dp"
+                    android:layout_height="0.5dp"
+                    android:layout_below="@+id/txt_about_the_service_provider"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/line_bg" />
+
+
+                <TextView
+                    android:id="@+id/leslie_alex"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/img_profile_pic"
+                    android:layout_marginStart="15dp"
+                    android:layout_toEndOf="@+id/img_profile_pic"
+                    android:fontFamily="@font/inter_bold"
+                    android:gravity="top"
+                    android:lineSpacingExtra="6sp"
+                    android:text="@string/leslie_alexander"
+                    android:textAppearance="@style/leslie_alex" />
+
+                <TextView
+                    android:id="@+id/kenzi_lawso"
+                    android:layout_width="107dp"
+                    android:layout_height="18dp"
+                    android:layout_below="@+id/leslie_alex"
+                    android:layout_alignStart="@+id/leslie_alex"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/inter"
+                    android:gravity="center_vertical"
+                    android:lineSpacingExtra="8sp"
+                    android:text="@string/kenzi_lawson_email"
+                    android:textAppearance="@style/kenzi_lawso" />
+
+                <RelativeLayout
+                    android:id="@+id/combinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/leslie_alex"
+                    android:layout_alignEnd="@+id/line_28"
+                    android:layout_alignBottom="@+id/kenzi_lawso"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/btn_chat_bg_frame"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="7dp">
+
+                    <ImageView
+                        android:id="@+id/imageView5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        app:srcCompat="@drawable/chat_icon_vector" />
+
+                    <TextView
+                        android:id="@+id/txtChat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="8dp"
+                        android:layout_toEndOf="@+id/imageView5"
+                        android:fontFamily="@font/inter_bold"
+                        android:text="@string/chat"
+                        android:textAppearance="@style/chat" />
+
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rel_layout_reviews_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rel_layout_service_provider"
+                android:layout_alignStart="@id/rel_layout_service_provider"
+                android:layout_alignEnd="@+id/imageViewServiceImage"
+                android:visibility="gone"
+                android:layout_marginTop="18dp">
+
+                <View
+                    android:id="@+id/line_29"
+                    android:layout_width="0dp"
+                    android:layout_height="0.5dp"
+                    android:layout_below="@+id/txt_client_reviews_section_title"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/line_bg" />
+
+                <TextView
+                    android:id="@+id/txt_client_reviews_section_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="18dp"
+                    android:fontFamily="@font/inter_bold"
+                    android:text="@string/reviews"
+                    android:textAppearance="@style/reviews" />
+
+                <TextView
+                    android:id="@+id/id_txt_no_reviews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/line_29"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="50dp"
+                    android:fontFamily="@font/inter"
+                    android:text="@string/no_reviews_yet"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:visibility="gone" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvRequestHistoryViewMoreReviews"
+                    android:layout_width="match_parent"
+                    android:layout_height="330dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignTop="@+id/line_29"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="10dp" />
+
+            </RelativeLayout>
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+</RelativeLayout>

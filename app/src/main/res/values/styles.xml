@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="email">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="email1">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#BBBBBB</item>
+    </style>
+
+
+    <style name="password">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <!-- styles.xml -->
+    <style name="remember_me">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <!-- styles.xml -->
+    <style name="forgot_pass">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <!-- styles.xml -->
+    <style name="square">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#383838</item>
+    </style>
+
+
+    <!-- styles.xml -->
+    <style name="name">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#032F59</item>
+    </style>
+
+    <!-- styles.xml -->
+    <style name="log_in">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="don_t_have_">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <style name="navigate_to_signup">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/light_pink</item>
+    </style>
+
+    <style name="reset_passw">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <!-- styles.xml -->
+    <style name="a_reset_lin">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#032F59</item>
+    </style>
+
+    <!-- styles.xml -->
+    <style name="ok">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <!-- styles.xml -->
+    <style name="sign_up">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <style name="btn_sign_up">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="full_name">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <style name="already_have">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <style name="signup_passwd">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <style name="signup_passwd_confirm">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <style name="Circular">
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="rounded_rectangle">
+        <item name="cornerSize">10%</item>
+    </style>
+
+
+    <style name="payment">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#707070</item>
+    </style>
+
+
+    <style name="home">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#707070</item>
+    </style>
+
+
+    <style name="messages">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <style name="monday_marc">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#0074E3</item>
+    </style>
+
+    <style name="good_aftern">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="RatingBar" parent="android:style/Widget.Material.RatingBar.Small">
+        <item name="colorControlNormal">#FFFFFF</item>
+        <item name="colorControlActivated">#FFBF00</item>
+    </style>
+    <style name="CustomRatingBar" parent="Widget.AppCompat.RatingBar">
+        <item name="android:progressDrawable">@drawable/rating_bar_custrom</item>
+        <item name="android:minHeight">24dp</item>
+        <item name="android:maxHeight">24dp</item>
+    </style>
+
+    <style name="request_ser">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <!-- styles.xml -->
+    <style name="request_ser_black">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <!-- styles.xml -->
+    <style name="request_sent">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#1FAD4F</item>
+    </style>
+
+    <!-- styles.xml -->
+    <style name="log_in_success">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#0074E3</item>
+    </style>
+
+    <!-- styles.xml -->
+    <style name="requested_ser">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#818181</item>
+    </style>
+
+    <!-- styles.xml -->
+    <style name="total_money">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#0074E3</item>
+    </style>
+
+    <!-- styles.xml -->
+    <style name="sample_amount">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#032F59</item>
+    </style>
+    <!-- styles.xml -->
+    <style name="request_his">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#DBECFD</item>
+    </style>
+
+    <!-- styles.xml -->
+    <style name="booking_his">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#DBECFD</item>
+    </style>
+
+    <!-- styles.xml -->
+    <style name="profile_set">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#DBECFD</item>
+    </style>
+
+    <!-- styles.xml -->
+    <style name="darlene_rob">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <!-- styles.xml -->
+    <style name="electrician">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#032F59</item>
+    </style>
+
+    <!-- styles.xml -->
+    <style name="categories">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#032F59</item>
+    </style>
+
+    <!-- styles.xml -->
+    <style name="reviews">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">#032F59</item>
+    </style>
+
+    <!-- styles.xml -->
+    <style name="select_cate">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#032F59</item>
+    </style>
+
+    <!-- styles.xml -->
+    <style name="service_title">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#032F59</item>
+    </style>
+
+    <!-- styles.xml -->
+    <style name="service_desc">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#032F59</item>
+    </style>
+
+    <!-- styles.xml -->
+    <style name="request_service">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#032F59</item>
+    </style>
+
+    <!-- styles.xml -->
+    <style name="document_sh">
+        <item name="android:textSize">6sp</item>
+        <item name="android:textColor">#FB1010</item>
+    </style>
+
+    <!-- styles.xml -->
+    <style name="picture1_jp">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">#5D5D5D</item>
+    </style>
+
+    <!-- styles.xml -->
+    <style name="view_status">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="ongoing">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">#C11D1D</item>
+    </style>
+
+    <style name="chat">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+
+
+    <!-- styles.xml -->
+    <style name="address">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">#5D5D5D</item>
+    </style>
+
+    <style name="service_request_description">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">#032F59</item>
+    </style>
+
+    <style name="lorem_ipsum">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <!-- styles.xml -->
+    <style name="about_the_service_provider">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">#032F59</item>
+    </style>
+
+    <style name="leslie_alex">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">#032F59</item>
+    </style>
+
+    <style name="kenzi_lawso">
+        <item name="android:textSize">8sp</item>
+        <item name="android:textColor">#032F59</item>
+    </style>
+
+    <style name="royal_ln_me">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">#5D5D5D</item>
+    </style>
+
+    <style name="pending">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">#F41919</item>
+    </style>
+
+    <!-- styles.xml -->
+    <style name="add_payment">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <!-- styles.xml -->
+    <style name="view_payment">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#5D5D5D</item>
+    </style>
+
+    <style name="payment_history">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#5D5D5D</item>
+    </style>
+
+    <style name="view_all">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">#0074E3</item>
+    </style>
+
+    <style name="profile_email">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+
+    </style>
+    <!-- styles.xml -->
+    <style name="account_type">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">#181818</item>
+    </style>
+
+    <!-- styles.xml -->
+    <style name="client">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#4E4E4E</item>
+    </style>
+    <!-- styles.xml -->
+    <style name="sign_out">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#4E4E4E</item>
+    </style>
+
+<!--    Checkbox Border-->
+<style name="checkbox_border" parent="Theme.AppCompat.NoActionBar">
+    <item name="colorControlNormal">@color/black</item>
+
+</style>
+
+
+</resources>

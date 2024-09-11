@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- drawable/home_undefi.xml -->
+<vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="65dp"
+    android:height="29dp"
+    android:viewportWidth="65"
+    android:viewportHeight="29"
+    >
+    <group>
+        <clip-path
+            android:pathData="M14.4998 0H50.5002C58.5082 0 65 6.4918 65 14.4998C65 22.5079 58.5082 28.9997 50.5002 28.9997H14.4998C6.4918 28.9997 0 22.5079 0 14.4998C0 6.4918 6.4918 0 14.4998 0Z"
+            />
+        <path
+            android:pathData="M0 0V28.9997H65V0"
+            android:fillColor="#DBECFD"
+            />
+    </group>
+</vector>

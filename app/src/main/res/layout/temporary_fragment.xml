@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/gridLayout"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/line_26"
+    android:layout_alignStart="@+id/line_26"
+    android:layout_alignEnd="@+id/line_26"
+    android:layout_marginTop="16dp"
+    android:foregroundGravity="center"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:layout_centerInParent="true" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <RelativeLayout
+            android:id="@+id/electrician_frame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginEnd="4dp"
+            android:layout_toStartOf="@+id/view"
+            android:layout_weight="1"
+            android:background="@drawable/frame_175">
+
+            <TextView
+                android:id="@+id/electrician"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/round_electrician"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="34dp"
+                android:fontFamily="@font/inter_bold"
+                android:gravity="top"
+                android:text="@string/electrician"
+                android:textAppearance="@style/electrician" />
+
+            <RelativeLayout
+                android:id="@+id/round_electrician"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/ellipse_grid_layout">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignWithParentIfMissing="true"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/vector_electrician_symbol" />
+
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/electrician"
+                android:layout_alignBottom="@+id/electrician"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/right_arrow_navy_vector" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/automotive_frame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_gravity="start"
+            android:layout_marginStart="4dp"
+
+            android:layout_weight="1"
+            android:background="@drawable/frame_175">
+
+            <TextView
+                android:id="@+id/txt_automotive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/round_automotive"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="34dp"
+                android:fontFamily="@font/inter_bold"
+                android:gravity="top"
+                android:text="@string/automotive"
+                android:textAppearance="@style/electrician" />
+
+            <RelativeLayout
+                android:id="@+id/round_automotive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/ellipse_grid_layout">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignWithParentIfMissing="true"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/vector_automotive_symbol" />
+
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/txt_automotive"
+                android:layout_alignBottom="@+id/txt_automotive"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/right_arrow_navy_vector" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <RelativeLayout
+            android:id="@+id/carpenter_frame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/automotive_frame"
+            android:layout_gravity="start"
+            android:layout_marginEnd="4dp"
+            android:layout_toStartOf="@+id/view"
+            android:layout_weight="1"
+            android:background="@drawable/frame_175">
+
+            <TextView
+                android:id="@+id/txt_carpenter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/round_carpenter"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="34dp"
+                android:fontFamily="@font/inter_bold"
+                android:gravity="top"
+                android:text="@string/carpenter"
+                android:textAppearance="@style/electrician" />
+
+            <RelativeLayout
+                android:id="@+id/round_carpenter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/ellipse_grid_layout">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignWithParentIfMissing="true"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/vector_carpenter_symbol" />
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/txt_carpenter"
+                android:layout_alignBottom="@+id/txt_carpenter"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/right_arrow_navy_vector" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/cleaning_frame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/plumber_frame"
+            android:layout_gravity="end"
+            android:layout_marginStart="4dp"
+
+            android:layout_toEndOf="@+id/view"
+            android:layout_weight="1"
+            android:background="@drawable/frame_175">
+
+            <TextView
+                android:id="@+id/txt_cleaning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/round_cleaning"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="34dp"
+                android:fontFamily="@font/inter_bold"
+                android:gravity="top"
+                android:text="@string/cleaning"
+                android:textAppearance="@style/electrician" />
+
+            <RelativeLayout
+                android:id="@+id/round_cleaning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/ellipse_grid_layout">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignWithParentIfMissing="true"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/vector_cleaning_symbol" />
+
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/txt_cleaning"
+                android:layout_alignBottom="@+id/txt_cleaning"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/right_arrow_navy_vector" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <RelativeLayout
+            android:id="@+id/cooking_frame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/frame_175">
+
+            <TextView
+                android:id="@+id/txt_cooking"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/round_cooking"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="34dp"
+                android:layout_marginBottom="19dp"
+                android:fontFamily="@font/inter_bold"
+                android:gravity="top"
+                android:text="@string/cooking"
+                android:textAppearance="@style/electrician" />
+
+            <RelativeLayout
+                android:id="@+id/round_cooking"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/ellipse_grid_layout">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignWithParentIfMissing="true"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/vector_cooking_symbol" />
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/txt_cooking"
+                android:layout_alignBottom="@+id/txt_cooking"
+                android:layout_alignParentEnd="true"
+
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/right_arrow_navy_vector" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/plumber_frame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginStart="4dp"
+            android:layout_toEndOf="@+id/view"
+
+            android:layout_weight="1"
+            android:background="@drawable/frame_175">
+
+            <TextView
+                android:id="@+id/txt_plumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/round_plumber"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="34dp"
+                android:fontFamily="@font/inter_bold"
+                android:gravity="top"
+                android:text="@string/plumber"
+                android:textAppearance="@style/electrician" />
+
+            <RelativeLayout
+                android:id="@+id/round_plumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/ellipse_grid_layout"
+                android:padding="2dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignWithParentIfMissing="true"
+                    android:layout_centerInParent="true"
+                    android:padding="3dp"
+                    android:src="@drawable/vector_plumber_symbol" />
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/txt_plumber"
+                android:layout_alignBottom="@+id/txt_plumber"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/right_arrow_navy_vector" />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+</LinearLayout>

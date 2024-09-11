@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ChatScreen.ChatActivity">
+
+    <RelativeLayout
+        android:id="@+id/layoutTopBar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="25dp">
+
+
+        <ImageView
+            android:id="@+id/imageViewBackButtonChat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/vector_arrow_left" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/img_profile_pic_chat_screen"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toEndOf="@+id/imageViewBackButtonChat"
+            android:src="@drawable/img_guy_hawkins"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/Circular" />
+
+        <TextView
+            android:id="@+id/txt_profile_name_chats"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="5dp"
+            android:layout_toEndOf="@+id/img_profile_pic_chat_screen"
+            android:fontFamily="@font/inter_bold"
+            android:gravity="top"
+            android:text="Guy Hawkins"
+            android:textAppearance="@style/request_ser" />
+
+
+        <ImageButton
+            android:id="@+id/img_button_call_person"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:layout_toStartOf="@+id/img_button_more_details"
+            android:background="@color/white"
+            android:src="@drawable/vector_phone" />
+
+        <ImageButton
+            android:id="@+id/img_button_more_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="5dp"
+            android:background="@color/white"
+            android:src="@drawable/vector_three_dots_more" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/parentChat"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/layoutMessageInputBox"
+        android:layout_below="@+id/layoutTopBar">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvChatMessages"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:layout_marginHorizontal="16dp" />
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/layoutMessageInputBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:gravity="center">
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout7"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+
+
+            android:layout_toStartOf="@+id/btn_send_message"
+            android:layout_weight="1"
+            android:background="@drawable/send_msg_edit_text_bg">
+
+            <ImageView
+                android:id="@+id/attach_icon"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="19dp"
+                android:src="@drawable/vector_attach_document" />
+
+            <ImageView
+                android:id="@+id/camera_icon"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="18dp"
+                android:layout_toStartOf="@+id/attach_icon"
+                android:src="@drawable/vector_camera_icon" />
+
+            <EditText
+                android:id="@+id/editTextInputMsg"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@+id/camera_icon"
+                android:background="#00000000"
+                android:fontFamily="@font/inter"
+                android:inputType="text"
+                android:paddingStart="10dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/hint1"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/btn_send_message"
+            android:layout_width="43dp"
+            android:layout_height="43dp"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center_vertical|end"
+            android:layout_marginHorizontal="10dp"
+            android:background="@drawable/vector_btn_send_msg"
+            app:shapeAppearanceOverlay="@style/Circular" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

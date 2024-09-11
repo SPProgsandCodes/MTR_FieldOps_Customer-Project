@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/checkmark_s"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="24dp"
+    android:layout_centerHorizontal="true"
+    android:layout_centerVertical="true"
+    android:layout_gravity="center">
+
+    <ImageView
+        android:id="@+id/imgGreenTick"
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:layout_marginHorizontal="71dp"
+        android:src="@drawable/no_network"
+        android:layout_marginTop="23dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/request_sen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imgGreenTick"
+        android:fontFamily="@font/inter_bold"
+        android:layout_marginTop="18dp"
+        android:gravity="top|center"
+        android:textColor="@color/black"
+        android:text="@string/no_internet"
+        android:textSize="26sp"
+        app:layout_constraintEnd_toEndOf="@+id/imgGreenTick"
+        app:layout_constraintStart_toStartOf="@+id/imgGreenTick"
+        app:layout_constraintTop_toBottomOf="@+id/imgGreenTick" />
+
+    <TextView
+        android:id="@+id/txt_login_success"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/request_sen"
+        android:layout_marginHorizontal="12dp"
+        android:fontFamily="@font/inter"
+        android:gravity="top|center"
+        android:lines="2"
+        android:maxLines="2"
+        android:text="@string/check_internet"
+        android:textSize="16sp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="@+id/request_sen"
+        app:layout_constraintStart_toStartOf="@+id/request_sen"
+        app:layout_constraintTop_toBottomOf="@+id/request_sen" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnRetry"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/btn_chat_bg_frame"
+        android:fontFamily="@font/inter_bold"
+        android:text="Retry"
+        android:textColor="@color/white"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/txt_login_success"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_login_success" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+

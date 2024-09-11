@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imvProfileVendorImgBookingHist"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_margin="20dp"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/men_face"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/rounded_rectangle"
+        app:strokeColor="@null" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_booking_hist_status_completed"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/request_history_btn_bg"
+        android:fontFamily="@font/inter"
+        android:gravity="center"
+        android:text="Completed"
+        android:textAllCaps="false"
+        android:visibility="gone"
+        android:textColor="@color/green"
+        android:layout_marginStart="16dp"
+        android:textSize="10sp"
+        app:layout_constraintStart_toEndOf="@+id/imvProfileVendorImgBookingHist"
+        app:layout_constraintTop_toTopOf="@+id/imvProfileVendorImgBookingHist" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_booking_hist_status_pending"
+        android:layout_width="52dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/btn_frame_light_red"
+        android:fontFamily="@font/inter"
+        android:gravity="center"
+        android:text="Pending"
+        android:textAllCaps="false"
+        android:visibility="gone"
+        android:textColor="@color/text_color_red"
+        android:layout_marginStart="16dp"
+        android:textSize="10sp"
+        app:layout_constraintStart_toEndOf="@+id/imvProfileVendorImgBookingHist"
+        app:layout_constraintTop_toTopOf="@+id/imvProfileVendorImgBookingHist" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_booking_hist_status_ongoing"
+        android:layout_width="52dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/text_booking_hist_yellow_bg"
+        android:fontFamily="@font/inter"
+        android:gravity="center"
+        android:text="Ongoing"
+        android:textAllCaps="false"
+        android:visibility="visible"
+        android:textColor="@color/text_color_yellow"
+        android:layout_marginStart="16dp"
+        android:textSize="10sp"
+        app:layout_constraintStart_toEndOf="@+id/imvProfileVendorImgBookingHist"
+        app:layout_constraintTop_toTopOf="@+id/imvProfileVendorImgBookingHist" />
+
+    <TextView
+        android:id="@+id/txt_vendor_work_name_booking_hist"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/inter_semibold"
+        android:gravity="top"
+        android:maxLines="2"
+        android:layout_marginBottom="3dp"
+        android:text="Home Electrician"
+        android:textColor="@color/text_color2"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/txt_price_booking_hist"
+        app:layout_constraintStart_toEndOf="@+id/imvProfileVendorImgBookingHist" />
+
+    <TextView
+        android:id="@+id/txt_price_booking_hist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/green_text_bg"
+        android:fontFamily="@font/inter_bold"
+        android:gravity="center"
+        android:text="$100.00"
+        android:textColor="@color/white"
+        android:layout_marginBottom="-4dp"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imvProfileVendorImgBookingHist"
+        app:layout_constraintStart_toStartOf="@+id/txt_vendor_work_name_booking_hist" />
+
+    <TextView
+        android:id="@+id/txt_view_more_booking_hist"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="@string/view_more"
+        android:textAllCaps="false"
+        android:textSize="12sp"
+        android:gravity="center"
+        android:fontFamily="@font/inter"
+        android:textColor="@color/text_color_blue"
+        android:layout_marginEnd="23dp"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_price_booking_hist"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txt_price_booking_hist"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

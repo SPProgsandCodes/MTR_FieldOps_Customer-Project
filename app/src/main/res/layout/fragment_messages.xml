@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".MessagesScreen.FragmentMessages">
+
+    <RelativeLayout
+        android:id="@+id/layoutTopBar"
+        android:layout_height="?actionBarSize"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="25dp"
+        android:layout_width="match_parent"
+        >
+
+        <TextView
+            android:id="@+id/request_ser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/inter_bold"
+            android:text="@string/message"
+            android:textAppearance="@style/request_ser" />
+
+        />
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvMessages"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layoutTopBar"
+        android:layout_marginHorizontal="16dp"/>
+
+    <ProgressBar
+        android:id="@+id/progressBarMessagesScreen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/btn_color"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/loading_details_txt_messages_screen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/loading_details"
+        android:textSize="12sp"
+        android:visibility="gone"
+        android:fontFamily="@font/inter"
+        android:textColor="@color/btn_color"
+        android:layout_below="@+id/progressBarMessagesScreen"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
+        />
+
+</RelativeLayout>

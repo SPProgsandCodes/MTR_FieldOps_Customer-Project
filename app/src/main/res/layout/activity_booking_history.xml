@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageButton
+        android:id="@+id/img_button_alert_booking_hist_pg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/alert_badge"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_booking_history"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txt_booking_history"
+        app:srcCompat="@drawable/notification_icon" />
+
+    <TextView
+        android:id="@+id/txt_booking_history"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:fontFamily="@font/inter_bold"
+        android:gravity="top"
+        android:text="@string/booking_his"
+        android:textAppearance="@style/request_ser_black"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewBackButtonBookingHistory"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageViewBackButtonBookingHistory" />
+
+    <ImageView
+        android:id="@+id/imageViewBackButtonBookingHistory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="36dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/vector_arrow_left" />
+
+
+    <ImageView
+        android:id="@+id/searchIconHomePage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:src="@drawable/search_black_icon_vector"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextSearchForBooking"
+        app:layout_constraintStart_toStartOf="@+id/editTextSearchForBooking"
+        app:layout_constraintTop_toTopOf="@+id/editTextSearchForBooking" />
+
+    <EditText
+        android:id="@+id/editTextSearchForBooking"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/search_drawable_black"
+        android:ems="10"
+        android:hint="@string/search_for_bookings"
+        android:inputType="text"
+        android:paddingStart="48dp"
+        android:paddingEnd="10dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/hint1"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewFilterStatus"
+        app:layout_constraintStart_toStartOf="@+id/imageViewBackButtonBookingHistory"
+        app:layout_constraintTop_toBottomOf="@+id/txt_booking_history" />
+
+    <ImageButton
+        android:id="@+id/imageViewFilterStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/round_1"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextSearchForBooking"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/editTextSearchForBooking"
+        app:srcCompat="@drawable/sort_icon_vector" />
+
+    <ProgressBar
+        android:id="@+id/progressBarBookingHistory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/btn_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <TextView
+        android:id="@+id/txtLoadingDetailsBookingHistory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/loading_details"
+        android:textColor="@color/btn_color"
+        android:fontFamily="@font/inter"
+        android:textSize="12sp"
+        android:visibility="gone"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@+id/progressBarBookingHistory"
+        app:layout_constraintStart_toStartOf="@+id/progressBarBookingHistory"
+        app:layout_constraintEnd_toEndOf="@+id/progressBarBookingHistory"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvBookingHistory"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextSearchForBooking"
+        app:layout_constraintVertical_bias="0.5" />
+</androidx.constraintlayout.widget.ConstraintLayout>

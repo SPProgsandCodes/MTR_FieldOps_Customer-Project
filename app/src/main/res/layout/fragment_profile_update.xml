@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/layoutTopBar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="25dp">
+
+
+        <ImageView
+            android:id="@+id/imageViewBackButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/vector_arrow_left" />
+
+        <TextView
+            android:id="@+id/request_ser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/inter_bold"
+            android:text="@string/profile_settings"
+            android:textAppearance="@style/request_ser" />
+
+
+        <ImageButton
+            android:id="@+id/img_button_alert_profile_update_page"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/alert_badge"
+            android:src="@drawable/notification_icon" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/progressBarLayoutProfileSettings"
+        android:layout_below="@+id/layoutTopBar">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layoutTopBar">
+
+            <ProgressBar
+                android:id="@+id/progressBarProfileUpdate"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                android:layout_below="@id/profile_image_settings_page"
+                android:layout_alignEnd="@+id/profile_image_settings_page"
+                android:layout_alignStart="@+id/profile_image_settings_page"
+                android:backgroundTint="@color/btn_color" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/profile_image_settings_page"
+                android:layout_width="124dp"
+                android:layout_height="124dp"
+
+
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="13dp"
+                android:padding="2dp"
+                android:src="@drawable/men_face"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/Circular"
+                app:strokeColor="@color/black"
+                app:strokeWidth="1dp" />
+
+            <ImageView
+                android:id="@+id/imgViewEditProfilePhotoUpdatePage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/profile_image_settings_page"
+                android:layout_alignBottom="@+id/profile_image_settings_page"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/edit_photo_vector" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/profile_image_settings_page"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="43dp"
+                android:orientation="vertical">
+
+
+
+                <TextView
+                    android:id="@+id/txt_profile_update_first_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter"
+                    android:gravity="top"
+                    android:paddingStart="2dp"
+                    android:text="@string/first_name"
+                    android:textAppearance="@style/email" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/frame_1">
+
+
+                    <ImageView
+                        android:id="@+id/profile_name_icon_vector"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="10dp"
+                        android:src="@drawable/vector_profile_grey" />
+
+                    <EditText
+                        android:id="@+id/editTextUpdateProfileFirstName"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="8dp"
+                        android:layout_toStartOf="@+id/profile_name_icon_vector"
+                        android:background="#00000000"
+                        android:fontFamily="@font/inter"
+                        android:hint="@string/enter_your_first_name"
+                        android:inputType="text"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/hint1"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+                <TextView
+                    android:id="@+id/txt_profile_update_middle_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter"
+                    android:gravity="top"
+                    android:layout_marginTop="32dp"
+                    android:paddingStart="2dp"
+                    android:text="Middle Name"
+                    android:textAppearance="@style/email" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/frame_1">
+
+
+                    <ImageView
+                        android:id="@+id/profile_name_icon_vector_1"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="10dp"
+                        android:src="@drawable/vector_profile_grey" />
+
+                    <EditText
+                        android:id="@+id/editTextUpdateProfileMiddleName"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="8dp"
+                        android:layout_toStartOf="@+id/profile_name_icon_vector_1"
+                        android:background="#00000000"
+                        android:fontFamily="@font/inter"
+                        android:hint="@string/enter_your_middle_name"
+                        android:inputType="text"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/hint1"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/txt_profile_update_last_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter"
+                    android:gravity="top"
+                    android:layout_marginTop="32dp"
+                    android:paddingStart="2dp"
+                    android:text="@string/last_name"
+                    android:textAppearance="@style/email" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/frame_1">
+
+
+                    <ImageView
+                        android:id="@+id/profile_name_icon_vector_3"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="10dp"
+                        android:src="@drawable/vector_profile_grey" />
+
+                    <EditText
+                        android:id="@+id/editTextUpdateProfileLastName"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="8dp"
+                        android:layout_toStartOf="@+id/profile_name_icon_vector_3"
+                        android:background="#00000000"
+                        android:fontFamily="@font/inter"
+                        android:hint="@string/enter_your_last_name"
+                        android:inputType="text"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/hint1"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+
+
+                <TextView
+                    android:id="@+id/txt_signup_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter"
+                    android:layout_marginTop="32dp"
+                    android:gravity="top"
+                    android:paddingStart="2dp"
+                    android:text="@string/email"
+                    android:textAppearance="@style/email" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/frame_1">
+
+
+                    <ImageView
+                        android:id="@+id/emailIconVector"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="10dp"
+                        android:src="@drawable/vector_email_icon" />
+
+                    <EditText
+                        android:id="@+id/editTextUpdateProfileEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="8dp"
+                        android:layout_toStartOf="@+id/emailIconVector"
+                        android:background="#00000000"
+                        android:fontFamily="@font/inter"
+                        android:enabled="false"
+                        android:hint="nevaeh.simmons@example.com"
+                        android:inputType="text"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/hint1"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+
+
+                <TextView
+                    android:id="@+id/textViewUpdatePhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:fontFamily="@font/inter"
+                    android:padding="2dp"
+                    android:text="@string/phone_number"
+                    android:textAppearance="@style/signup_passwd_confirm" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/frame_1">
+
+                    <ImageView
+                        android:id="@+id/visibleEyeIconVectorSettingsPage"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="10dp"
+                        android:src="@drawable/vector_call" />
+
+                    <EditText
+                        android:id="@+id/editTextUpdateProfilePhoneNumber"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentStart="true"
+                        android:layout_toStartOf="@+id/visibleEyeIconVectorSettingsPage"
+                        android:background="#00000000"
+                        android:fontFamily="@font/inter"
+                        android:gravity="center_vertical"
+                        android:enabled="false"
+                        android:hint="@string/enter_your_phone_number"
+                        android:inputType="text"
+                        android:paddingStart="10dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/hint1"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnSaveChanges"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:background="@drawable/btn_frame"
+                    android:fontFamily="@font/inter_bold"
+                    android:text="@string/btn_save_changes"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+    </ScrollView>
+    <RelativeLayout
+        android:id="@+id/progressBarLayoutProfileSettings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_alignParentBottom="true">
+
+        <ProgressBar
+            android:id="@+id/profileSettingsProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginVertical="20dp"
+            android:backgroundTint="@color/btn_color"
+            android:visibility="gone" />
+    </RelativeLayout>
+</RelativeLayout>

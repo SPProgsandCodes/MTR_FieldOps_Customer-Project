@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/dialog_bg">
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout5"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+
+        android:layout_marginHorizontal="16dp">
+
+        <ImageView
+            android:id="@+id/close_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/cross_vector" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/inter_semibold"
+            android:textColor="@color/black"
+            android:text="@string/select_status"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_select_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:orientation="vertical"
+        android:layout_below="@+id/relativeLayout5">
+        <TextView
+            android:id="@+id/txt_all_status"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@drawable/items_bg"
+            android:text="@string/all_status"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/inter_semibold"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/txt_status_created"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@drawable/items_bg"
+            android:text="@string/status_created"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/inter_semibold"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/txt_status_pending"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@drawable/items_bg"
+            android:text="@string/pending"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/inter_semibold"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/txt_status_InProgress"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@drawable/items_bg"
+            android:text="@string/in_progress"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/inter_semibold"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/txt_status_Completed"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@drawable/items_bg"
+            android:text="@string/status_completed"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/inter_semibold"
+            android:gravity="center" />
+
+
+    </LinearLayout>
+
+</RelativeLayout>

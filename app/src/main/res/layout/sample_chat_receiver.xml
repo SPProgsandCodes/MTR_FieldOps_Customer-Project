@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:layout_marginEnd="7dp"
+    android:background="@drawable/chat_reciever_layout"
+    android:maxHeight="400dp"
+    android:maxWidth="310dp"
+    >
+
+    <TextView
+        android:id="@+id/receiver_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/inter"
+        android:layout_marginEnd="7dp"
+        android:text="Hi"
+        android:textColor="@color/black"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/receiver_msg_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/receiver_msg"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="0dp"
+        android:fontFamily="@font/inter"
+        android:text="October 12, 2015"
+        android:layout_marginEnd="7dp"
+        android:textColor="@color/black"
+        android:textSize="8sp" />
+
+
+</RelativeLayout>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/drawable/ratingbar_custom.xml -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@android:id/background"
+        android:drawable="@drawable/ratingbar_unchecked" />
+    <item android:id="@android:id/secondaryProgress"
+        android:drawable="@drawable/ratingbar_unchecked" />
+    <item android:id="@android:id/progress">
+        <clip>
+            <shape>
+                <solid android:color="@color/your_checked_color" /> <!-- Set your desired checked color here -->
+            </shape>
+        </clip>
+    </item>
+</layer-list>

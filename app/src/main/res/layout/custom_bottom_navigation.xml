@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?><!-- res/layout/custom_bottom_navigation.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bottom_navigation_view"
+    android:layout_width="match_parent"
+    android:layout_height="85dp"
+    android:layout_gravity="bottom"
+    android:background="@color/white"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:id="@+id/bottom_nav_home"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/home_nav_option"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/nav_bar_unfocused"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/img_home_nav"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/btn_home_navigation_unfocussed" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:fontFamily="@font/inter"
+            android:gravity="top"
+            android:text="@string/home"
+            android:textAppearance="@style/home" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bottom_nav_message"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/msg_nav_option"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/nav_bar_unfocused"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/img_message_nav"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/vector_message_nav_bar_unfoccussed" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txt_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:fontFamily="@font/inter"
+            android:gravity="top"
+            android:text="@string/message"
+            android:textAppearance="@style/payment" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bottom_nav_payments"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/payment_nav_option"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/nav_bar_unfocused"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/img_payment_nav"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/vector_payment_nav_bar_unfoccused" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/payment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:fontFamily="@font/inter"
+            android:gravity="top"
+            android:text="@string/payment"
+            android:textAppearance="@style/payment" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/bottom_nav_settings"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/settings_nav_option"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/nav_bar_unfocused"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/img_settings_nav"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/vector_settings_nav_bar_unfoccussed" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txt_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:fontFamily="@font/inter"
+            android:gravity="top"
+            android:text="@string/settings"
+            android:textAppearance="@style/payment" />
+    </LinearLayout>
+    />
+
+</LinearLayout>
+

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="primary_bg">#F7F7F7</color>
+    <color name="hint1">#BBBBBB</color>
+    <color name="btn_color">#032F59</color>
+    <color name="grey">#252525</color>
+    <color name="grey1">#858585</color>
+    <color name="grey2">#B4B4B4</color>
+
+    <color name="yellow">#FFC700</color>
+    <color name="light_pink">#FF9FB4</color>
+    <color name="text_unfocussed">#707070</color>
+    <color name="your_unchecked_color">#CCCCCC</color> <!-- Unchecked color -->
+    <color name="your_checked_color">#FFCC00</color>  <!-- Checked color -->
+    <color name="text_color1">#585858</color>
+    <color name="text_color2">#303030</color>
+    <color name="text_color3">#DBECFD</color>
+    <color name="text_color_blue">#0074E3</color>
+    <color name="text_color_red">#C11D1D</color>
+    <color name="text_color_yellow">#E8BD24</color>
+    <color name="green">#1DC141</color>
+    <color name="text_grey_color">#818181</color>
+
+    <color name="transparent">#00000000</color>
+</resources>

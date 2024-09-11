@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:layout_marginVertical="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/items_bg">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imv_Payment_Sender_Image"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_margin="20dp"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/men_face"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/Circular"
+        app:strokeColor="@null" />
+
+    <TextView
+        android:id="@+id/txt_Payment_Sender_Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_bold"
+        android:layout_marginStart="12dp"
+        android:textSize="12sp"
+        android:text="AC Repair"
+        android:textColor="@color/btn_color"
+        app:layout_constraintStart_toEndOf="@+id/imv_Payment_Sender_Image"
+        app:layout_constraintTop_toTopOf="@+id/imv_Payment_Sender_Image" />
+
+
+    <TextView
+        android:id="@+id/txt_service_provider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/inter"
+        android:text="Service Provider: "
+        android:textColor="@color/btn_color"
+        android:textSize="10sp"
+        app:layout_constraintStart_toEndOf="@+id/imv_Payment_Sender_Image"
+        app:layout_constraintTop_toBottomOf="@+id/txt_Payment_Sender_Name" />
+
+    <TextView
+        android:id="@+id/txt_service_provider_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/inter_bold"
+        android:text="Laslie Alexandra"
+        android:textColor="@color/btn_color"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_service_provider"
+        app:layout_constraintStart_toEndOf="@+id/txt_service_provider"
+        app:layout_constraintTop_toBottomOf="@+id/txt_Payment_Sender_Name" />
+
+    <TextView
+        android:id="@+id/txt_payment_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:fontFamily="@font/inter_bold"
+        android:text="October 30, 2017"
+        android:textColor="#999999"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_Payment_Sender_Name"
+        app:layout_constraintStart_toEndOf="@+id/txt_Payment_Sender_Name"
+        app:layout_constraintTop_toTopOf="@+id/txt_Payment_Sender_Name" />
+
+    <TextView
+        android:id="@+id/txt_payment_rate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_bold"
+        android:text="$100.00"
+        android:layout_marginEnd="17dp"
+        android:textColor="#D42121"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_Payment_Sender_Name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txt_Payment_Sender_Name" />
+
+    <TextView
+        android:id="@+id/txt_payment_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="17dp"
+        android:fontFamily="@font/inter"
+        android:text="paid"
+        android:textStyle="italic"
+        android:textColor="#1DC141"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_service_provider_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txt_service_provider_name" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

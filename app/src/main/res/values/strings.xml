@@ -1,0 +1,146 @@
+<resources>
+    <string name="app_name">Field Ops Customer</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="remember_me">Remember me</string>
+    <string name="forgot_pass">Forgot Password?</string>
+    <string name="log_in">Log In</string>
+    <string name="don_t_have_">Don\'t have an account?</string>
+    <string name="already_have">Already have an account?</string>
+    <string name="reset_passw">Reset Password</string>
+    <string name="a_reset_lin">A reset link has been sent to your Email</string>
+    <string name="ok">OK</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="btn_sign_up">Sign Up</string>
+    <string name="full_name">Full Name</string>
+    <string name="first_name">First Name</string>
+    <string name="middle_name">Middle Name(Optional)</string>
+    <string name="last_name">Last Name</string>
+    <string name="signup_passwd">Password</string>
+    <string name="phone_number">Phone</string>
+    <string name="signup_passwd_confirm">Confirm Password</string>
+    <string name="good_aftern">Good Afternoon </string>
+    <string name="monday_marc">Monday, March 25th, 2024</string>
+    <string name="request_ser">Request Service</string>
+    <string name="requested_ser">No. of Services Requested: </string>
+    <string name="select_cate">Select Category</string>
+    <string name="service_title">Service Title</string>
+    <string name="service_desc">Service Description</string>
+    <string name="offer_price">Offer Price</string>
+    <string name="message">Messages</string>
+    <string name="settings">Settings</string>
+    <string name="messages">Messages</string>
+    <string name="home">Home</string>
+    <string name="payment">Payment</string>
+    <string name="total_money">Total Money Spent:</string>
+    <string name="sample_amount">$10,000</string>
+    <string name="request_his">Request History</string>
+    <string name="booking_his">Booking History</string>
+    <string name="electrician">Electrician </string>
+    <string name="plumber">Plumber</string>
+    <string name="automotive">Automotive</string>
+    <string name="cleaning">Cleaning</string>
+    <string name="carpenter">Carpenter</string>
+    <string name="cooking">Cooking</string>
+    <string name="categories">Categories</string>
+    <string name="reviews">Reviews</string>
+    <string name="document_sh">Document Should not be more than 10mb</string>
+    <string name="picture1_jp">1. picture1.jpeg delete</string>
+    <string name="document_txt">2. document_1.pdf delete</string>
+    <string name="search_for_bookings">Search for bookings</string>
+    <string name="request_sent">Request Sent\n</string>
+    <string name="enter_your_full_name">Enter your full name</string>
+    <string name="enter_your_first_name">Enter your first name</string>
+    <string name="enter_your_middle_name">Enter your middle name</string>
+    <string name="enter_your_last_name">Enter your last name</string>
+    <string name="log_in_to_continue_using_our_app">Log in to continue using our App</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="home_electrician">Home Electrician</string>
+    <string name="view_status">View Status</string>
+    <string name="ongoing">Ongoing</string>
+    <string name="service_request_description">Service Request Description</string>
+    <string name="lorem_ipsum">
+        Office ipsum you must be muted. Encourage looking flesh right work pants whatever. If the strategic with enable flesh it\'s. Important driving meaningful fured three left hour eod. Food lift hurting big make decisions panel. Please status launch closing users low vendor event synergy.
+    </string>
+    <string name="about_the_service_provider">About the Service Provider</string>
+    <string name="leslie_alexander">Leslie Alexander</string>
+    <string name="kenzi_lawson_email">kenzi.lawson@example.com</string>
+    <string name="chat">Chat</string>
+    <string name="address">Address</string>
+    <string name="date_started">Date Started</string>
+    <string name="date_completion">Date Completion</string>
+    <!-- strings.xml -->
+    <string name="royal_ln_me">2464 Royal Ln. Mesa,
+        New Jersey 45463</string>
+    <string name="customer">Customer</string>
+    <string name="payment_method">Payment Method</string>
+    <string name="payment_status">Payment Status</string>
+    <string name="november_16_2024">November 16, 2024</string>
+    <string name="aubrey">Aubrey</string>
+    <string name="pending">Pending</string>
+    <string name="payment_methods">Payment Methods</string>
+    <string name="add_payment_method">Add Payment Method</string>
+    <string name="view_payment_details">View Payment Details</string>
+    <string name="payment_history">Payment History</string>
+    <string name="view_all">View All</string>
+    <string name="square">Square</string>
+    <string name="stripe">Stripe</string>
+    <string name="name">Name</string>
+    <string name="card_number">Card Number</string>
+    <string name="mm_yy">MM/YY</string>
+    <string name="cvc">CVC</string>
+    <string name="profile_settings">Profile Settings</string>
+    <string name="profile_name">Darlene Robertson</string>
+    <string name="profile_email">michelle.rivera@example.com</string>
+    <string name="account_type">Account Type:</string>
+    <string name="client">Client\n</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="search_for_services">Search for Services</string>
+    <string name="dummy_text_long">Lorem ipsum dolor sit amet consectetur. Metus aliquam elementum ac commodo volutpat non.Lorem ipsum dolor sit amet consectetur. Metus aliquam elementum ac commodo volutpat non.</string>
+    <string name="request_status">Request Status</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="btn_save_changes">Save Changes</string>
+    <string name="remove_payment_method">Remove Payment Method</string>
+    <string name="view_more"><u>View More</u></string>
+    <string name="enter_your_phone_number">(555) 555-1234</string>
+
+    <!--    Popup Dialog Screens-->
+    <!--    Login Screen-->
+
+    <string name="login_success">Login Success</string>
+
+    <!--    Signup Screen-->
+    <string name="log_in_underlined"><u>Log in</u></string>
+    <string name="signup_success">Your Application is under process. Please wait until verification is complete</string>
+
+    <!--    No Internet Dialog-->
+    <string name="no_internet">NO INTERNET</string>
+    <string name="check_internet">Check your internet connection and try again</string>
+    <string name="are_you_sure_you_want_to_sign_out">Are you sure you want to sign out?</string>
+    <string name="signuout_dialog_btn_text_no">no</string>
+    <string name="signuout_dialog_btn_text_yes">yes</string>
+    <string name="loading_details">Loading details...</string>
+    <string name="no_reviews_yet">No reviews yet</string>
+    <string name="select_status">Select Status</string>
+    <string name="all_status">All Status</string>
+    <string name="status_created">Created</string>
+    <string name="in_progress">In Progress</string>
+    <string name="status_completed">Completed</string>
+    <string name="error_fetching_categories">Error fetching categories</string>
+    <string name="notification">Notification</string>
+    <string name="updating_booking_status">Updating Booking Status</string>
+    <string name="notification_desc_sample">Booking Status has been changed from Pending approval to completed</string>
+    <string name="service_request_no_description">No Description Available</string>
+    <string name="cancel_str">Cancel</string>
+    <string name="Continue">Continue\n</string>
+    <string name="please_enter_amount">Please Enter Amount</string>
+    <string name="please_enter_amount_in_valid_format">Please enter the amount in a valid format</string>
+    <string name="Cancel">Cancel</string>
+    <string name="OK">OK</string>
+    <string name="are_you_sure_you_want_to_logout">Are you sure you want to Logout?</string>
+    <string name="ATTENTION">ATTENTION!</string>
+
+</resources>
+
