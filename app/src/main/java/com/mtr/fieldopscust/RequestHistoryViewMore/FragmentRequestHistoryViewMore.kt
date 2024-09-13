@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.Insets
 import androidx.core.view.OnApplyWindowInsetsListener
 import androidx.core.view.ViewCompat
@@ -83,14 +84,50 @@ class FragmentRequestHistoryViewMore : Fragment() {
             val email = bundle.getString("service_provider_email")
 
             // For Status Bottom Sheet
-            val assignedToName = bundle.getString("assigned_to_name")
-            val assignedDate = bundle.getString("assigned_date")
-            val viewedByName = bundle.getString("viewedBy_to_name")
-            val viewedDate = bundle.getString("viewed_date")
-            val profileUrlChatUser = bundle.getString("profile_url")
+            val assignedToName = if (bundle.getString("assigned_to_name").isNullOrEmpty()){
+                ""
+            } else {
+                bundle.getString("assigned_to_name")
+            }
+
+            val assignedDate = if(bundle.getString("assigned_date").isNullOrEmpty()){
+                ""
+            } else {
+                bundle.getString("assigned_date")
+            }
+
+            val viewedByName = if (bundle.getString("viewedBy_to_name").isNullOrEmpty()){
+                ""
+            } else {
+                bundle.getString("viewedBy_to_name")
+            }
+
+            val viewedDate = if (bundle.getString("viewed_date").isNullOrEmpty()){
+                ""
+            } else {
+                bundle.getString("viewed_date")
+            }
+
+            val profileUrlChatUser = if (bundle.getString("profile_url").isNullOrEmpty()){
+                ""
+            } else {
+                bundle.getString("profile_url")
+            }
+
+            val workStartTime = if (bundle.getString("work_start_time").isNullOrEmpty()){
+                ""
+            } else {
+                bundle.getString("work_start_time")
+            }
+
+            val workCompletedTime = if (bundle.getString("work_complete_time").isNullOrEmpty()){
+                ""
+            } else {
+                bundle.getString("work_complete_time")
+            }
 
             binding.btnViewStatusReqHist.setOnClickListener {
-                showDialog(assignedToName!!, assignedDate!!, viewedByName!!, viewedDate!!, status!!, viewStatus!!, updatedAt!!, profileUrlChatUser!!)
+                showDialog(assignedToName!!, assignedDate!!, viewedByName!!, viewedDate!!, status!!, viewStatus!!, updatedAt!!, profileUrlChatUser!!, workStartTime!!, workCompletedTime!!)
             }
 
             // For Reviews
@@ -105,8 +142,13 @@ class FragmentRequestHistoryViewMore : Fragment() {
             Log.d("TAG", "Service Provider Name: $name")
 
             binding.txtHomeElectrician.text = serviceName
-            if (status == "Inprogress"){
-                binding.btnStatus.text = "In Progress"
+            if (status == "Requested" || status == "Completed"){
+                binding.btnStatus.text = status
+                binding.btnStatus.setTextColor(ContextCompat.getColor(requireContext(), R.color.green))
+                binding.btnStatus.background = ContextCompat.getDrawable(requireContext(), R.drawable.request_history_btn_bg)
+            } else if (status == "Inprogress"){
+                binding.btnStatus.text = "Ongoing"
+                binding.btnStatus.background = ContextCompat.getDrawable(requireContext(), R.drawable.text_booking_hist_yellow_bg)
             } else {
                 binding.btnStatus.text = status
             }
@@ -175,7 +217,7 @@ class FragmentRequestHistoryViewMore : Fragment() {
         }
     }
 
-    private fun showDialog(assignedToName: String, assignedDate: String, viewedByName: String, viewedDate: String, status: String, viewStatus: String, updatedAt: String, profileUrl: String) {
+    private fun showDialog(assignedToName: String, assignedDate: String, viewedByName: String, viewedDate: String, status: String, viewStatus: String, updatedAt: String, profileUrl: String, workStartTime: String, workCompleteTime: String) {
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.fragment_request_status_bottom_sheet_dialog)
@@ -251,11 +293,43 @@ class FragmentRequestHistoryViewMore : Fragment() {
         }
 
         Log.d("TAG", "Status: ${status}")
-        if (status == "Inprogress") {
+
+        if(status == "Completed"){
             list.add(
                 ModelRequestStatusDialog(
-                    updatedAt,
-                    updatedAt,
+                    workStartTime,
+                    workStartTime,
+                    "In Progress",
+                    assignedToName,
+                    "Has Started Working",
+                    true,
+                    false,
+                    false,
+                    false,
+                    true,
+                    profileUrl
+                )
+            )
+            list.add(
+                ModelRequestStatusDialog(
+                    workCompleteTime,
+                    workCompleteTime,
+                    "Completed",
+                    "Your Request has been completed by",
+                    assignedToName,
+                    false,
+                    true,
+                    false,
+                    false,
+                    true,
+                    profileUrl
+                )
+            )
+        } else if (status == "Inprogress") {
+            list.add(
+                ModelRequestStatusDialog(
+                    workStartTime,
+                    workStartTime,
                     "In Progress",
                     assignedToName,
                     "Has Started Working",

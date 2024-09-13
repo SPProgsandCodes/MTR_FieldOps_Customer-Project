@@ -152,7 +152,7 @@ class FragmentHomePage : Fragment(), AdapterCategories.OnServiceCategoriesClickL
             Log.d("TAG", "profile Home Page: $profileUrl")
             Glide.with(requireContext())
                 .load(profileUrl)
-                .placeholder(R.drawable.placeholder)
+                .placeholder(R.drawable.menface)
                 .into(binding.dashboardProfileImage)
         } else {
             Toast.makeText(requireContext(), "Null Profile Url", Toast.LENGTH_SHORT).show()
@@ -345,7 +345,7 @@ class FragmentHomePage : Fragment(), AdapterCategories.OnServiceCategoriesClickL
                 sharedPreferences?.edit()?.putString(USER_GET_PROFILE_PIC, profileUrl)?.apply()
                 Glide.with(requireContext())
                     .load(userResponse.result.profileUrl)
-                    .placeholder(R.drawable.placeholder)
+                    .placeholder(R.drawable.menface)
                     .into(binding.dashboardProfileImage)
             }
 

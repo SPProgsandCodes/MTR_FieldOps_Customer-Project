@@ -1,8 +1,8 @@
 package com.mtr.fieldopscust.DialogRequestStatus
 
 class ModelRequestStatusDialog(
-    var date: String,
-    var time: String,
+    var date: String = "empty",
+    var time: String = "empty",
     var status: String,
     var text1: String,
     var text2: String,

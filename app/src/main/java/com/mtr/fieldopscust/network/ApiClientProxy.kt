@@ -9,6 +9,8 @@ import com.google.gson.JsonObject
 import com.mtr.fieldopscust.DashboardScreen.ModelUserDashboard
 import com.mtr.fieldopscust.Utils.ApplicationHelper.compressBitmap
 import com.mtr.fieldopscust.Utils.ApplicationHelper.resizeBitmap
+import com.mtr.fieldopscust.network.request.ChargeAmountRequest
+import com.mtr.fieldopscust.network.request.ChargeAmountResponse
 import com.mtr.fieldopscust.network.request.ForgetPassLinkRequest
 import com.mtr.fieldopscust.network.request.ForgetPassLinkResponse
 import com.mtr.fieldopscust.network.request.GetFileResponse
@@ -230,13 +232,14 @@ object ApiClientProxy {
             .observeOn(AndroidSchedulers.mainThread())
     }
 
-    fun updateUserProfile(domainId: Int, firstName: String, middleName: String, lastName: String, email: String, password: String, token: String): Observable<UpdateUserProfileResponse>{
+    fun updateUserProfile(domainId: Int, firstName: String, middleName: String, lastName: String, email: String, password: String, phoneNumber: String, token: String): Observable<UpdateUserProfileResponse>{
         var updateUserProfileRequest: UpdateUserProfileRequest = UpdateUserProfileRequest()
         updateUserProfileRequest.firstName = firstName
         updateUserProfileRequest.middleName = middleName
         updateUserProfileRequest.lastName = lastName
         updateUserProfileRequest.email = email
         updateUserProfileRequest.password = password
+        updateUserProfileRequest.phoneNumber = phoneNumber
 
 
         return ApiClient.getServiceClient().updateUserProfile(domainId, updateUserProfileRequest, token)
@@ -286,6 +289,16 @@ object ApiClientProxy {
 
     fun getWalletBalance(domainId: Int, currency: String, token: String): Observable<WalletBalanceResponse>{
         return ApiClient.getServiceClient().getWalletBalance(domainId, currency, token)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun chargeAmount(taskId: Int, amountCharged: Int, currency: String, token: String, domainId: Int): Observable<ChargeAmountResponse>{
+        val chargeAmountRequest = ChargeAmountRequest()
+        chargeAmountRequest.taskId = taskId
+        chargeAmountRequest.amountCharged = amountCharged
+        chargeAmountRequest.currency = currency
+        return ApiClient.getServiceClient().chargeAmount(domainId, token, chargeAmountRequest)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }

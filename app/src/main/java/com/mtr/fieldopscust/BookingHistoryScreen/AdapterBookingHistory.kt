@@ -59,10 +59,10 @@ class AdapterBookingHistory(private var bookingHistoryList: List<Job>, private v
             holder.statusPending.visibility = ViewGroup.GONE
             holder.statusOngoing.visibility = ViewGroup.VISIBLE
         } else if (status == "Inprogress"){
-            holder.statusCompleted.text = "In Progress"
-            holder.statusCompleted.visibility = ViewGroup.VISIBLE
+            holder.statusCompleted.text = "Ongoing"
+            holder.statusCompleted.visibility = ViewGroup.GONE
             holder.statusPending.visibility = ViewGroup.GONE
-            holder.statusOngoing.visibility = ViewGroup.GONE
+            holder.statusOngoing.visibility = ViewGroup.VISIBLE
         }
     }
 

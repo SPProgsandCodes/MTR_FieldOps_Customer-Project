@@ -35,6 +35,7 @@ import com.mtr.fieldopscust.R
 import com.mtr.fieldopscust.Utils.ApplicationHelper
 import com.mtr.fieldopscust.Utils.ApplicationHelper.getFileFromUri
 import com.mtr.fieldopscust.Utils.ApplicationHelper.hideSystemUI
+import com.mtr.fieldopscust.Utils.Constants.Companion.DOMAIN_ID_KEY
 import com.mtr.fieldopscust.Utils.Constants.Companion.LOGIN_PREFS
 import com.mtr.fieldopscust.Utils.Constants.Companion.TOKEN_KEY
 import com.mtr.fieldopscust.Utils.Constants.Companion.USER_ID_KEY
@@ -63,6 +64,7 @@ class ActivityRequestServicePage : AppCompatActivity() {
     private val PICK_PDF_FILE: Int = 2
     private var disposable: Disposable? = null
     private var token: String? = null
+    private var domainId: Int?= null
     private var sharedSesssionPrefs: SessionPreferences? = null
     private var userId: Int = 0
     private var selectedPosition: Int? = null
@@ -122,6 +124,7 @@ class ActivityRequestServicePage : AppCompatActivity() {
         if (sharedSesssionPrefs != null) {
             token = sharedSesssionPrefs!!.getString(TOKEN_KEY, null)
             userId = sharedSesssionPrefs!!.getInt(USER_ID_KEY, 0)
+            domainId = sharedSesssionPrefs!!.getInt(DOMAIN_ID_KEY, 0)
         }
 
 

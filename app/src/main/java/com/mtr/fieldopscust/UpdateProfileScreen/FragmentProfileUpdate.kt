@@ -90,6 +90,7 @@ class FragmentProfileUpdate : Fragment() {
             userId = sharedSesssionPrefs?.getInt(USER_ID_KEY, 0)
 
             phoneNumber = sharedSesssionPrefs?.getString(USER_PHONE_NUMBER, null).toString()
+            Log.d("TAG", "User Phone Number: $phoneNumber")
             email = sharedSesssionPrefs?.getString(USER_EMAIL, null).toString()
 
             DOMAIN_ID = sharedSesssionPrefs?.getInt(DOMAIN_ID_KEY, 1)
@@ -113,7 +114,7 @@ class FragmentProfileUpdate : Fragment() {
         binding.imgButtonAlertProfileUpdatePage.setOnClickListener{
             notificationButton()
         }
-
+        getSharedPreferencesForProfileUpdate()
         if (email.isNotEmpty()){
             val emailEditable: Editable = Editable.Factory.getInstance().newEditable(email)
             binding.editTextUpdateProfileEmail.text = emailEditable
@@ -124,7 +125,7 @@ class FragmentProfileUpdate : Fragment() {
             binding.editTextUpdateProfilePhoneNumber.text = phoneNumberEditable
         }
 
-        getSharedPreferencesForProfileUpdate()
+
         if (firstNameUser?.isNotEmpty() == true){
             val firstNameEditable: Editable = Editable.Factory.getInstance().newEditable(firstNameUser)
             binding.editTextUpdateProfileFirstName.text = firstNameEditable
@@ -160,7 +161,7 @@ class FragmentProfileUpdate : Fragment() {
 
         }
         binding.btnSaveChanges.setOnClickListener {
-//            getSharedPreferencesForProfileUpdate()
+            getSharedPreferencesForProfileUpdate()
             var firstName = binding.editTextUpdateProfileFirstName.text.toString()
             if (firstName.isEmpty()) {
                 firstName = firstNameUser!!
@@ -173,7 +174,12 @@ class FragmentProfileUpdate : Fragment() {
             if (lastName.isEmpty()) {
                 lastName = lastNameUser!!
             }
+
+
+
             val email = sharedSesssionPrefs?.getString(USER_EMAIL, null)
+
+            val phone = sharedSesssionPrefs?.getString(USER_PHONE_NUMBER, null)
 
             val passwd = sharedSesssionPrefs?.getString(USER_PASSWORD, null)
 
@@ -181,7 +187,7 @@ class FragmentProfileUpdate : Fragment() {
                 updateUserProfilePic(fileKey!!, token!!, DOMAIN_ID!!)
             }
 
-            if (passwd != null && email != null) {
+            if (phone != null && email != null) {
 
                 if (firstName.isEmpty() && lastName.isEmpty() && middleName.isEmpty()) {
                     Toast.makeText(
@@ -201,7 +207,8 @@ class FragmentProfileUpdate : Fragment() {
                         middleName,
                         lastName,
                         email,
-                        passwd
+                        passwd!!,
+                        phone
                     )
                 }
             }
@@ -244,6 +251,9 @@ class FragmentProfileUpdate : Fragment() {
             sharedSesssionPrefs?.edit()
                 ?.putString(USER_LAST_NAME, userResponse.result.lastName)
                 ?.apply()
+            sharedSesssionPrefs?.edit()
+                ?.putString(USER_PHONE_NUMBER, userResponse.result.phoneNumber)
+                ?.apply()
             getSharedPreferencesForProfileUpdate()
 
         } else {
@@ -258,6 +268,8 @@ class FragmentProfileUpdate : Fragment() {
         firstNameUser = sharedSesssionPrefs?.getString(USER_FIRST_NAME, null)
         middleNameUser = sharedSesssionPrefs?.getString(USER_MIDDLE_NAME, null)
         lastNameUser = sharedSesssionPrefs?.getString(USER_LAST_NAME, null)
+        phoneNumber = sharedSesssionPrefs?.getString(USER_PHONE_NUMBER, null).toString()
+        Log.d("TAG", "User Phone Number: $phoneNumber")
     }
 
     private fun onUserDetailsError(throwable: Throwable?) {
@@ -311,7 +323,7 @@ class FragmentProfileUpdate : Fragment() {
             binding.progressBarProfileUpdate.visibility = View.VISIBLE
             Glide.with(this)
                 .load(profileUrl)
-                .placeholder(R.drawable.placeholder)
+                .placeholder(R.drawable.menface)
                 .into(binding.profileImageSettingsPage)
             binding.progressBarProfileUpdate.visibility = View.GONE
         } else {
@@ -328,7 +340,7 @@ class FragmentProfileUpdate : Fragment() {
             // Show the ProgressBar before starting the image load
             binding.progressBarProfileUpdate.visibility = View.GONE
 
-            if (userResponse.result.profileUrl.isNullOrEmpty()){
+            if (userResponse.result.profileUrl.isEmpty()){
                 Glide.with(requireContext())
                     .load(R.drawable.menface)
                     .into(binding.profileImageSettingsPage)
@@ -396,7 +408,8 @@ class FragmentProfileUpdate : Fragment() {
         middleName: String,
         lastName: String,
         email: String,
-        passwd: String
+        passwd: String,
+        phone: String
     ) {
         val bearerToken = "bearer $token"
         binding.profileSettingsProgressBar.visibility = View.VISIBLE
@@ -410,6 +423,7 @@ class FragmentProfileUpdate : Fragment() {
             lastName,
             email,
             passwd,
+            phone,
             bearerToken
         )
             .observeOn(AndroidSchedulers.mainThread())
@@ -439,10 +453,10 @@ class FragmentProfileUpdate : Fragment() {
 
             if (fragmentManager.getBackStackEntryCount() > 0) {
                 // Navigate to the previous fragment
-                fragmentManager.popBackStack();
+                fragmentManager.popBackStack()
             } else {
                 // If no fragments in the back stack, finish the activity or handle as needed
-                activity?.onBackPressed();
+                activity?.onBackPressed()
             }
 
 

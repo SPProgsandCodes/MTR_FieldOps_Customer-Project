@@ -40,6 +40,7 @@ import com.mtr.fieldopscust.Utils.Constants.Companion.TOKEN_KEY
 import com.mtr.fieldopscust.Utils.Constants.Companion.USER_ID_KEY
 import com.mtr.fieldopscust.Utils.SessionPreferences
 import com.mtr.fieldopscust.databinding.ActivityRequestServicePageBinding
+import com.mtr.fieldopscust.network.request.ChargeAmountResponse
 import com.mtr.fieldopscust.network.request.RequestServiceResponse
 import com.mtr.fieldopscust.network.request.UploadFileResponse
 import com.mtr.fieldopsemp.network.ApiClientProxy
@@ -489,6 +490,7 @@ class FragmentRequestServicePage : Fragment() {
             if (requestServiceResponse.isSuccess) {
                 binding.requestServiceProgressBar.visibility = View.GONE
                 binding.txtLoadingDetailsServicePage.visibility = View.GONE
+                chargeAmount(requestServiceResponse.result.id, requestServiceResponse.result.price, "usd", token!!, DOMAIN_ID!!)
                 Toast.makeText(activity, "Task Created Successfully", Toast.LENGTH_SHORT).show()
                 onClickBackButton()
             } else {
@@ -505,8 +507,36 @@ class FragmentRequestServicePage : Fragment() {
     private fun onRequestServiceFailure(throwable: Throwable?) {
         binding.requestServiceProgressBar.visibility = View.GONE
         binding.txtLoadingDetailsServicePage.visibility = View.GONE
-        Toast.makeText(activity, "Task Failed", Toast.LENGTH_SHORT).show()
+//        Toast.makeText(activity, "Task Failed", Toast.LENGTH_SHORT).show()
     }
+
+    private fun chargeAmount(taskId: Int, amount: Int, currency: String, token: String, domainId: Int){
+        val bearerToken = "bearer $token"
+        binding.requestServiceProgressBar.visibility = View.VISIBLE
+        binding.txtLoadingDetailsServicePage.text = "Charging Amount"
+        binding.txtLoadingDetailsServicePage.visibility = View.VISIBLE
+        disposable = ApiClientProxy.chargeAmount(taskId, amount, currency, bearerToken, domainId)
+            .subscribe(this::onChargeAmountSuccess, this::onChargeAmountFailure)
+
+    }
+
+    private fun onChargeAmountSuccess(chargeAmountResponse: ChargeAmountResponse?) {
+        if (chargeAmountResponse != null) {
+            binding.requestServiceProgressBar.visibility = View.GONE
+            binding.txtLoadingDetailsServicePage.visibility = View.GONE
+//            if (chargeAmountResponse.isSuccess)
+//                Toast.makeText(activity, "Amount Charged", Toast.LENGTH_SHORT).show()
+
+//                Toast.makeText(activity, chargeAmountResponse.message, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun onChargeAmountFailure(throwable: Throwable?) {
+        binding.requestServiceProgressBar.visibility = View.GONE
+        binding.txtLoadingDetailsServicePage.visibility = View.GONE
+//        Toast.makeText(activity, "Error in Charging Amount", Toast.LENGTH_SHORT).show()
+    }
+
 
 
 

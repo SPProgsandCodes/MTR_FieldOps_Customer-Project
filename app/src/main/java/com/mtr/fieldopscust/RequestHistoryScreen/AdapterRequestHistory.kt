@@ -36,7 +36,12 @@ class AdapterRequestHistory(private val requestHistory: List<Job>, private val l
             .placeholder(R.drawable.placeholder)
             .into(holder.vImage)
 //        holder.vImage.setImageResource(R.drawable.electric_wires)
-        holder.vStatus.text = requestHistory.status
+
+        holder.vStatus.text = if (requestHistory.status == "Inprogress"){
+            "In Progress"
+        } else {
+            requestHistory.status
+        }
         holder.btnViewStatus.setOnClickListener{
             listener.onViewStatusClick(requestHistory)
 

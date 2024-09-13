@@ -233,7 +233,8 @@ class FragmentPaymentMethods : Fragment() {
             is PaymentSheetResult.Completed -> {
                 // Payment succeeded
                 Toast.makeText(requireContext(), "Payment successful!", Toast.LENGTH_LONG).show()
-
+                val bearerToken = "bearer $token"
+                fetchTransactions(DOMAIN_ID!!, token!!)
                 updatePaymentStatus()
             }
 

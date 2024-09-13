@@ -56,6 +56,7 @@ class FragmentProfileSettings : Fragment() {
     var disposable: Disposable? = null
     private var sharedSesssionPrefs: SessionPreferences? = null
     private var profileUrl: String? = null
+    private var phoneNumber: String? = null
     private var userId: Int? = null
     private var token: String? = null
     private var firstName: String?= null
@@ -76,6 +77,7 @@ class FragmentProfileSettings : Fragment() {
             profileUrl = sharedSesssionPrefs?.getString(USER_GET_PROFILE_PIC, null)
             firstName = sharedSesssionPrefs?.getString(USER_FIRST_NAME, null)
             lastName = sharedSesssionPrefs?.getString(USER_LAST_NAME, null)
+            phoneNumber = sharedSesssionPrefs?.getString(USER_PHONE_NUMBER, null)
             email = sharedSesssionPrefs?.getString(USER_EMAIL, null)
             userId = sharedSesssionPrefs?.getInt(USER_ID_KEY, 0)
             DOMAIN_ID = sharedSesssionPrefs?.getInt(DOMAIN_ID_KEY, 1)
@@ -110,7 +112,7 @@ class FragmentProfileSettings : Fragment() {
                 } else {
                     Glide.with(requireContext())
                         .load(profileUrl)
-                        .placeholder(R.drawable.placeholder)
+                        .placeholder(R.drawable.menface)
                         .into(binding.imgProfileImageProfilePage)
                 }
 
@@ -203,6 +205,8 @@ class FragmentProfileSettings : Fragment() {
         firstName = sharedSesssionPrefs?.getString(USER_FIRST_NAME, null)
         lastName = sharedSesssionPrefs?.getString(USER_LAST_NAME, null)
         email = sharedSesssionPrefs?.getString(USER_EMAIL, null)
+        phoneNumber = sharedSesssionPrefs?.getString(USER_PHONE_NUMBER, null)
+
 
     }
 
@@ -222,7 +226,7 @@ class FragmentProfileSettings : Fragment() {
         if (profileUrl!=null && profileUrl == sharedSesssionPrefs?.getString(USER_GET_PROFILE_PIC, null)){
             Glide.with(requireContext())
                 .load(profileUrl)
-                .placeholder(com.mtr.fieldopscust.R.drawable.placeholder)
+                .placeholder(R.drawable.menface)
                 .into(binding.imgProfileImageProfilePage)
             binding.textProfileNameSettings.text = "$firstName $lastName"
             binding.michelleRi.text = email

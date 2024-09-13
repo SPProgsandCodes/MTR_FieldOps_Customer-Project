@@ -49,7 +49,7 @@ class FragmentRequestHistory : Fragment(), AdapterRequestHistory.onViewStatusCli
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = ActivityRequestHistoryPageBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -155,8 +155,8 @@ class FragmentRequestHistory : Fragment(), AdapterRequestHistory.onViewStatusCli
         } else {
             list.add(
                 ModelRequestStatusDialog(
-                    viewedBy.createdAt,
-                    viewedBy.createdAt,
+                    job.viewedTime!!,
+                    job.viewedTime,
                     "Viewed",
                     "Request has been viewed by",
                     viewedBy.name,
@@ -187,10 +187,15 @@ class FragmentRequestHistory : Fragment(), AdapterRequestHistory.onViewStatusCli
                 )
             )
         } else {
+            val assignedTime: String = if (job.assignedTime.isNullOrEmpty()){
+                ""
+            } else {
+                job.assignedTime
+            }
             list.add(
                 ModelRequestStatusDialog(
-                    viewedBy.createdAt,
-                    viewedBy.createdAt,
+                    assignedTime,
+                    assignedTime,
                     "Assigned",
                     "Your Request has been assigned to",
                     job.assignedTo.name,
@@ -205,11 +210,62 @@ class FragmentRequestHistory : Fragment(), AdapterRequestHistory.onViewStatusCli
         }
 
         Log.d("TAG", "Status: ${job.status}")
-        if (job.status == "Inprogress") {
+        val workCompleteTime: String
+        val workStartTime: String
+        if (job.status == "Completed"){
+
+            workCompleteTime = if (job.workCompleteTime.isNullOrEmpty()){
+                ""
+            } else {
+                job.workCompleteTime
+            }
+
+            workStartTime = if (job.workStartTime.isNullOrEmpty()){
+                ""
+            } else {
+                job.workStartTime.toString()
+            }
+
             list.add(
                 ModelRequestStatusDialog(
-                    job.updatedAt,
-                    job.updatedAt,
+                    workStartTime,
+                    workStartTime,
+                    "In Progress",
+                    job.assignedTo.name,
+                    "Has Started Working",
+                    true,
+                    false,
+                    false,
+                    false,
+                    true,
+                    job.assignedTo.profileUrl
+                )
+            )
+            list.add(
+                ModelRequestStatusDialog(
+                    workCompleteTime,
+                    workCompleteTime,
+                    "Completed",
+                    "Your Request has been completed by",
+                    job.assignedTo.name,
+                    false,
+                    true,
+                    false,
+                    false,
+                    true,
+                    job.assignedTo.profileUrl
+                )
+            )
+        } else if (job.status == "Inprogress") {
+            workStartTime = if (job.workStartTime.isNullOrEmpty()){
+                ""
+            } else {
+                job.workStartTime.toString()
+            }
+            list.add(
+                ModelRequestStatusDialog(
+                    workStartTime,
+                    workStartTime,
                     "In Progress",
                     job.assignedTo.name,
                     "Has Started Working",

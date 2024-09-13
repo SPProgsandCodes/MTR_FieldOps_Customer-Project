@@ -13,4 +13,6 @@ class UpdateUserProfileRequest {
     var email: String? = null
     @SerializedName("password")
     var password: String? = null
+    @SerializedName("phoneNumber")
+    var phoneNumber: String? = null
 }

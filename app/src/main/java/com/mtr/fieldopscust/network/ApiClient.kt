@@ -5,6 +5,8 @@ import android.util.Log
 import com.google.gson.JsonObject
 import com.mtr.fieldopscust.DashboardScreen.ModelCategories
 import com.mtr.fieldopscust.DashboardScreen.ModelUserDashboard
+import com.mtr.fieldopscust.network.request.ChargeAmountRequest
+import com.mtr.fieldopscust.network.request.ChargeAmountResponse
 import com.mtr.fieldopscust.network.request.ForgetPassLinkRequest
 import com.mtr.fieldopscust.network.request.ForgetPassLinkResponse
 import com.mtr.fieldopscust.network.request.GetFileResponse
@@ -232,5 +234,13 @@ object ApiClient {
             @Query("currency") currency: String,
             @Header("Authorization") token: String
         ): Observable<WalletBalanceResponse>
+
+        @Headers("Content-type: application/json")
+        @POST("Wallet/chargeamount")
+        fun chargeAmount(
+            @Query("domainId") domainId: Int,
+            @Header("Authorization") token: String,
+            @Body chargeAmountRequest: ChargeAmountRequest
+        ): Observable<ChargeAmountResponse>
     }
 }

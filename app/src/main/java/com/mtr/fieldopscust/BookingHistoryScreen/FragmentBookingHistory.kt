@@ -229,12 +229,20 @@ class FragmentBookingHistory : Fragment(), AdapterBookingHistory.OnBookingHistor
             putString("service_provider_email", job.assignedTo.email)
             putString("service_provider_profile_url", job.assignedTo.profileUrl)
 
-            // For Status Bottom Sheet
+            // For Status Bottom Sheet Status
+            // Work Start Time
+            putString("work_start_time", job.workStartTime)
+            // Work Complete Time
+            putString("work_complete_time", job.workCompleteTime)
+
+            // Assigned To Details
+            putString("profile_url", job.assignedTo.profileUrl)
             putString("assigned_to_name", job.assignedTo.name)
             putString("assigned_date", job.assignedTo.createdAt)
-            putString("profile_url", job.assignedTo.profileUrl)
+
+            // Viewed By Details
+            putString("viewed_date", job.viewedTime)
             putString("viewedBy_to_name", job.viewedBy.name)
-            putString("viewed_date", job.viewedBy.createdAt)
 
             // For Reviews
 
