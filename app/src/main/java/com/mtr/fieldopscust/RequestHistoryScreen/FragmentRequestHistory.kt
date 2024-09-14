@@ -280,6 +280,8 @@ class FragmentRequestHistory : Fragment(), AdapterRequestHistory.onViewStatusCli
 
         }
 
+
+
         rv = dialog.findViewById(R.id.request_status_rv)
         rv!!.layoutManager = LinearLayoutManager(requireContext())
         rv!!.adapter = AdapterRequestStatusDialog(requireContext(), list)

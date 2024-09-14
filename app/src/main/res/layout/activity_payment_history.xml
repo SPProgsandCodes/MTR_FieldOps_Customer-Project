@@ -76,7 +76,7 @@
         android:fontFamily="@font/inter"
         android:textColor="@color/btn_color"
         android:layout_below="@+id/progressBarPaymentHistActivity"
-        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
         />
 
 </RelativeLayout>

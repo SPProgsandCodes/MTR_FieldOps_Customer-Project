@@ -1,16 +1,18 @@
 package com.mtr.fieldopscust.ChatScreen
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Window
 import android.view.WindowManager
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-
 import com.mtr.fieldopscust.R
 import com.mtr.fieldopscust.Utils.ApplicationHelper
 import com.mtr.fieldopscust.Utils.ApplicationHelper.hideSystemUI
@@ -20,21 +22,18 @@ import com.mtr.fieldopscust.Utils.Constants.Companion.INTENT_MESSAGE_SEND_USER_F
 import com.mtr.fieldopscust.Utils.Constants.Companion.LOGIN_PREFS
 import com.mtr.fieldopscust.Utils.Constants.Companion.TOKEN_KEY
 import com.mtr.fieldopscust.Utils.Constants.Companion.USER_ID_KEY
+import com.mtr.fieldopscust.Utils.Constants.Companion.USER_PHONE_NUMBER
 import com.mtr.fieldopscust.databinding.ActivityChatBinding
 import com.mtr.fieldopscust.network.request.ResultMessageSended
-import com.mtr.fieldopscust.network.request.SendMessageRequest
 import com.mtr.fieldopscust.network.request.SendMessageResponse
-import com.mtr.fieldopsemp.network.ApiClient
 import com.mtr.fieldopsemp.network.ApiClientProxy
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.net.SocketTimeoutException
-import java.util.concurrent.TimeUnit
+
 
 class ChatActivity : AppCompatActivity() {
     lateinit var binding: ActivityChatBinding
@@ -42,8 +41,9 @@ class ChatActivity : AppCompatActivity() {
     private var token: String? = null
     private val messageList = mutableListOf<ResultMessageSended>()
     private lateinit var chatAdapter: ChatAdapter
-    private var currentUserId: Int?= null
-    private var DOMAIN_ID: Int?= null
+    private var currentUserId: Int? = null
+    private var DOMAIN_ID: Int? = null
+    private var phoneNumber: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityChatBinding.inflate(getLayoutInflater())
@@ -61,11 +61,13 @@ class ChatActivity : AppCompatActivity() {
         }
 
         val sharedPreferences = ApplicationHelper.getAppController()?.getSharedPreferences(
-            LOGIN_PREFS, Context.MODE_PRIVATE)
+            LOGIN_PREFS, Context.MODE_PRIVATE
+        )
         if (sharedPreferences != null) {
             token = sharedPreferences.getString(TOKEN_KEY, null)
             currentUserId = sharedPreferences.getInt(USER_ID_KEY, 0)
             DOMAIN_ID = sharedPreferences.getInt(DOMAIN_ID_KEY, 1)
+            phoneNumber = sharedPreferences.getString(USER_PHONE_NUMBER, null)
             Log.d("TAG", "UserId for Chats: $token")
         }
 
@@ -83,15 +85,34 @@ class ChatActivity : AppCompatActivity() {
             .placeholder(R.drawable.placeholder)
             .into(binding.imgProfilePicChatScreen)
         binding.txtProfileNameChats.text = sendToName
-        binding.imageViewBackButtonChat.setOnClickListener{
+        binding.imageViewBackButtonChat.setOnClickListener {
             onClickBackButton()
         }
-        binding.btnSendMessage.setOnClickListener{
+        binding.btnSendMessage.setOnClickListener {
             sendMessage(sendTo, DOMAIN_ID!!)
+        }
+
+        binding.imgButtonCallPerson.setOnClickListener {
+
+            if (phoneNumber.isNullOrEmpty()){
+                Toast.makeText(this, "Phone Number Not Found", Toast.LENGTH_SHORT).show()
+            } else{
+                val phoneNumber = phoneNumber.toString()
+                // Create an intent to open the dialer app with the phone number pre-filled
+                val dialIntent = Intent(Intent.ACTION_DIAL).apply {
+                    data = Uri.parse("tel:$phoneNumber") // Pre-fill the phone number
+                }
+                // Start the dialer activity
+                startActivity(dialIntent)
+            }
+
+
+
         }
 //        sendMessage()
 
     }
+
     private fun onClickBackButton() {
         val fragmentManager: FragmentManager = supportFragmentManager
 
@@ -113,33 +134,35 @@ class ChatActivity : AppCompatActivity() {
             .subscribe(
                 { response ->
                     Log.d("API_RESPONSE", "Response: $response")
-                    onSendMessageSuccess(response) },
+                    onSendMessageSuccess(response)
+                },
                 { error ->
                     Log.e("API_ERROR", "Error: ${error.message}", error)
-                    onSendMessageError(error) }
+                    onSendMessageError(error)
+                }
             )
 
     }
 
     private fun onSendMessageSuccess(sendMessageResponse: SendMessageResponse?) {
-        if (sendMessageResponse != null){
-            if (sendMessageResponse.isSuccess){
+        if (sendMessageResponse != null) {
+            if (sendMessageResponse.isSuccess) {
                 Toast.makeText(this, sendMessageResponse.message, Toast.LENGTH_SHORT).show()
 
                 binding.rvChatMessages.layoutManager = LinearLayoutManager(this)
 
-                    val messages : ResultMessageSended = sendMessageResponse.result
-                    val updatedMessages = arrayListOf(messages)
-                    chatAdapter.addMessage(messages) // Add the new message to the adapter
+                val messages: ResultMessageSended = sendMessageResponse.result
+                val updatedMessages = arrayListOf(messages)
+                chatAdapter.addMessage(messages) // Add the new message to the adapter
 
-            }else{
+            } else {
                 Toast.makeText(this, sendMessageResponse.message, Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     private fun onSendMessageError(throwable: Throwable?) {
-        if (throwable != null){
+        if (throwable != null) {
             Toast.makeText(this, "Error Sending Message", Toast.LENGTH_SHORT).show()
         }
     }

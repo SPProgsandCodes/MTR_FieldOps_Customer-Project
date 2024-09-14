@@ -7,6 +7,7 @@ import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -118,6 +119,15 @@ class FragmentHomePage : Fragment(), AdapterCategories.OnServiceCategoriesClickL
 
         binding.imgButtonAlert.setOnClickListener {
             notificationButton()
+//            val phoneNumber = "1234567890"  // Replace with the actual phone number
+//
+//            // Create an intent to open the dialer app with the phone number pre-filled
+//            val dialIntent = Intent(Intent.ACTION_DIAL).apply {
+//                data = Uri.parse("tel:$phoneNumber") // Pre-fill the phone number
+//            }
+//
+//            // Start the dialer activity
+//            startActivity(dialIntent)
         }
 
         binding.homePageSearch.addTextChangedListener(object : TextWatcher {
