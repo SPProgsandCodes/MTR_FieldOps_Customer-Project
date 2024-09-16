@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Window
 import android.view.WindowManager
-import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
@@ -37,7 +36,7 @@ import kotlinx.coroutines.launch
 
 class ChatActivity : AppCompatActivity() {
     lateinit var binding: ActivityChatBinding
-    var disposable: Disposable? = null
+    var chatScreenDisposable: Disposable? = null
     private var token: String? = null
     private val messageList = mutableListOf<ResultMessageSended>()
     private lateinit var chatAdapter: ChatAdapter
@@ -129,7 +128,7 @@ class ChatActivity : AppCompatActivity() {
 //        val sendTo = 124 // Replace with the user ID you want to send the message to
         // Send the message to the server
         val bearerToken = "bearer $token"
-        disposable = ApiClientProxy.sendMessage(sendTo, sampleMessage, bearerToken, domainId)
+        chatScreenDisposable = ApiClientProxy.sendMessage(sendTo, sampleMessage, bearerToken, domainId)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { response ->

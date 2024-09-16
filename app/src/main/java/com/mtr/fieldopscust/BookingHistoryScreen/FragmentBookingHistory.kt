@@ -1,10 +1,12 @@
 package com.mtr.fieldopscust.BookingHistoryScreen
 
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
+import android.widget.Button
 import android.widget.Toast
 import androidx.core.graphics.Insets
 import androidx.core.view.OnApplyWindowInsetsListener
@@ -15,11 +17,14 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.mtr.fieldopscust.LoginScreen.ActivityLogin
+import com.mtr.fieldopscust.NetworkUtil
 import com.mtr.fieldopscust.NotificationFragment.FragmentNotification
 import com.mtr.fieldopscust.R
 import com.mtr.fieldopscust.RequestHistoryViewMore.FragmentRequestHistoryViewMore
 import com.mtr.fieldopscust.Utils.ApplicationHelper
 import com.mtr.fieldopscust.Utils.Constants.Companion.DOMAIN_ID_KEY
+import com.mtr.fieldopscust.Utils.Constants.Companion.IS_LOGIN
 import com.mtr.fieldopscust.Utils.Constants.Companion.LOGIN_PREFS
 import com.mtr.fieldopscust.Utils.Constants.Companion.NO_BOOKING_HISTORY
 import com.mtr.fieldopscust.Utils.Constants.Companion.TASK_STATUS_CODE
@@ -50,7 +55,7 @@ class FragmentBookingHistory : Fragment(), AdapterBookingHistory.OnBookingHistor
     private var userId: Int? = null
     private var DOMAIN_ID: Int? = null
     private var userToken: String? = null
-    private var disposable: Disposable? = null
+    private var bookingHistoryDisposable: Disposable? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -69,16 +74,21 @@ class FragmentBookingHistory : Fragment(), AdapterBookingHistory.OnBookingHistor
             hideSystemUI()
         }
 
-        binding.imageViewBackButtonBookingHistory.setOnClickListener {
-            onClickBackButton()
-        }
+        if (checkNetworkConnection()) {
+            binding.imageViewBackButtonBookingHistory.setOnClickListener {
+                onClickBackButton()
+            }
 
-        binding.imageViewFilterStatus.setOnClickListener {
-            showDialog()
-        }
+            binding.imageViewFilterStatus.setOnClickListener {
+                showDialog()
+            }
 
-        binding.imgButtonAlertBookingHistPg.setOnClickListener{
-            notificationButton()
+            binding.imgButtonAlertBookingHistPg.setOnClickListener {
+                notificationButton()
+            }
+
+        } else {
+            dialogNoInternet()
         }
 
         binding.editTextSearchForBooking.addTextChangedListener(object : TextWatcher {
@@ -105,25 +115,39 @@ class FragmentBookingHistory : Fragment(), AdapterBookingHistory.OnBookingHistor
                 insets
             }
         )
+        if (checkNetworkConnection()){
+            fetchBookingHistory(userId, userToken, TASK_STATUS_CODE, DOMAIN_ID!!)
+        } else {
+            dialogNoInternet()
+        }
 
-        fetchBookingHistory(userId, userToken, TASK_STATUS_CODE, DOMAIN_ID!!)
+
     }
 
-    private fun fetchBookingHistory(userId: Int?, userToken: String?, taskStatusId: Int?, domainId: Int) {
+    private fun fetchBookingHistory(
+        userId: Int?,
+        userToken: String?,
+        taskStatusId: Int?,
+        domainId: Int
+    ) {
         val bearerToken = "bearer $userToken"
         binding.progressBarBookingHistory.visibility = View.VISIBLE
         binding.txtLoadingDetailsBookingHistory.visibility = View.VISIBLE
 
-        disposable = ApiClientProxy.getBookingHistory(userId!!, taskStatusId!!, bearerToken, domainId)
-            .retryWhen { error ->
-                error.zipWith(Observable.range(1, 3)) { error, retryCount ->
-                    if (error is SocketTimeoutException && retryCount < 3) {
-                        Observable.timer(2, TimeUnit.SECONDS) // Wait for 2 seconds before retrying
-                    } else {
-                        Observable.error<Throwable>(error)
-                    }
-                }.flatMap { it }
-            }.subscribe(this::onFetchBookingHistorySuccess, this::onFetchBookingHistoryFailure)
+        bookingHistoryDisposable =
+            ApiClientProxy.getBookingHistory(userId!!, taskStatusId!!, bearerToken, domainId)
+                .retryWhen { error ->
+                    error.zipWith(Observable.range(1, 3)) { error, retryCount ->
+                        if (error is SocketTimeoutException && retryCount < 3) {
+                            Observable.timer(
+                                2,
+                                TimeUnit.SECONDS
+                            ) // Wait for 2 seconds before retrying
+                        } else {
+                            Observable.error<Throwable>(error)
+                        }
+                    }.flatMap { it }
+                }.subscribe(this::onFetchBookingHistorySuccess, this::onFetchBookingHistoryFailure)
     }
 
     private fun onFetchBookingHistorySuccess(bookingHistoryResponse: RequestHistoryResponse) {
@@ -137,7 +161,11 @@ class FragmentBookingHistory : Fragment(), AdapterBookingHistory.OnBookingHistor
                 rvBookingHistory?.layoutManager = LinearLayoutManager(requireContext())
                 adapterBookingHistory = AdapterBookingHistory(bookingHistoryList, this)
                 rvBookingHistory?.adapter = adapterBookingHistory
-                Toast.makeText(requireContext(), "Booking History fetched successfully", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Booking History fetched successfully",
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
                 binding.txtLoadingDetailsBookingHistory.text = NO_BOOKING_HISTORY
                 binding.txtLoadingDetailsBookingHistory.visibility = View.VISIBLE
@@ -146,7 +174,8 @@ class FragmentBookingHistory : Fragment(), AdapterBookingHistory.OnBookingHistor
         } else {
             binding.txtLoadingDetailsBookingHistory.text = NO_BOOKING_HISTORY
             binding.txtLoadingDetailsBookingHistory.visibility = View.VISIBLE
-            Toast.makeText(requireContext(), "Booking History fetch failed", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Booking History fetch failed", Toast.LENGTH_SHORT)
+                .show()
         }
     }
 
@@ -161,10 +190,10 @@ class FragmentBookingHistory : Fragment(), AdapterBookingHistory.OnBookingHistor
     }
 
     private fun filter(query: String) {
-        if (bookingHistoryList.isEmpty()){
+        if (bookingHistoryList.isEmpty()) {
             return
         } else {
-            val filteredList =bookingHistoryList.filter {
+            val filteredList = bookingHistoryList.filter {
                 it.name.contains(query, ignoreCase = true)
             }
             adapterBookingHistory.updateList(filteredList)
@@ -173,8 +202,8 @@ class FragmentBookingHistory : Fragment(), AdapterBookingHistory.OnBookingHistor
     }
 
     private fun filterStatus(query: String) {
-        if(query.isEmpty()){
-            if (bookingHistoryList.isEmpty()){
+        if (query.isEmpty()) {
+            if (bookingHistoryList.isEmpty()) {
                 return
             } else {
                 binding.txtLoadingDetailsBookingHistory.visibility = View.GONE
@@ -182,13 +211,13 @@ class FragmentBookingHistory : Fragment(), AdapterBookingHistory.OnBookingHistor
                 return
             }
         } else {
-            if (bookingHistoryList.isEmpty()){
+            if (bookingHistoryList.isEmpty()) {
                 return
             } else {
-                val filteredList =bookingHistoryList.filter {
+                val filteredList = bookingHistoryList.filter {
                     it.status.contains(query, ignoreCase = true)
                 }
-                if (filteredList.isEmpty()){
+                if (filteredList.isEmpty()) {
                     binding.txtLoadingDetailsBookingHistory.text = NO_BOOKING_HISTORY
                     binding.txtLoadingDetailsBookingHistory.visibility = View.VISIBLE
                     adapterBookingHistory.updateList(filteredList)
@@ -208,53 +237,58 @@ class FragmentBookingHistory : Fragment(), AdapterBookingHistory.OnBookingHistor
 
     override fun onDestroyView() {
         super.onDestroyView()
-        disposable?.dispose()
+        bookingHistoryDisposable?.dispose()
         _binding = null
     }
 
     override fun onHistoryClick(job: Job) {
-        val reviewsList = ArrayList(job.assignedTo.reviews)
-        val bundle = Bundle().apply {
-            putString("service_name", job.name)
-            putString("view_status", job.viewStatus)
-            putString("status", job.status)
-            putString("updated_at", job.updatedAt)
-            putString("service_description", job.description)
-            putString("documents", job.documents)
+        if (checkNetworkConnection()){
+            val reviewsList = ArrayList(job.assignedTo.reviews)
+            val bundle = Bundle().apply {
+                putString("service_name", job.name)
+                putString("view_status", job.viewStatus)
+                putString("status", job.status)
+                putString("updated_at", job.updatedAt)
+                putString("service_description", job.description)
+                putString("documents", job.documents)
 //            putStringArrayList("reviews_list", reviewsList)
 
-            // For Service Provider
-            putInt("service_provider_id", job.assignedTo.id)
-            putString("service_provider_name", job.assignedTo.name)
-            putString("service_provider_email", job.assignedTo.email)
-            putString("service_provider_profile_url", job.assignedTo.profileUrl)
+                // For Service Provider
+                putInt("service_provider_id", job.assignedTo.id)
+                putString("service_provider_name", job.assignedTo.name)
+                putString("service_provider_email", job.assignedTo.email)
+                putString("service_provider_profile_url", job.assignedTo.profileUrl)
 
-            // For Status Bottom Sheet Status
-            // Work Start Time
-            putString("work_start_time", job.workStartTime)
-            // Work Complete Time
-            putString("work_complete_time", job.workCompleteTime)
+                // For Status Bottom Sheet Status
+                // Work Start Time
+                putString("work_start_time", job.workStartTime)
+                // Work Complete Time
+                putString("work_complete_time", job.workCompleteTime)
 
-            // Assigned To Details
-            putString("profile_url", job.assignedTo.profileUrl)
-            putString("assigned_to_name", job.assignedTo.name)
-            putString("assigned_date", job.assignedTo.createdAt)
+                // Assigned To Details
+                putString("profile_url", job.assignedTo.profileUrl)
+                putString("assigned_to_name", job.assignedTo.name)
+                putString("assigned_date", job.assignedTo.createdAt)
 
-            // Viewed By Details
-            putString("viewed_date", job.viewedTime)
-            putString("viewedBy_to_name", job.viewedBy.name)
+                // Viewed By Details
+                putString("viewed_date", job.viewedTime)
+                putString("viewedBy_to_name", job.viewedBy.name)
 
-            // For Reviews
+                // For Reviews
 
+            }
+
+            val fragment = FragmentRequestHistoryViewMore()
+            fragment.arguments = bundle
+
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
+                .commit()
+        } else {
+            dialogNoInternet()
         }
 
-        val fragment = FragmentRequestHistoryViewMore()
-        fragment.arguments = bundle
-
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .addToBackStack(null)
-            .commit()
     }
 
     fun showDialog() {
@@ -298,12 +332,15 @@ class FragmentBookingHistory : Fragment(), AdapterBookingHistory.OnBookingHistor
         }
 
         dialog.show()
-        dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        dialog.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.window?.setGravity(Gravity.BOTTOM)
     }
 
-    private fun notificationButton(){
+    private fun notificationButton() {
         val fragmentManager: FragmentManager = parentFragmentManager
         val transaction: FragmentTransaction = fragmentManager.beginTransaction()
         transaction.replace(R.id.fragment_container, FragmentNotification())
@@ -316,9 +353,46 @@ class FragmentBookingHistory : Fragment(), AdapterBookingHistory.OnBookingHistor
         // Hide system UI logic here for fragments, if needed.
     }
 
+    // Method to check Internet Connection
+    private fun checkNetworkConnection(): Boolean {
+        return NetworkUtil().isNetworkAvailable(context)
+    }
+
+    private fun dialogNoInternet() {
+        val dialog = Dialog(requireContext())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.no_internet_dialog)
+        val btnRetry = dialog.findViewById<Button>(R.id.btnRetry)
+        btnRetry.setOnClickListener {
+            logOutApp()
+            dialog.dismiss()
+//            if (checkNetworkConnection()) {
+//                getUserDashboard()
+//                fetchUserDetails(sharedViewModel.userID)
+//                fetchUserReviews(sharedViewModel.userID)
+//            } else {
+//                dialogNoInternet()
+//            }
+        }
+        dialog.show()
+    }
+
+    private fun logOutApp() {
+
+        sharedSessionPreferences?.edit()?.putBoolean(IS_LOGIN, false)?.apply()
+        val intent = Intent(activity, ActivityLogin::class.java)
+        startActivity(intent)
+        if (isAdded) {
+            Toast.makeText(requireContext(), "Logout Successfully", Toast.LENGTH_SHORT).show()
+        }
+
+
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-        disposable?.dispose()
+        bookingHistoryDisposable?.dispose()
     }
 }

@@ -63,7 +63,7 @@ class ActivityLogin : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         this.enableEdgeToEdge()
         requestWindowFeature(Window.FEATURE_NO_TITLE)
-        this.getWindow().setFlags(
+        this.window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
@@ -261,13 +261,15 @@ class ActivityLogin : AppCompatActivity() {
 
 
         dialog.findViewById<Button>(R.id.btnRetry).setOnClickListener(View.OnClickListener {
-            if (NetworkUtil().isNetworkAvailable(this)) {
-                dialog.dismiss()
-                Toast.makeText(this, "Internet Connection Retrieved", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "Please Check your Internet Connection", Toast.LENGTH_SHORT)
-                    .show()
-            }
+            dialog.dismiss()
+            Toast.makeText(this, "Please Check your Internet Connection", Toast.LENGTH_SHORT).show()
+//            if (NetworkUtil().isNetworkAvailable(this)) {
+//                dialog.dismiss()
+//                Toast.makeText(this, "Internet Connection Retrieved", Toast.LENGTH_SHORT).show()
+//            } else {
+//                Toast.makeText(this, "Please Check your Internet Connection", Toast.LENGTH_SHORT)
+//                    .show()
+//            }
         })
         dialog.show()
     }

@@ -15,7 +15,6 @@ import java.time.temporal.ChronoField
 
 class AdapterUserMessages(
     private val messages: ArrayList<ChatUser>,
-    private val currentUserId: Int,
     private val listener: OnMessageClickListener,
     private val noMessagesTextView: TextView
 ) : RecyclerView.Adapter<ViewHolderMessages>() {

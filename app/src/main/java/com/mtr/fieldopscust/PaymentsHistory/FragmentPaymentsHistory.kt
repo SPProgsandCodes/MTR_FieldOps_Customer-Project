@@ -33,7 +33,7 @@ import java.util.concurrent.TimeUnit
 
 class FragmentPaymentHistory : Fragment() {
     private lateinit var binding: ActivityPaymentHistoryBinding
-    private var disposable: Disposable? = null
+    private var paymentHistoryDisposable: Disposable? = null
     private var token: String? = null
     private var DOMAIN_ID: Int? = null
     private var sharedSessionPrefs: SessionPreferences? = null
@@ -75,7 +75,7 @@ class FragmentPaymentHistory : Fragment() {
         binding.progressBarPaymentHistActivity.visibility = View.VISIBLE
         binding.loadingDetailsTxtPaymentHistActivity.visibility = View.VISIBLE
 
-        disposable = ApiClientProxy.getTransactionHistory(domainId, bearerToken)
+        paymentHistoryDisposable = ApiClientProxy.getTransactionHistory(domainId, bearerToken)
             .retryWhen { error ->
                 error.zipWith(Observable.range(1, 3)) { error, retryCount ->
                     if (error is SocketTimeoutException && retryCount < 3) {
@@ -139,6 +139,6 @@ class FragmentPaymentHistory : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        disposable?.dispose()
+        paymentHistoryDisposable?.dispose()
     }
 }

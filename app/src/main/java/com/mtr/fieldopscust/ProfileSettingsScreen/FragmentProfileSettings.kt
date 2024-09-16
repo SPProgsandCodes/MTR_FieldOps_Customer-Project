@@ -53,7 +53,7 @@ import java.util.concurrent.TimeUnit
 
 class FragmentProfileSettings : Fragment() {
     lateinit var binding: FragmentProfileSettingsBinding
-    var disposable: Disposable? = null
+    private var profileSettingsDisposable: Disposable? = null
     private var sharedSesssionPrefs: SessionPreferences? = null
     private var profileUrl: String? = null
     private var phoneNumber: String? = null
@@ -87,7 +87,12 @@ class FragmentProfileSettings : Fragment() {
         }
 
         binding.imgButtonAlertReqSerPg.setOnClickListener {
-            notificationButton()
+            if (checkNetworkConnection()){
+                notificationButton()
+            } else {
+                dialogNoInternet()
+            }
+
         }
         binding.layoutSignoutButton.setOnClickListener{
             showSignOutPopup()
@@ -95,29 +100,32 @@ class FragmentProfileSettings : Fragment() {
 
 
         if (userId != null) {
-
-
-            if (firstName.isNullOrEmpty() && lastName.isNullOrEmpty()){
+            if (checkNetworkConnection()){
+                if (firstName.isNullOrEmpty() && lastName.isNullOrEmpty()){
 //                fetchUserDetails(userId!!)
-                clearGlideCache()
-                loadProfileImage(userId!!, token!!)
-            } else {
-                clearGlideCache()
-                binding.textProfileNameSettings.text = "$firstName $lastName"
-                binding.michelleRi.text = email
-                if (profileUrl.isNullOrEmpty()){
-                    Glide.with(requireContext())
-                        .load(R.drawable.menface)
-                        .into(binding.imgProfileImageProfilePage)
+                    clearGlideCache()
+                    loadProfileImage(userId!!, token!!)
                 } else {
-                    Glide.with(requireContext())
-                        .load(profileUrl)
-                        .placeholder(R.drawable.menface)
-                        .into(binding.imgProfileImageProfilePage)
-                }
+                    clearGlideCache()
+                    binding.textProfileNameSettings.text = "$firstName $lastName"
+                    binding.michelleRi.text = email
+                    if (profileUrl.isNullOrEmpty()){
+                        Glide.with(requireContext())
+                            .load(R.drawable.menface)
+                            .into(binding.imgProfileImageProfilePage)
+                    } else {
+                        Glide.with(requireContext())
+                            .load(profileUrl)
+                            .placeholder(R.drawable.menface)
+                            .into(binding.imgProfileImageProfilePage)
+                    }
 
+                }
+                fetchUserDetails(userId!!)
+            } else {
+                dialogNoInternet()
             }
-            fetchUserDetails(userId!!)
+
         } else {
             Glide.with(requireContext())
                 .load(R.drawable.menface)
@@ -161,7 +169,7 @@ class FragmentProfileSettings : Fragment() {
         binding.progressBarProfileSettings.visibility = View.VISIBLE
         binding.txtLoadingDetails.visibility = View.VISIBLE
         val bearerToken = "bearer $token"
-        disposable = ApiClientProxy.getUserDetails(userId, bearerToken, DOMAIN_ID!!)
+        profileSettingsDisposable = ApiClientProxy.getUserDetails(userId, bearerToken, DOMAIN_ID!!)
             .retryWhen { error ->
                 error.zipWith(Observable.range(1, 3)) { error, retryCount ->
                     if (error is SocketTimeoutException && retryCount < 3) {
@@ -238,7 +246,7 @@ class FragmentProfileSettings : Fragment() {
             binding.progressBarProfileSettings.visibility = View.GONE
             binding.txtLoadingDetails.visibility = View.GONE
             val bearerToken = "bearer $token"
-            disposable = ApiClientProxy.getUserDetails(userId, bearerToken, DOMAIN_ID!!)
+            profileSettingsDisposable = ApiClientProxy.getUserDetails(userId, bearerToken, DOMAIN_ID!!)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onProfileImageSuccess, this::onProfileImageFailure)
         }
@@ -343,18 +351,9 @@ class FragmentProfileSettings : Fragment() {
         // Show the dialog
         dialog.show()
     }
-    private fun logOutApp() {
-        if (checkNetworkConnection()) {
-            sharedSesssionPrefs?.edit()?.putBoolean(IS_LOGIN, false)?.apply()
-            val intent = Intent(activity, ActivityLogin::class.java)
-            startActivity(intent)
-            if (isAdded) {
-                Toast.makeText(requireContext(), "Logout Successfully", Toast.LENGTH_SHORT).show()
-            }
-        } else {
-            dialogNoInternet()
-        }
-
+    // Method to check Internet Connection
+    private fun checkNetworkConnection(): Boolean {
+        return NetworkUtil().isNetworkAvailable(context)
     }
     private fun dialogNoInternet() {
         val dialog = Dialog(requireContext())
@@ -363,23 +362,32 @@ class FragmentProfileSettings : Fragment() {
         dialog.setContentView(R.layout.no_internet_dialog)
         val btnRetry = dialog.findViewById<Button>(R.id.btnRetry)
         btnRetry.setOnClickListener {
+            logOutApp()
             dialog.dismiss()
-            if (checkNetworkConnection()) {
-                fetchUserDetails(userId!!)
-
-            } else {
-                dialogNoInternet()
-            }
+//            if (checkNetworkConnection()) {
+//                getUserDashboard()
+//                fetchUserDetails(sharedViewModel.userID)
+//                fetchUserReviews(sharedViewModel.userID)
+//            } else {
+//                dialogNoInternet()
+//            }
         }
         dialog.show()
     }
-    // Method to check Internet Connection
-    private fun checkNetworkConnection(): Boolean {
-        return NetworkUtil().isNetworkAvailable(context)
+
+    private fun logOutApp() {
+
+            sharedSesssionPrefs?.edit()?.putBoolean(IS_LOGIN, false)?.apply()
+            val intent = Intent(activity, ActivityLogin::class.java)
+            startActivity(intent)
+            if (isAdded) {
+                Toast.makeText(requireContext(), "Logout Successfully", Toast.LENGTH_SHORT).show()
+            }
+
     }
     override fun onDestroy() {
         super.onDestroy()
-        disposable?.dispose()
+        profileSettingsDisposable?.dispose()
 
     }
 

@@ -1,40 +1,32 @@
 package com.mtr.fieldopscust.RequestServiceScreen
 
-import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.Context
+import android.app.Dialog
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
+import android.view.Window
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.Spinner
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
-import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityCompat.startActivityForResult
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.Insets
-import androidx.core.view.OnApplyWindowInsetsListener
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mtr.fieldopscust.DashboardScreen.Category
 import com.mtr.fieldopscust.DashboardScreen.ModelUserDashboard
+import com.mtr.fieldopscust.LoginScreen.ActivityLogin
+import com.mtr.fieldopscust.NetworkUtil
 import com.mtr.fieldopscust.R
 import com.mtr.fieldopscust.Utils.ApplicationHelper
-import com.mtr.fieldopscust.Utils.ApplicationHelper.getFileFromUri
 import com.mtr.fieldopscust.Utils.ApplicationHelper.hideSystemUI
 import com.mtr.fieldopscust.Utils.Constants.Companion.DOMAIN_ID_KEY
+import com.mtr.fieldopscust.Utils.Constants.Companion.IS_LOGIN
 import com.mtr.fieldopscust.Utils.Constants.Companion.LOGIN_PREFS
 import com.mtr.fieldopscust.Utils.Constants.Companion.TOKEN_KEY
 import com.mtr.fieldopscust.Utils.Constants.Companion.USER_ID_KEY
@@ -54,7 +46,6 @@ import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.io.FileOutputStream
 import java.net.SocketTimeoutException
@@ -64,7 +55,7 @@ class FragmentRequestServicePage : Fragment() {
 
     private lateinit var binding: ActivityRequestServicePageBinding
     private val PICK_PDF_FILE: Int = 2
-    private var disposable: Disposable? = null
+    private var requestServiceDisposable: Disposable? = null
     private var token: String? = null
     private var sharedSesssionPrefs: SessionPreferences? = null
     private var userId: Int = 0
@@ -109,20 +100,59 @@ class FragmentRequestServicePage : Fragment() {
             DOMAIN_ID = sharedSesssionPrefs!!.getInt(DOMAIN_ID_KEY, 1)
         }
 
-        getUserDashboard()
+        if (checkNetworkConnection()){
+            getUserDashboard()
 
-        binding.btnSendRequest.setOnClickListener {
-            sendFinalRequest()
+            binding.btnSendRequest.setOnClickListener {
+                sendFinalRequest()
+            }
+
+            binding.uploadDocumentLayout.setOnClickListener{
+                showSelectDocumentTypeDialog()
+            }
+
+            binding.imageViewBackButton.setOnClickListener {
+                onClickBackButton()
+            }
+            binding.imgAddDocument.setOnClickListener { showSelectDocumentTypeDialog() }
+        } else {
+            dialogNoInternet()
         }
 
-        binding.uploadDocumentLayout.setOnClickListener{
-            showSelectDocumentTypeDialog()
-        }
+    }
 
-        binding.imageViewBackButton.setOnClickListener {
-            onClickBackButton()
+    // Method to check Internet Connection
+    private fun checkNetworkConnection(): Boolean {
+        return NetworkUtil().isNetworkAvailable(context)
+    }
+    private fun dialogNoInternet() {
+        val dialog = Dialog(requireContext())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.no_internet_dialog)
+        val btnRetry = dialog.findViewById<Button>(R.id.btnRetry)
+        btnRetry.setOnClickListener {
+            logOutApp()
+            dialog.dismiss()
+//            if (checkNetworkConnection()) {
+//                getUserDashboard()
+//                fetchUserDetails(sharedViewModel.userID)
+//                fetchUserReviews(sharedViewModel.userID)
+//            } else {
+//                dialogNoInternet()
+//            }
         }
-        binding.imgAddDocument.setOnClickListener { showSelectDocumentTypeDialog() }
+        dialog.show()
+    }
+
+    private fun logOutApp() {
+            sharedSesssionPrefs?.edit()?.putBoolean(IS_LOGIN, false)?.apply()
+            val intent = Intent(activity, ActivityLogin::class.java)
+            startActivity(intent)
+            if (isAdded) {
+                Toast.makeText(requireContext(), "Logout Successfully", Toast.LENGTH_SHORT).show()
+            }
+
     }
 
     private fun uploadDocuments(
@@ -156,7 +186,7 @@ class FragmentRequestServicePage : Fragment() {
                         price,
                         selectedFileNames
                     )
-                    Toast.makeText(activity, "All Documents Uploaded", Toast.LENGTH_SHORT).show()
+                    Log.d("TAG", "Documents Uploaded Successfully")
                 }
             }
         }
@@ -224,7 +254,7 @@ class FragmentRequestServicePage : Fragment() {
             binding.txtLoadingDetailsServicePage.text = "Documents Uploading"
             binding.txtLoadingDetailsServicePage.visibility = View.VISIBLE
             try {
-                disposable = body.let {
+                requestServiceDisposable = body.let {
                     uploadFile(it, fileName, bearerToken, DOMAIN_ID!!)
                         .retryWhen { error ->
                             error.zipWith(Observable.range(1, 3)) { error, retryCount ->
@@ -299,7 +329,6 @@ class FragmentRequestServicePage : Fragment() {
 //                val pdfFile = uriToFile(uri, this)
                 selectedItems.add(it)
                 adapterFileNames.notifyDataSetChanged()
-                Toast.makeText(activity, "File Selected", Toast.LENGTH_SHORT).show()
 //                uploadPdfToServer(pdfFile!!)
                 Log.d("TAG", "Method Called")
             }
@@ -333,7 +362,7 @@ class FragmentRequestServicePage : Fragment() {
     private fun getUserDashboard() {
         val bearerToken = "bearer $token"
 
-        disposable = ApiClientProxy.getUserDashboard(bearerToken, DOMAIN_ID!!)
+        requestServiceDisposable = ApiClientProxy.getUserDashboard(bearerToken, DOMAIN_ID!!)
             .retryWhen { error ->
                 error.zipWith(Observable.range(1, 3)) { error, retryCount ->
                     if (error is SocketTimeoutException && retryCount < 3) {
@@ -350,7 +379,6 @@ class FragmentRequestServicePage : Fragment() {
     private fun onUserDashboardSuccess(modelUserDashboard: ModelUserDashboard?) {
         if (modelUserDashboard != null) {
             if (modelUserDashboard.isSuccess) {
-                Toast.makeText(activity, "Category Fetched", Toast.LENGTH_SHORT).show()
 
                 // Map the categories from the server to the Category data class
                 categories = modelUserDashboard.result.categories.map {
@@ -464,7 +492,7 @@ class FragmentRequestServicePage : Fragment() {
             Log.d("TAG", "Document Keys: $items")
         }
         val bearerToken = "bearer $token"
-        disposable = ApiClientProxy.requestService(
+        requestServiceDisposable = ApiClientProxy.requestService(
             DOMAIN_ID!!,
             serviceTitle,
             serviceDescription,
@@ -515,7 +543,7 @@ class FragmentRequestServicePage : Fragment() {
         binding.requestServiceProgressBar.visibility = View.VISIBLE
         binding.txtLoadingDetailsServicePage.text = "Charging Amount"
         binding.txtLoadingDetailsServicePage.visibility = View.VISIBLE
-        disposable = ApiClientProxy.chargeAmount(taskId, amount, currency, bearerToken, domainId)
+        requestServiceDisposable = ApiClientProxy.chargeAmount(taskId, amount, currency, bearerToken, domainId)
             .subscribe(this::onChargeAmountSuccess, this::onChargeAmountFailure)
 
     }

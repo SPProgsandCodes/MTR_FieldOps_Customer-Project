@@ -100,13 +100,15 @@ class SplashScreen : AppCompatActivity() {
 //        ).toInt()
 
         dialog.findViewById<Button>(R.id.btnRetry).setOnClickListener(View.OnClickListener {
-            if (NetworkUtil().isNetworkAvailable(this)){
-                dialog.dismiss()
-                Toast.makeText(this, "Internet Connection Retrieved", Toast.LENGTH_SHORT).show()
-                proceedToNextActivity()
-            } else {
-                Toast.makeText(this, "Please Check your Internet Connection", Toast.LENGTH_SHORT).show()
-            }
+//            if (NetworkUtil().isNetworkAvailable(this)){
+//                dialog.dismiss()
+//                Toast.makeText(this, "Internet Connection Retrieved", Toast.LENGTH_SHORT).show()
+//                proceedToNextActivity()
+//            } else {
+//                Toast.makeText(this, "Please Check your Internet Connection", Toast.LENGTH_SHORT).show()
+//            }
+            dialog.dismiss()
+
         })
         dialog.show()
     }

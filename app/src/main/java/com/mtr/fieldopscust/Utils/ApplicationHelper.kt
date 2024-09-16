@@ -147,7 +147,7 @@ object ApplicationHelper {
         return MediaStore.Images.Media.getBitmap(context.contentResolver, uri)
     }
 
-    fun hideSystemUI(context: Activity){
+    fun hideSystemUI(context: Activity) {
         // Enables regular immersive mode.
         // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
         // Or for "sticky immersive," replace it with SYSTEM_UI_FLAG_IMMERSIVE_STICKY
@@ -172,6 +172,7 @@ object ApplicationHelper {
                 durationSeconds < 10 -> "just now"
                 else -> "$durationSeconds seconds ago"
             }
+
             durationMinutes < 60 -> "$durationMinutes minutes ago"
             durationMinutes < 1440 -> "${durationMinutes / 60} hours ago"
             durationMinutes < 10080 -> "${durationMinutes / 1440} days ago"
@@ -181,7 +182,8 @@ object ApplicationHelper {
 
 
     fun getCountryCode(context: Context): String {
-        val telephonyManager = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+        val telephonyManager =
+            context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
 
         // First, try to get country code from SIM card
         val simCountryIso = telephonyManager.simCountryIso.uppercase(Locale.getDefault())
@@ -204,6 +206,29 @@ object ApplicationHelper {
         val phoneNumberUtil = PhoneNumberUtil.getInstance()
         val countryCode = phoneNumberUtil.getCountryCodeForRegion(iso)
         return "+$countryCode"
+    }
+
+    // Method to check Internet Connection
+    private fun checkNetworkConnection(context: Context): Boolean {
+        return NetworkUtil().isNetworkAvailable(context)
+    }
+
+    private fun dialogNoInternet(context: Context): Boolean {
+        val dialog = Dialog(context)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.no_internet_dialog)
+        val btnRetry = dialog.findViewById<Button>(R.id.btnRetry)
+        btnRetry.setOnClickListener {
+            dialog.dismiss()
+            if (checkNetworkConnection(context)) {
+                return@setOnClickListener
+            } else {
+                dialogNoInternet(context)
+            }
+        }
+        dialog.show()
+        return false
     }
 
 

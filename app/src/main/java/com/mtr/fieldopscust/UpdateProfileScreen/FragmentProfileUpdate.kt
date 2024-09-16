@@ -1,6 +1,7 @@
 package com.mtr.fieldopscust.UpdateProfileScreen
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
@@ -11,7 +12,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.view.WindowManager
+import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -20,6 +23,8 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.mtr.fieldopscust.LoginScreen.ActivityLogin
+import com.mtr.fieldopscust.NetworkUtil
 import com.mtr.fieldopscust.NotificationFragment.FragmentNotification
 import com.mtr.fieldopscust.R
 import com.mtr.fieldopscust.RequestServiceScreen.FragmentRequestServicePage.Companion.PICK_FILE_REQUEST
@@ -28,6 +33,7 @@ import com.mtr.fieldopscust.Utils.ApplicationHelper.getBitmapFromUri
 import com.mtr.fieldopscust.Utils.ApplicationHelper.getFileFromUri
 import com.mtr.fieldopscust.Utils.Constants.Companion.DOMAIN_ID_KEY
 import com.mtr.fieldopscust.Utils.Constants.Companion.FILE_REQUEST_KEY
+import com.mtr.fieldopscust.Utils.Constants.Companion.IS_LOGIN
 import com.mtr.fieldopscust.Utils.Constants.Companion.LOGIN_PREFS
 import com.mtr.fieldopscust.Utils.Constants.Companion.TOKEN_KEY
 import com.mtr.fieldopscust.Utils.Constants.Companion.USER_EMAIL
@@ -95,50 +101,56 @@ class FragmentProfileUpdate : Fragment() {
 
             DOMAIN_ID = sharedSesssionPrefs?.getInt(DOMAIN_ID_KEY, 1)
         }
+        if (checkNetworkConnection()) {
+            if (userId != null) {
+                loadProfileImage(userId!!, token!!)
+                fetchUserDetails(userId!!)
+            } else {
+                Glide.with(this)
+                    .load(R.drawable.menface)
+                    .into(binding.profileImageSettingsPage)
+            }
 
-        if (userId != null) {
-            loadProfileImage(userId!!, token!!)
-            fetchUserDetails(userId!!)
+            binding.imgViewEditProfilePhotoUpdatePage.setOnClickListener {
+                openGalleryForFile()
+            }
+
+            binding.imgButtonAlertProfileUpdatePage.setOnClickListener {
+                notificationButton()
+            }
+            getSharedPreferencesForProfileUpdate()
+            if (email.isNotEmpty()) {
+                val emailEditable: Editable = Editable.Factory.getInstance().newEditable(email)
+                binding.editTextUpdateProfileEmail.text = emailEditable
+            }
+
+            if (phoneNumber.isNotEmpty()) {
+                val phoneNumberEditable: Editable =
+                    Editable.Factory.getInstance().newEditable(phoneNumber)
+                binding.editTextUpdateProfilePhoneNumber.text = phoneNumberEditable
+            }
+
+
+            if (firstNameUser?.isNotEmpty() == true) {
+                val firstNameEditable: Editable =
+                    Editable.Factory.getInstance().newEditable(firstNameUser)
+                binding.editTextUpdateProfileFirstName.text = firstNameEditable
+            }
+
+            if (middleNameUser?.isNotEmpty() == true) {
+                val middleNameEditable: Editable =
+                    Editable.Factory.getInstance().newEditable(middleNameUser)
+                binding.editTextUpdateProfileMiddleName.text = middleNameEditable
+            }
+
+            if (lastNameUser?.isNotEmpty() == true) {
+                val lastNameEditable: Editable =
+                    Editable.Factory.getInstance().newEditable(lastNameUser)
+                binding.editTextUpdateProfileLastName.text = lastNameEditable
+            }
+
         } else {
-            Glide.with(this)
-                .load(R.drawable.menface)
-                .into(binding.profileImageSettingsPage)
-
-            Toast.makeText(requireContext(), "User ID Null", Toast.LENGTH_SHORT).show()
-        }
-
-        binding.imgViewEditProfilePhotoUpdatePage.setOnClickListener {
-            openGalleryForFile()
-        }
-
-        binding.imgButtonAlertProfileUpdatePage.setOnClickListener{
-            notificationButton()
-        }
-        getSharedPreferencesForProfileUpdate()
-        if (email.isNotEmpty()){
-            val emailEditable: Editable = Editable.Factory.getInstance().newEditable(email)
-            binding.editTextUpdateProfileEmail.text = emailEditable
-        }
-
-        if (phoneNumber.isNotEmpty()){
-            val phoneNumberEditable: Editable = Editable.Factory.getInstance().newEditable(phoneNumber)
-            binding.editTextUpdateProfilePhoneNumber.text = phoneNumberEditable
-        }
-
-
-        if (firstNameUser?.isNotEmpty() == true){
-            val firstNameEditable: Editable = Editable.Factory.getInstance().newEditable(firstNameUser)
-            binding.editTextUpdateProfileFirstName.text = firstNameEditable
-        }
-
-        if (middleNameUser?.isNotEmpty() == true){
-            val middleNameEditable: Editable = Editable.Factory.getInstance().newEditable(middleNameUser)
-            binding.editTextUpdateProfileMiddleName.text = middleNameEditable
-        }
-
-        if (lastNameUser?.isNotEmpty() == true){
-            val lastNameEditable: Editable = Editable.Factory.getInstance().newEditable(lastNameUser)
-            binding.editTextUpdateProfileLastName.text = lastNameEditable
+            dialogNoInternet()
         }
 
         return binding.root
@@ -147,72 +159,76 @@ class FragmentProfileUpdate : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.imageViewBackButton.setOnClickListener{
+        binding.imageViewBackButton.setOnClickListener {
 
-                val fragmentManager: FragmentManager = parentFragmentManager;
+            val fragmentManager: FragmentManager = parentFragmentManager;
 
-                if (fragmentManager.backStackEntryCount > 0) {
-                    // Navigate to the previous fragment
-                    fragmentManager.popBackStack();
-                } else {
-                    // If no fragments in the back stack, finish the activity or handle as needed
-                    activity?.onBackPressed();
-                }
+            if (fragmentManager.backStackEntryCount > 0) {
+                // Navigate to the previous fragment
+                fragmentManager.popBackStack();
+            } else {
+                // If no fragments in the back stack, finish the activity or handle as needed
+                activity?.onBackPressed();
+            }
 
         }
         binding.btnSaveChanges.setOnClickListener {
-            getSharedPreferencesForProfileUpdate()
-            var firstName = binding.editTextUpdateProfileFirstName.text.toString()
-            if (firstName.isEmpty()) {
-                firstName = firstNameUser!!
-            }
-            var middleName = binding.editTextUpdateProfileMiddleName.text.toString()
-            if (middleName.isEmpty()) {
-                middleName = middleNameUser!!
-            }
-            var lastName = binding.editTextUpdateProfileLastName.text.toString()
-            if (lastName.isEmpty()) {
-                lastName = lastNameUser!!
-            }
+            if (checkNetworkConnection()) {
 
-
-
-            val email = sharedSesssionPrefs?.getString(USER_EMAIL, null)
-
-            val phone = sharedSesssionPrefs?.getString(USER_PHONE_NUMBER, null)
-
-            val passwd = sharedSesssionPrefs?.getString(USER_PASSWORD, null)
-
-            if (!fileKey.isNullOrEmpty()) {
-                updateUserProfilePic(fileKey!!, token!!, DOMAIN_ID!!)
-            }
-
-            if (phone != null && email != null) {
-
-                if (firstName.isEmpty() && lastName.isEmpty() && middleName.isEmpty()) {
-                    Toast.makeText(
-                        requireContext(),
-                        "Atleast one Field is Required",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                } else {
-
-                    Log.d("TAG", "First Name: $firstName")
-                    Log.d("TAG", "Middle Name: $middleName")
-                    Log.d("TAG", "Last Name: $lastName")
-                    updateUserDetails(
-                        DOMAIN_ID!!,
-                        token!!,
-                        firstName,
-                        middleName,
-                        lastName,
-                        email,
-                        passwd!!,
-                        phone
-                    )
+                getSharedPreferencesForProfileUpdate()
+                var firstName = binding.editTextUpdateProfileFirstName.text.toString()
+                if (firstName.isEmpty()) {
+                    firstName = firstNameUser!!
                 }
-            }
+                var middleName = binding.editTextUpdateProfileMiddleName.text.toString()
+                if (middleName.isEmpty()) {
+                    middleName = middleNameUser!!
+                }
+                var lastName = binding.editTextUpdateProfileLastName.text.toString()
+                if (lastName.isEmpty()) {
+                    lastName = lastNameUser!!
+                }
 
+
+                val email = sharedSesssionPrefs?.getString(USER_EMAIL, null)
+
+                val phone = sharedSesssionPrefs?.getString(USER_PHONE_NUMBER, null)
+
+                val passwd = sharedSesssionPrefs?.getString(USER_PASSWORD, null)
+
+                if (!fileKey.isNullOrEmpty()) {
+                    updateUserProfilePic(fileKey!!, token!!, DOMAIN_ID!!)
+                }
+
+                if (phone != null && email != null) {
+
+                    if (firstName.isEmpty() && lastName.isEmpty() && middleName.isEmpty()) {
+                        Toast.makeText(
+                            requireContext(),
+                            "Atleast one Field is Required",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+
+                        Log.d("TAG", "First Name: $firstName")
+                        Log.d("TAG", "Middle Name: $middleName")
+                        Log.d("TAG", "Last Name: $lastName")
+                        updateUserDetails(
+                            DOMAIN_ID!!,
+                            token!!,
+                            firstName,
+                            middleName,
+                            lastName,
+                            email,
+                            passwd!!,
+                            phone
+                        )
+                    }
+                }
+
+            } else {
+                dialogNoInternet()
+            }
         }
 
 
@@ -329,9 +345,10 @@ class FragmentProfileUpdate : Fragment() {
         } else {
             binding.progressBarProfileUpdate.visibility = View.VISIBLE
             val bearerToken = "bearer $token"
-            profileUpdateDisposable = ApiClientProxy.getUserDetails(userId, bearerToken, DOMAIN_ID!!)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::onProfileImageSuccess, this::onProfileImageFailure)
+            profileUpdateDisposable =
+                ApiClientProxy.getUserDetails(userId, bearerToken, DOMAIN_ID!!)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(this::onProfileImageSuccess, this::onProfileImageFailure)
         }
     }
 
@@ -340,7 +357,7 @@ class FragmentProfileUpdate : Fragment() {
             // Show the ProgressBar before starting the image load
             binding.progressBarProfileUpdate.visibility = View.GONE
 
-            if (userResponse.result.profileUrl.isEmpty()){
+            if (userResponse.result.profileUrl.isEmpty()) {
                 Glide.with(requireContext())
                     .load(R.drawable.menface)
                     .into(binding.profileImageSettingsPage)
@@ -472,9 +489,9 @@ class FragmentProfileUpdate : Fragment() {
         middleNameUser: String?,
         lastNameUser: String?
     ) {
-            sharedSesssionPrefs?.edit()?.putString(USER_FIRST_NAME, firstNameUser)?.apply()
-            sharedSesssionPrefs?.edit()?.putString(USER_MIDDLE_NAME, middleNameUser)?.apply()
-            sharedSesssionPrefs?.edit()?.putString(USER_LAST_NAME, lastNameUser)?.apply()
+        sharedSesssionPrefs?.edit()?.putString(USER_FIRST_NAME, firstNameUser)?.apply()
+        sharedSesssionPrefs?.edit()?.putString(USER_MIDDLE_NAME, middleNameUser)?.apply()
+        sharedSesssionPrefs?.edit()?.putString(USER_LAST_NAME, lastNameUser)?.apply()
     }
 
     private fun onUpdateProfileFailure(throwable: Throwable?) {
@@ -506,7 +523,7 @@ class FragmentProfileUpdate : Fragment() {
     private fun onImageUploadSuccess(uploadFileResponse: UploadFileResponse?) {
         if (uploadFileResponse != null && uploadFileResponse.isSuccess) {
             binding.progressBarProfileUpdate.visibility = View.GONE
-            Toast.makeText(requireContext(), "File Uploaded Successfully", Toast.LENGTH_SHORT)
+            Toast.makeText(requireContext(), "File Uploaded", Toast.LENGTH_SHORT)
                 .show()
             fileKey = uploadFileResponse.result.key
             sharedSesssionPrefs?.edit()?.putString(FILE_REQUEST_KEY, fileKey)?.apply()
@@ -540,22 +557,14 @@ class FragmentProfileUpdate : Fragment() {
 
     private fun onImageUpdateSuccess(updateUserProfilePicResponse: UpdateUserProfilePicResponse) {
         if (updateUserProfilePicResponse.isSuccess) {
-            Toast.makeText(
-                requireContext(),
-                updateUserProfilePicResponse.message,
-                Toast.LENGTH_SHORT
-            ).show()
+            Log.d("TAG", "Profile Picture Updated")
 
 
             if (userId != null) {
                 loadProfileImage(userId!!, token!!)
             }
         } else {
-            Toast.makeText(
-                requireContext(),
-                updateUserProfilePicResponse.message,
-                Toast.LENGTH_SHORT
-            ).show()
+            Log.d("TAG", "Error in Updating Profile Picture")
         }
     }
 
@@ -564,7 +573,7 @@ class FragmentProfileUpdate : Fragment() {
             .show()
     }
 
-    private fun notificationButton(){
+    private fun notificationButton() {
         val fragmentManager: FragmentManager = parentFragmentManager
         val transaction: FragmentTransaction = fragmentManager.beginTransaction()
         transaction.replace(R.id.fragment_container, FragmentNotification())
@@ -575,6 +584,43 @@ class FragmentProfileUpdate : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         profileUpdateDisposable?.dispose()
+
+    }
+
+    // Method to check Internet Connection
+    private fun checkNetworkConnection(): Boolean {
+        return NetworkUtil().isNetworkAvailable(context)
+    }
+
+    private fun dialogNoInternet() {
+        val dialog = Dialog(requireContext())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.no_internet_dialog)
+        val btnRetry = dialog.findViewById<Button>(R.id.btnRetry)
+        btnRetry.setOnClickListener {
+            logOutApp()
+            dialog.dismiss()
+//            if (checkNetworkConnection()) {
+//                getUserDashboard()
+//                fetchUserDetails(sharedViewModel.userID)
+//                fetchUserReviews(sharedViewModel.userID)
+//            } else {
+//                dialogNoInternet()
+//            }
+        }
+        dialog.show()
+    }
+
+    private fun logOutApp() {
+
+            sharedSesssionPrefs?.edit()?.putBoolean(IS_LOGIN, false)?.apply()
+            val intent = Intent(activity, ActivityLogin::class.java)
+            startActivity(intent)
+            if (isAdded) {
+                Toast.makeText(requireContext(), "Logout Successfully", Toast.LENGTH_SHORT).show()
+            }
+
 
     }
 

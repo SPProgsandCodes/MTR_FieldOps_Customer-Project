@@ -2,6 +2,7 @@ package com.mtr.fieldopscust.PaymentsScreen
 
 
 import android.app.Dialog
+import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -13,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -20,6 +22,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.mtr.fieldopscust.LoginScreen.ActivityLogin
+import com.mtr.fieldopscust.NetworkUtil
 import com.mtr.fieldopscust.NotificationFragment.FragmentNotification
 import com.mtr.fieldopscust.PaymentsHistory.AdapterPaymentHistoryItems
 import com.mtr.fieldopscust.PaymentsHistory.FragmentPaymentHistory
@@ -27,6 +31,7 @@ import com.mtr.fieldopscust.R
 import com.mtr.fieldopscust.Utils.ApplicationHelper
 import com.mtr.fieldopscust.Utils.Constants.Companion.DOMAIN_ID_KEY
 import com.mtr.fieldopscust.Utils.Constants.Companion.EMPTY_TRANSACTION_HISTORY
+import com.mtr.fieldopscust.Utils.Constants.Companion.IS_LOGIN
 import com.mtr.fieldopscust.Utils.Constants.Companion.LOGIN_PREFS
 import com.mtr.fieldopscust.Utils.Constants.Companion.TOKEN_KEY
 import com.mtr.fieldopscust.Utils.Constants.Companion.USER_ID_KEY
@@ -53,7 +58,7 @@ class FragmentPaymentMethods : Fragment() {
     private var token: String? = null
     private var userId: Int? = null
     private var DOMAIN_ID: Int? = null
-    private var disposable: Disposable? = null
+    private var paymentsScreenDisposable: Disposable? = null
     private var paymentIntentClient: String? = null
     private var intentId: String? = null
     private var Addamo: String? = null
@@ -79,18 +84,31 @@ class FragmentPaymentMethods : Fragment() {
             )
         }
 
-        if (token != null) {
+        if (token != null && checkNetworkConnection()) {
             fetchTransactions(DOMAIN_ID!!, token!!)
+            fetchWalletBalance()
+        }else{
+            dialogNoInternet()
         }
 
-        fetchWalletBalance()
+
 
         binding.imgButtonAlertPaymentMethodPg.setOnClickListener {
-            notificationButton()
+            if (checkNetworkConnection()){
+                notificationButton()
+            } else {
+                dialogNoInternet()
+            }
+
         }
 
         binding.btnAddMoney.setOnClickListener {
-            addMoney()
+            if (checkNetworkConnection()){
+                addMoney()
+            } else {
+                dialogNoInternet()
+            }
+
         }
 
         return binding.getRoot()
@@ -98,7 +116,7 @@ class FragmentPaymentMethods : Fragment() {
 
     private fun createPayIntent(userId: Int?, token: String?, amount: Int?, currency: String?) {
         val bearerToken = "bearer $token"
-        disposable =
+        paymentsScreenDisposable =
             ApiClientProxy.createPaymentIntent(DOMAIN_ID!!, bearerToken, amount!!, currency!!) .retryWhen { error ->
                 error.zipWith(Observable.range(1, 3)) { error, retryCount ->
                     if (error is SocketTimeoutException && retryCount < 3) {
@@ -247,7 +265,7 @@ class FragmentPaymentMethods : Fragment() {
                 // Payment failed, handle the error
                 Toast.makeText(
                     requireContext(),
-                    "Payment failed: ${paymentSheetResult.error.message}",
+                    "Payment failed",
                     Toast.LENGTH_LONG
                 ).show()
             }
@@ -256,7 +274,7 @@ class FragmentPaymentMethods : Fragment() {
 
     private fun updatePaymentStatus() {
         val bearerToken = "bearer $token"
-        disposable = ApiClientProxy.updatePaymentStatus(userId!!, bearerToken,0, intentId!!) .retryWhen { error ->
+        paymentsScreenDisposable = ApiClientProxy.updatePaymentStatus(userId!!, bearerToken,0, intentId!!) .retryWhen { error ->
             error.zipWith(Observable.range(1, 3)) { error, retryCount ->
                 if (error is SocketTimeoutException && retryCount < 3) {
                     Observable.timer(
@@ -283,7 +301,7 @@ class FragmentPaymentMethods : Fragment() {
 
     private fun fetchWalletBalance() {
         val bearerToken = "bearer $token"
-        disposable = ApiClientProxy.getWalletBalance( DOMAIN_ID!!,"usd" , bearerToken)
+        paymentsScreenDisposable = ApiClientProxy.getWalletBalance( DOMAIN_ID!!,"usd" , bearerToken)
             .retryWhen { error ->
                 error.zipWith(Observable.range(1, 3)) { error, retryCount ->
                     if (error is SocketTimeoutException && retryCount < 3) {
@@ -325,7 +343,7 @@ class FragmentPaymentMethods : Fragment() {
 
     private fun fetchTransactions(domainId: Int, token: String) {
         val bearerToken = "bearer $token"
-        disposable = ApiClientProxy.getTransactionHistory(domainId, bearerToken)
+        paymentsScreenDisposable = ApiClientProxy.getTransactionHistory(domainId, bearerToken)
             .retryWhen { error ->
                 error.zipWith(Observable.range(1, 3)) { error, retryCount ->
                     if (error is SocketTimeoutException && retryCount < 3) {
@@ -346,11 +364,6 @@ class FragmentPaymentMethods : Fragment() {
                 binding.loadingDetailsTxtPaymentHistFragment.visibility = View.GONE
                 val transactionHistoryList: List<History> = getTransactionHistoryResponse.result
                 if (isAdded) {
-                    Toast.makeText(
-                        requireContext(),
-                        "Transaction History fetched successfully",
-                        Toast.LENGTH_SHORT
-                    ).show()
 
                     binding.rvPaymentMethodHistory.layoutManager =
                         LinearLayoutManager(requireContext())
@@ -364,13 +377,6 @@ class FragmentPaymentMethods : Fragment() {
                     binding.progressBarPaymentHistFragment.visibility = View.GONE
                     binding.loadingDetailsTxtPaymentHistFragment.text = EMPTY_TRANSACTION_HISTORY
                     binding.loadingDetailsTxtPaymentHistFragment.visibility = View.VISIBLE
-                    if (isAdded) {
-                        Toast.makeText(
-                            requireContext(),
-                            "No transaction history found",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
 
                 }
 
@@ -378,7 +384,6 @@ class FragmentPaymentMethods : Fragment() {
                 binding.progressBarPaymentHistFragment.visibility = View.GONE
                 binding.loadingDetailsTxtPaymentHistFragment.text = EMPTY_TRANSACTION_HISTORY
                 binding.loadingDetailsTxtPaymentHistFragment.visibility = View.VISIBLE
-                Toast.makeText(requireContext(), "Something went wrong", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -418,13 +423,44 @@ class FragmentPaymentMethods : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        disposable?.dispose()
+        paymentsScreenDisposable?.dispose()
     }
 
-    fun refreshFragment() {
-        val fragmentManager = requireActivity().supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.detach(this).attach(this).commit()
+    // Method to check Internet Connection
+    private fun checkNetworkConnection(): Boolean {
+        return NetworkUtil().isNetworkAvailable(context)
     }
+    private fun dialogNoInternet() {
+        val dialog = Dialog(requireContext())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.no_internet_dialog)
+        val btnRetry = dialog.findViewById<Button>(R.id.btnRetry)
+        btnRetry.setOnClickListener {
+            logOutApp()
+            dialog.dismiss()
+//            if (checkNetworkConnection()) {
+//                getUserDashboard()
+//                fetchUserDetails(sharedViewModel.userID)
+//                fetchUserReviews(sharedViewModel.userID)
+//            } else {
+//                dialogNoInternet()
+//            }
+        }
+        dialog.show()
+    }
+
+    private fun logOutApp() {
+
+            sharedSessionPrefs?.edit()?.putBoolean(IS_LOGIN, false)?.apply()
+            val intent = Intent(activity, ActivityLogin::class.java)
+            startActivity(intent)
+            if (isAdded) {
+                Toast.makeText(requireContext(), "Logout Successfully", Toast.LENGTH_SHORT).show()
+            }
+
+
+    }
+
 
 }

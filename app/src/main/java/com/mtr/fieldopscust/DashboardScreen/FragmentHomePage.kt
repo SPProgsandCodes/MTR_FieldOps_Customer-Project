@@ -7,7 +7,6 @@ import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.drawable.ColorDrawable
-import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -62,7 +61,7 @@ import java.util.concurrent.TimeUnit
 
 class FragmentHomePage : Fragment(), AdapterCategories.OnServiceCategoriesClickListener {
     lateinit var binding: FragmentHomePageBinding
-    private lateinit var sharedViewModel: ViewModelDashboard
+    private var dashboardDisposable: Disposable? = null
     private var sharedSesssionPrefs: SessionPreferences? = null
     private var sharedPreferences: SharedPreferences? = null
     private var token: String? = null
@@ -70,13 +69,12 @@ class FragmentHomePage : Fragment(), AdapterCategories.OnServiceCategoriesClickL
     private var categoriesAdapter: AdapterCategories? = null
     private var reviewsAdapter: AdapterReviewsRecyclerView? = null
     private var userFirstName: String? = null
-    private var userName: String? = null
-    private var disposable: Disposable? = null
     private var profileUrl: String? = null
     private lateinit var totalMoneySpent: String
     private var servicePageIntent: Intent? = null
     private var DOMAIN_ID: Int? = null
     private var dialogProgressBar: ProgressBar? = null
+    private lateinit var sharedViewModel: ViewModelDashboard
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -118,7 +116,12 @@ class FragmentHomePage : Fragment(), AdapterCategories.OnServiceCategoriesClickL
         super.onViewCreated(view, savedInstanceState)
 
         binding.imgButtonAlert.setOnClickListener {
-            notificationButton()
+            if (checkNetworkConnection()){
+                 notificationButton()
+
+            } else {
+                dialogNoInternet()
+            }
 //            val phoneNumber = "1234567890"  // Replace with the actual phone number
 //
 //            // Create an intent to open the dialer app with the phone number pre-filled
@@ -165,7 +168,6 @@ class FragmentHomePage : Fragment(), AdapterCategories.OnServiceCategoriesClickL
                 .placeholder(R.drawable.menface)
                 .into(binding.dashboardProfileImage)
         } else {
-            Toast.makeText(requireContext(), "Null Profile Url", Toast.LENGTH_SHORT).show()
             Glide.with(requireContext())
                 .load(R.drawable.menface)
                 .into(binding.dashboardProfileImage)
@@ -173,7 +175,6 @@ class FragmentHomePage : Fragment(), AdapterCategories.OnServiceCategoriesClickL
 
         if (userFirstName!=null){
             binding.profileNameTxt.text = userFirstName
-//            Toast.makeText(activity, "User First Name: $userFirstName", Toast.LENGTH_SHORT).show()
         } else {
             binding.profileNameTxt.text = "Mitchell"
         }
@@ -236,19 +237,28 @@ class FragmentHomePage : Fragment(), AdapterCategories.OnServiceCategoriesClickL
         })
 
         binding.frameRequestHistory.setOnClickListener(View.OnClickListener {
-            val fragmentManager: FragmentManager = parentFragmentManager
-            val transaction: FragmentTransaction = fragmentManager.beginTransaction()
-            transaction.replace(R.id.fragment_container, FragmentRequestHistory())
-            transaction.addToBackStack(null)
-            transaction.commit()
+            if (checkNetworkConnection()){
+                val fragmentManager: FragmentManager = parentFragmentManager
+                val transaction: FragmentTransaction = fragmentManager.beginTransaction()
+                transaction.replace(R.id.fragment_container, FragmentRequestHistory())
+                transaction.addToBackStack(null)
+                transaction.commit()
+            } else {
+                dialogNoInternet()
+            }
+
         })
 
         binding.frameBookingHistory.setOnClickListener(View.OnClickListener {
-            val fragmentManager: FragmentManager = parentFragmentManager
-            val transaction: FragmentTransaction = fragmentManager.beginTransaction()
-            transaction.replace(R.id.fragment_container, FragmentBookingHistory())
-            transaction.addToBackStack(null)
-            transaction.commit()
+            if (checkNetworkConnection()) {
+                val fragmentManager: FragmentManager = parentFragmentManager
+                val transaction: FragmentTransaction = fragmentManager.beginTransaction()
+                transaction.replace(R.id.fragment_container, FragmentBookingHistory())
+                transaction.addToBackStack(null)
+                transaction.commit()
+            } else {
+                dialogNoInternet()
+            }
 //            val intent = Intent(activity, ActivityBookingHistory::class.java)
 //            startActivity(intent)
         })
@@ -256,11 +266,16 @@ class FragmentHomePage : Fragment(), AdapterCategories.OnServiceCategoriesClickL
 
         servicePageIntent = Intent(activity, ActivityRequestServicePage::class.java)
         binding.frame154.setOnClickListener(View.OnClickListener {
-            val fragmentManager: FragmentManager = parentFragmentManager
-            val transaction: FragmentTransaction = fragmentManager.beginTransaction()
-            transaction.replace(R.id.fragment_container, FragmentRequestServicePage())
-            transaction.addToBackStack(null)
-            transaction.commit()
+
+            if (checkNetworkConnection()) {
+                val fragmentManager: FragmentManager = parentFragmentManager
+                val transaction: FragmentTransaction = fragmentManager.beginTransaction()
+                transaction.replace(R.id.fragment_container, FragmentRequestServicePage())
+                transaction.addToBackStack(null)
+                transaction.commit()
+            } else {
+                dialogNoInternet()
+            }
 //            startActivity(servicePageIntent!!)
 
         })
@@ -277,7 +292,7 @@ class FragmentHomePage : Fragment(), AdapterCategories.OnServiceCategoriesClickL
         val bearerToken = "bearer $token"
         dialogProgressBar?.visibility = View.VISIBLE
         binding.txtLoadingDetailsCategories.visibility = View.VISIBLE
-        disposable = ApiClientProxy.getUserDashboard(bearerToken, DOMAIN_ID!!)
+        dashboardDisposable = ApiClientProxy.getUserDashboard(bearerToken, DOMAIN_ID!!)
             .retryWhen { error ->
                 error.zipWith(Observable.range(1, 3)) { error, retryCount ->
                     if (error is SocketTimeoutException && retryCount < 3) {
@@ -308,9 +323,6 @@ class FragmentHomePage : Fragment(), AdapterCategories.OnServiceCategoriesClickL
         } else {
             dialogProgressBar?.visibility = View.GONE
             binding.txtLoadingDetailsCategories.visibility = View.GONE
-            if (isAdded) {
-                Toast.makeText(requireContext(), modelUserDashboard.message, Toast.LENGTH_SHORT).show()
-            }
             binding.sampleAmount.text = "$0"
         }
     }
@@ -328,7 +340,7 @@ class FragmentHomePage : Fragment(), AdapterCategories.OnServiceCategoriesClickL
     // For Fetching User Details
     private fun fetchUserDetails(userId: Int) {
         val bearerToken = "bearer $token"
-        disposable = ApiClientProxy.getUserDetails(userId, bearerToken, DOMAIN_ID!!)
+        dashboardDisposable = ApiClientProxy.getUserDetails(userId, bearerToken, DOMAIN_ID!!)
             .retryWhen { error ->
                 error.zipWith(Observable.range(1, 3)) { error, retryCount ->
                     if (error is SocketTimeoutException && retryCount < 3) {
@@ -379,7 +391,7 @@ class FragmentHomePage : Fragment(), AdapterCategories.OnServiceCategoriesClickL
         val bearerToken = "bearer $token"
         binding.loadReviews.visibility = View.VISIBLE
         binding.txtLoadingDetailsReviews.visibility = View.VISIBLE
-        disposable = ApiClientProxy.getUserReviews(userId, bearerToken, DOMAIN_ID!!)
+        dashboardDisposable = ApiClientProxy.getUserReviews(userId, bearerToken, DOMAIN_ID!!)
             .retryWhen { error ->
                 error.zipWith(Observable.range(1, 3)) { error, retryCount ->
                     if (error is SocketTimeoutException && retryCount < 3) {
@@ -400,9 +412,6 @@ class FragmentHomePage : Fragment(), AdapterCategories.OnServiceCategoriesClickL
             reviewsAdapter = AdapterReviewsRecyclerView(reviews)
             binding.rvReviews.layoutManager = LinearLayoutManager(activity)
             binding.rvReviews.adapter = reviewsAdapter
-            if (isAdded) {
-              //  Toast.makeText(requireContext(), "Reviews Fetched Successfully", Toast.LENGTH_SHORT).show()
-            }
         } else {
             binding.loadReviews.visibility = View.GONE
             binding.txtLoadingDetailsReviews.visibility = View.GONE
@@ -415,7 +424,7 @@ class FragmentHomePage : Fragment(), AdapterCategories.OnServiceCategoriesClickL
         if (throwable != null) {
             binding.loadReviews.visibility = View.GONE
             binding.txtLoadingDetailsReviews.visibility = View.GONE
-            Toast.makeText(requireActivity(), "${throwable.printStackTrace()}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireActivity(), "Error Occurred", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -439,14 +448,15 @@ class FragmentHomePage : Fragment(), AdapterCategories.OnServiceCategoriesClickL
         dialog.setContentView(R.layout.no_internet_dialog)
         val btnRetry = dialog.findViewById<Button>(R.id.btnRetry)
         btnRetry.setOnClickListener {
+            logOutApp()
             dialog.dismiss()
-            if (checkNetworkConnection()) {
-                getUserDashboard()
-                fetchUserDetails(sharedViewModel.userID)
-                fetchUserReviews(sharedViewModel.userID)
-            } else {
-                dialogNoInternet()
-            }
+//            if (checkNetworkConnection()) {
+//                getUserDashboard()
+//                fetchUserDetails(sharedViewModel.userID)
+//                fetchUserReviews(sharedViewModel.userID)
+//            } else {
+//                dialogNoInternet()
+//            }
         }
         dialog.show()
     }
@@ -502,7 +512,6 @@ class FragmentHomePage : Fragment(), AdapterCategories.OnServiceCategoriesClickL
                     binding.profileNameTxt.text = userResponse.result.firstName
                 } else {
                     binding.profileNameTxt.text = "Mitchell"
-                    Toast.makeText(activity, userResponse.message, Toast.LENGTH_SHORT).show()
                 }
             }
         })
@@ -539,7 +548,7 @@ class FragmentHomePage : Fragment(), AdapterCategories.OnServiceCategoriesClickL
                     sharedViewModel.totalMoneySpent = modelUserDashboard.result.totalMoneySpent.toString()
                     binding.averageRating.text = modelUserDashboard.result.averageRating.toString()
                 } else {
-                    Toast.makeText(activity, modelUserDashboard.message, Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(activity, modelUserDashboard.message, Toast.LENGTH_SHORT).show()
                     binding.sampleAmount.text = "$0"
                 }
             }
@@ -567,16 +576,13 @@ class FragmentHomePage : Fragment(), AdapterCategories.OnServiceCategoriesClickL
 
     }
     private fun logOutApp() {
-        if (checkNetworkConnection()) {
             sharedSesssionPrefs?.edit()?.putBoolean(IS_LOGIN, false)?.apply()
             val intent = Intent(activity, ActivityLogin::class.java)
             startActivity(intent)
             if (isAdded) {
                 Toast.makeText(requireContext(), "Logout Successfully", Toast.LENGTH_SHORT).show()
             }
-        } else {
-            dialogNoInternet()
-        }
+
 
     }
 
@@ -590,7 +596,7 @@ class FragmentHomePage : Fragment(), AdapterCategories.OnServiceCategoriesClickL
 
     override fun onDestroyView() {
         super.onDestroyView()
-        disposable?.dispose()
+        dashboardDisposable?.dispose()
         binding.rvCategories.adapter = null
         binding.rvReviews.adapter = null
         binding.rvCategories.layoutManager = null
@@ -603,13 +609,13 @@ class FragmentHomePage : Fragment(), AdapterCategories.OnServiceCategoriesClickL
 
     override fun onDestroy() {
         super.onDestroy()
-        disposable?.dispose()
+        dashboardDisposable?.dispose()
 
     }
 
     override fun onDetach() {
         super.onDetach()
-        disposable?.dispose()
+        dashboardDisposable?.dispose()
     }
 
     override fun onCategoriesClick(categoriesList: Category) {

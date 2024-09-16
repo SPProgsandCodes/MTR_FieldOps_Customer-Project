@@ -54,7 +54,7 @@ class ActivityRecoverPasswd : AppCompatActivity() {
 
             val emailLink = binding.editTextEmail.text.toString()
             if (emailLink.isEmpty()) {
-                binding.resetPassw.setError("This Field is required")
+                binding.resetPassw.error = "This Field is required"
             } else {
                 checkNetworkConnection(emailLink)
             }

@@ -1,16 +1,24 @@
 package com.mtr.fieldopscust.NotificationFragment
 
+import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.mtr.fieldopscust.LoginScreen.ActivityLogin
+import com.mtr.fieldopscust.NetworkUtil
+import com.mtr.fieldopscust.R
 import com.mtr.fieldopscust.Utils.Constants.Companion.DOMAIN_ID_KEY
+import com.mtr.fieldopscust.Utils.Constants.Companion.IS_LOGIN
 import com.mtr.fieldopscust.Utils.Constants.Companion.NO_NEW_MESSAGES
 import com.mtr.fieldopscust.Utils.Constants.Companion.NO_NEW_NOTIFICATIONS
 import com.mtr.fieldopscust.Utils.Constants.Companion.TOKEN_KEY
@@ -69,6 +77,8 @@ class FragmentNotification : Fragment() {
 
 
     }
+
+
 
     private fun fetchNotifications() {
         val bearerToken = "bearer $token"

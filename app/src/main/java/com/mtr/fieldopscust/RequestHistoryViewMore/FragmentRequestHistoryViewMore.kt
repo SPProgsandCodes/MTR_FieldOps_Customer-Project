@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.Button
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.Insets
@@ -23,10 +24,13 @@ import com.bumptech.glide.Glide
 import com.mtr.fieldopscust.ChatScreen.ChatActivity
 import com.mtr.fieldopscust.DialogRequestStatus.AdapterRequestStatusDialog
 import com.mtr.fieldopscust.DialogRequestStatus.ModelRequestStatusDialog
+import com.mtr.fieldopscust.LoginScreen.ActivityLogin
+import com.mtr.fieldopscust.NetworkUtil
 import com.mtr.fieldopscust.NotificationFragment.FragmentNotification
 import com.mtr.fieldopscust.R
 import com.mtr.fieldopscust.Reviews.AdapterReviewsRecyclerView
 import com.mtr.fieldopscust.Utils.Constants.Companion.INTENT_MESSAGE_SEND_USER_FULL_NAME
+import com.mtr.fieldopscust.Utils.Constants.Companion.IS_LOGIN
 import com.mtr.fieldopscust.databinding.ActivityRequestHistoryViewMoreBinding
 import com.mtr.fieldopscust.network.request.Job
 import com.mtr.fieldopscust.network.request.Reviews
@@ -48,7 +52,10 @@ class FragmentRequestHistoryViewMore : Fragment() {
         }
 
         binding.imgButtonAlertReqHistViewMorePg.setOnClickListener{
-            notificationButton()
+
+                notificationButton()
+
+
         }
 
         return binding.root
@@ -179,7 +186,7 @@ class FragmentRequestHistoryViewMore : Fragment() {
             if (reviewsList.isNullOrEmpty()) {
                 binding.idTxtNoReviews.visibility = View.VISIBLE
             } else {
-                Toast.makeText(requireContext(), "Reviews Available", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Reviews Fetched", Toast.LENGTH_SHORT).show()
             }
 
             if (name.isNullOrEmpty() && email.isNullOrEmpty()) {
@@ -366,4 +373,8 @@ class FragmentRequestHistoryViewMore : Fragment() {
         _binding = null // Prevent memory leaks
 
     }
+
+
+
+
 }

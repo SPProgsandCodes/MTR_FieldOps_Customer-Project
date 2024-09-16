@@ -226,7 +226,7 @@ class ActivitySignupScreen : AppCompatActivity() {
             }
         } else {
             // Handle the case where the login response is null
-            Toast.makeText(this, "Login Failed: Null response from server", Toast.LENGTH_SHORT)
+            Toast.makeText(this, "Signup Failed: Null response from server", Toast.LENGTH_SHORT)
                 .show()
         }
     }
@@ -307,13 +307,15 @@ class ActivitySignupScreen : AppCompatActivity() {
 //        ).toInt()
 
         dialog.findViewById<Button>(R.id.btnRetry).setOnClickListener(View.OnClickListener {
-            if (NetworkUtil().isNetworkAvailable(this)) {
-                dialog.dismiss()
-                Toast.makeText(this, "Internet Connection Retrieved", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "Please Check your Internet Connection", Toast.LENGTH_SHORT)
-                    .show()
-            }
+            dialog.dismiss()
+            Toast.makeText(this, "Please Check your Internet Connection", Toast.LENGTH_SHORT).show()
+//            if (NetworkUtil().isNetworkAvailable(this)) {
+//                dialog.dismiss()
+//                Toast.makeText(this, "Internet Connection Retrieved", Toast.LENGTH_SHORT).show()
+//            } else {
+//                Toast.makeText(this, "Please Check your Internet Connection", Toast.LENGTH_SHORT)
+//                    .show()
+//            }
         })
         dialog.show()
     }

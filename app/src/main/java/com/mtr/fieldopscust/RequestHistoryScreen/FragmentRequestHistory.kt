@@ -1,9 +1,11 @@
 package com.mtr.fieldopscust.RequestHistoryScreen
 
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Button
 import android.widget.Toast
 import androidx.core.graphics.Insets
 import androidx.core.view.ViewCompat
@@ -15,11 +17,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mtr.fieldopscust.DialogRequestStatus.AdapterRequestStatusDialog
 import com.mtr.fieldopscust.DialogRequestStatus.ModelRequestStatusDialog
+import com.mtr.fieldopscust.LoginScreen.ActivityLogin
+import com.mtr.fieldopscust.NetworkUtil
 import com.mtr.fieldopscust.NotificationFragment.FragmentNotification
 import com.mtr.fieldopscust.R
 import com.mtr.fieldopscust.Utils.ApplicationHelper
-import com.mtr.fieldopscust.Utils.ApplicationHelper.hideSystemUI
 import com.mtr.fieldopscust.Utils.Constants.Companion.DOMAIN_ID_KEY
+import com.mtr.fieldopscust.Utils.Constants.Companion.IS_LOGIN
 import com.mtr.fieldopscust.Utils.Constants.Companion.LOGIN_PREFS
 import com.mtr.fieldopscust.Utils.Constants.Companion.NO_REQUEST_HISTORY
 import com.mtr.fieldopscust.Utils.Constants.Companion.TOKEN_KEY
@@ -39,7 +43,7 @@ class FragmentRequestHistory : Fragment(), AdapterRequestHistory.onViewStatusCli
 
     private lateinit var binding: ActivityRequestHistoryPageBinding
     private var rv: RecyclerView? = null
-    private var disposable: Disposable? = null
+    private var requestHistoryDisposable: Disposable? = null
     private var sharedSesssionPrefs: SessionPreferences? = null
     private var userId: Int? = null
     private var accessToken: String? = null
@@ -91,7 +95,7 @@ class FragmentRequestHistory : Fragment(), AdapterRequestHistory.onViewStatusCli
         binding.txtLoadingDetails.visibility = View.VISIBLE
 
         val bearerToken = "bearer $accessToken"
-        disposable = ApiClientProxy.getRequestHistory(userId, taskId, bearerToken, domainId)
+        requestHistoryDisposable = ApiClientProxy.getRequestHistory(userId, taskId, bearerToken, domainId)
             .retryWhen { error ->
                 error.zipWith(Observable.range(1, 3)) { error, retryCount ->
                     if (error is SocketTimeoutException && retryCount < 3) {
@@ -111,13 +115,11 @@ class FragmentRequestHistory : Fragment(), AdapterRequestHistory.onViewStatusCli
             if (requestHistory.isNotEmpty()) {
                 binding.rvRequestHistory.layoutManager = LinearLayoutManager(requireContext())
                 binding.rvRequestHistory.adapter = AdapterRequestHistory(requestHistory, this)
-                Toast.makeText(requireContext(), "Request History Fetched Successfully", Toast.LENGTH_SHORT).show()
 
             } else {
                 binding.progressBarRequestHistory.visibility = View.GONE
                 binding.txtLoadingDetails.text = NO_REQUEST_HISTORY
                 binding.txtLoadingDetails.visibility = View.VISIBLE
-                Toast.makeText(requireContext(), "No Request History Found", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -314,7 +316,7 @@ class FragmentRequestHistory : Fragment(), AdapterRequestHistory.onViewStatusCli
 
     override fun onDestroyView() {
         super.onDestroyView()
-        disposable?.dispose()
+        requestHistoryDisposable?.dispose()
     }
 
 //    override fun onRequestHistClick(job: Job) {
@@ -323,8 +325,47 @@ class FragmentRequestHistory : Fragment(), AdapterRequestHistory.onViewStatusCli
 //    }
 
     override fun onViewStatusClick(job: Job) {
-        showDialog(job.id, job.viewedBy, job)
+        if (checkNetworkConnection()){
+            showDialog(job.id, job.viewedBy, job)
+        } else {
+            dialogNoInternet()
+        }
+
         Log.d("TAG", "Task ID ${job.id}")
+    }
+
+    // Method to check Internet Connection
+    private fun checkNetworkConnection(): Boolean {
+        return NetworkUtil().isNetworkAvailable(context)
+    }
+    private fun dialogNoInternet() {
+        val dialog = Dialog(requireContext())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.no_internet_dialog)
+        val btnRetry = dialog.findViewById<Button>(R.id.btnRetry)
+        btnRetry.setOnClickListener {
+            logOutApp()
+            dialog.dismiss()
+//            if (checkNetworkConnection()) {
+//                getUserDashboard()
+//                fetchUserDetails(sharedViewModel.userID)
+//                fetchUserReviews(sharedViewModel.userID)
+//            } else {
+//                dialogNoInternet()
+//            }
+        }
+        dialog.show()
+    }
+
+    private fun logOutApp() {
+
+            sharedSesssionPrefs?.edit()?.putBoolean(IS_LOGIN, false)?.apply()
+            val intent = Intent(activity, ActivityLogin::class.java)
+            startActivity(intent)
+            if (isAdded) {
+                Toast.makeText(requireContext(), "Logout Successfully", Toast.LENGTH_SHORT).show()
+            }
     }
 
 }
