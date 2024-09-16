@@ -191,7 +191,7 @@
                     android:layout_alignStart="@+id/txt_about_the_service_provider"
 
                     android:layout_marginTop="10dp"
-                    android:src="@drawable/men_face"
+                    android:src="@drawable/dummy_profile"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:shapeAppearanceOverlay="@style/Circular" />

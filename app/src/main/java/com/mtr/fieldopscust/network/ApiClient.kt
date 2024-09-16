@@ -1,17 +1,14 @@
 package com.mtr.fieldopsemp.network
 
-import android.telecom.Call
 import android.util.Log
-import com.google.gson.JsonObject
-import com.mtr.fieldopscust.DashboardScreen.ModelCategories
 import com.mtr.fieldopscust.DashboardScreen.ModelUserDashboard
 import com.mtr.fieldopscust.network.request.ChargeAmountRequest
 import com.mtr.fieldopscust.network.request.ChargeAmountResponse
-import com.mtr.fieldopscust.network.request.ForgetPassLinkRequest
 import com.mtr.fieldopscust.network.request.ForgetPassLinkResponse
 import com.mtr.fieldopscust.network.request.GetFileResponse
 import com.mtr.fieldopscust.network.request.GetMessageResponse
 import com.mtr.fieldopscust.network.request.GetTransactionHistoryResponse
+import com.mtr.fieldopscust.network.request.MessageResponse
 import com.mtr.fieldopscust.network.request.NotificationResponse
 import com.mtr.fieldopscust.network.request.PaymentIntentRequest
 import com.mtr.fieldopscust.network.request.PaymentIntentResponse
@@ -20,9 +17,6 @@ import com.mtr.fieldopscust.network.request.PaymentUpdateResponse
 import com.mtr.fieldopscust.network.request.RequestHistoryResponse
 import com.mtr.fieldopscust.network.request.RequestServiceRequest
 import com.mtr.fieldopscust.network.request.RequestServiceResponse
-import com.mtr.fieldopscust.network.request.SendMessageRequest
-import com.mtr.fieldopscust.network.request.SendMessageResponse
-import com.mtr.fieldopscust.network.request.SignupRequest
 import com.mtr.fieldopscust.network.request.SignupResponse
 import com.mtr.fieldopscust.network.request.UpdateUserProfilePicResponse
 import com.mtr.fieldopscust.network.request.UpdateUserProfileRequest
@@ -141,14 +135,6 @@ object ApiClient {
         ): Observable<UserReviewsResponse>
 
 
-        @POST("Message/SendMessage")
-        fun sendMessage(
-            @Query("sendTo") sendTo: Int,
-            @Query("message") message: String,
-            @Query("domainId") domainId: Int,
-            @Header("Authorization") token: String
-        ) : Observable<SendMessageResponse>
-
         @Multipart
         @POST("File/uploadfile")
         fun uploadFile(
@@ -242,5 +228,15 @@ object ApiClient {
             @Header("Authorization") token: String,
             @Body chargeAmountRequest: ChargeAmountRequest
         ): Observable<ChargeAmountResponse>
+
+
+        @GET("Message/getchathistorywithuser")
+        fun getchathistorywithuser(
+            @Query("otherUserId") userId: Int,
+            @Query("pageNumber") pageNumber: Int,
+            @Query("pageSize") pageSize: Int,
+            @Query("domainId") domainId: Int,
+            @Header("Authorization") token: String
+        ): Observable<MessageResponse>
     }
 }

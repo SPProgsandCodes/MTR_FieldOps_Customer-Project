@@ -16,6 +16,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.mtr.fieldopscust.ActivityDashboard
 import com.mtr.fieldopscust.ForgetPassLink.ActivityRecoverPasswd
 import com.mtr.fieldopscust.NetworkUtil
@@ -61,20 +62,18 @@ class ActivityLogin : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        this.enableEdgeToEdge()
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
-        this.window.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        window.decorView.systemUiVisibility =
+            View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR //  set status text dark
+
+        window.statusBarColor =
+            ContextCompat.getColor(
+                this@ActivityLogin,
+                R.color.white
+            ) // set status background white
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val coroutineScope = CoroutineScope(Dispatchers.Main)
-        hideSystemUI(this@ActivityLogin)
-        coroutineScope.launch {
-            delay(2000)
-            hideSystemUI(this@ActivityLogin)
-        }
+
         dialogProgressBar = findViewById(R.id.loginProgressBar)
         sharedSesssionPrefs = ApplicationHelper.getAppController()?.loginPrefs(LOGIN_PREFS)
 

@@ -25,7 +25,7 @@
             android:layout_marginStart="40dp"
             android:layout_marginTop="83dp"
             android:padding="2dp"
-            android:src="@drawable/men_face"
+            android:src="@drawable/dummy_profile"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/Circular"

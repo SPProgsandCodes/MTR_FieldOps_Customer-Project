@@ -210,7 +210,8 @@ class FragmentRequestHistoryViewMore : Fragment() {
 
         Glide.with(requireContext())
             .load(profileUrl)
-            .placeholder(R.drawable.men_face)
+            .error(R.drawable.dummy_profile)
+            .placeholder(R.drawable.dummy_profile)
             .into(binding.imgProfilePic)
     }
 

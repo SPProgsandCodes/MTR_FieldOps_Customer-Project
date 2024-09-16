@@ -530,7 +530,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="83dp"
-                    android:src="@drawable/men_face"
+                    android:src="@drawable/dummy_profile"
                     android:padding="2dp"
                     app:strokeColor="@color/white"
                     app:strokeWidth="1dp"

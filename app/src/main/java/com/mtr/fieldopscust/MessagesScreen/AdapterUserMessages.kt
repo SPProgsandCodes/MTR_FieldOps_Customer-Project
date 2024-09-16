@@ -48,6 +48,7 @@ class AdapterUserMessages(
 
         Glide.with(holder.itemView.context)
             .load(messagesList.profilePicture)
+            .error(R.drawable.placeholder)
             .placeholder(R.drawable.placeholder)
             .into(holder.imvProfile)
 
@@ -61,12 +62,6 @@ class AdapterUserMessages(
 
         val dateTime = LocalDateTime.parse(lastMessageTime, formatter)
         holder.date.text = humanReadableTimeDifference(dateTime)
-
-
-
-
-
-
 
     }
 }

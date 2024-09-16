@@ -47,7 +47,7 @@
         android:layout_height="60dp"
         android:layout_margin="20dp"
         android:layout_marginStart="16dp"
-        android:src="@drawable/men_face"
+        android:src="@drawable/dummy_profile"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

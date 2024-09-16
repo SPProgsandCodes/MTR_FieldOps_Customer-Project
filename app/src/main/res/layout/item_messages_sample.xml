@@ -9,11 +9,10 @@
         android:id="@+id/img_profile_pic_messages"
         android:layout_width="48dp"
         android:layout_height="48dp"
-
         android:layout_marginStart="10dp"
-
-
-        android:src="@drawable/men_face"
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/white"
+        android:src="@drawable/dummy_profile"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

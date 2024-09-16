@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="25dp">
+        android:layout_marginTop="@dimen/_20sdp">
 
 
         <ImageView
@@ -31,7 +31,7 @@
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
             android:layout_toEndOf="@+id/imageViewBackButtonChat"
-            android:src="@drawable/img_guy_hawkins"
+            android:src="@drawable/dummy_profile"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -46,7 +46,7 @@
             android:layout_toEndOf="@+id/img_profile_pic_chat_screen"
             android:fontFamily="@font/inter_bold"
             android:gravity="top"
-            android:text="Guy Hawkins"
+            android:text="name"
             android:textAppearance="@style/request_ser" />
 
 
@@ -83,28 +83,27 @@
             android:id="@+id/rvChatMessages"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
+            tools:itemCount="6"
+            android:paddingTop="@dimen/_1sdp"
+            android:paddingBottom="@dimen/_10sdp"
+            tools:listitem="@layout/item_message_received"
             android:layout_marginHorizontal="16dp" />
 
-
     </RelativeLayout>
-
 
     <RelativeLayout
         android:id="@+id/layoutMessageInputBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="30dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="20dp"
         android:gravity="center">
 
         <RelativeLayout
             android:id="@+id/relativeLayout7"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-
-
             android:layout_toStartOf="@+id/btn_send_message"
             android:layout_weight="1"
             android:background="@drawable/send_msg_edit_text_bg">
@@ -113,6 +112,7 @@
                 android:id="@+id/attach_icon"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
+                android:visibility="gone"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="19dp"
@@ -124,21 +124,24 @@
                 android:layout_height="18dp"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="18dp"
+                android:visibility="gone"
                 android:layout_toStartOf="@+id/attach_icon"
                 android:src="@drawable/vector_camera_icon" />
 
             <EditText
                 android:id="@+id/editTextInputMsg"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentStart="true"
                 android:layout_toStartOf="@+id/camera_icon"
                 android:background="#00000000"
-                android:fontFamily="@font/inter"
+                android:fontFamily="@font/inter_semibold"
                 android:inputType="text"
-                android:paddingStart="10dp"
+                android:paddingEnd="5dp"
+                android:hint="Message"
+                android:paddingStart="6dp"
                 android:textColor="@color/black"
-                android:textColorHint="@color/hint1"
+                android:textColorHint="@color/text_grey_color"
                 android:textSize="14sp" />
         </RelativeLayout>
 
@@ -146,6 +149,7 @@
             android:id="@+id/btn_send_message"
             android:layout_width="43dp"
             android:layout_height="43dp"
+            android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
             android:layout_gravity="center_vertical|end"
             android:layout_marginHorizontal="10dp"

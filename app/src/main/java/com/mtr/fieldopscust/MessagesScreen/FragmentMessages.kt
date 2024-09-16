@@ -71,7 +71,6 @@ class FragmentMessages : Fragment(), AdapterUserMessages.OnMessageClickListener 
         }
 
         getUserMessages()
-//        messagesAdapter = AdapterMessages(messages, userID!!)
 
         return binding.getRoot()
     }
@@ -91,13 +90,6 @@ class FragmentMessages : Fragment(), AdapterUserMessages.OnMessageClickListener 
         btnRetry.setOnClickListener {
             logOutApp()
             dialog.dismiss()
-//            if (checkNetworkConnection()) {
-//                getUserDashboard()
-//                fetchUserDetails(sharedViewModel.userID)
-//                fetchUserReviews(sharedViewModel.userID)
-//            } else {
-//                dialogNoInternet()
-//            }
         }
         dialog.show()
     }
@@ -166,8 +158,7 @@ class FragmentMessages : Fragment(), AdapterUserMessages.OnMessageClickListener 
         if (getMessageResponse != null) {
             if (getMessageResponse.isSuccess) {
                 if (isAdded) {
-                    Toast.makeText(requireContext(), getMessageResponse.message, Toast.LENGTH_SHORT)
-                        .show()
+                   // Toast.makeText(requireContext(), getMessageResponse.message, Toast.LENGTH_SHORT).show()
                 }
                 binding.progressBarMessagesScreen.visibility = View.GONE
                 binding.loadingDetailsTxtMessagesScreen.visibility = View.GONE
@@ -217,13 +208,10 @@ class FragmentMessages : Fragment(), AdapterUserMessages.OnMessageClickListener 
     override fun onMessageClick(message: ChatUser) {
         if (checkNetworkConnection()) {
             val intent = Intent(requireContext(), ChatActivity::class.java).apply {
-                putExtra(INTENT_MESSAGE_SEND_TO_USER_ID, message.userName)
+                putExtra(INTENT_MESSAGE_SEND_TO_USER_ID, message.userId)
                 putExtra("profile_url", message.profilePicture)
-                Log.d("TAG", "Message Send To ${message.userName}")
-                Log.d("TAG", "Message Send By ${message.userName}")
-//            Log.d("TAG", "Message Send To User Name ${message.userDetailsSendTo.firstName}")
-//            Log.d("TAG", "Message Send By User Name ${message.userDetailsSendBy.firstName}")
                 putExtra(INTENT_MESSAGE_SEND_USER_FULL_NAME, message.userName)
+                Log.d("TAG", "Message Send To ${message.userName}")
             }
             startActivity(intent)
         } else {

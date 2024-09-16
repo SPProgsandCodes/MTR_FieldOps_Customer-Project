@@ -11,8 +11,8 @@ android {
         applicationId = "com.mtr.fieldopscust"
         minSdk = 26
         targetSdk = 34
-        versionCode = 1
-        versionName = "15.0"
+        versionCode = 2
+        versionName = "1.5.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -86,5 +86,7 @@ dependencies {
     implementation ("com.stripe:stripe-android:20.19.0")
 
     implementation ("com.android.volley:volley:1.2.1")
+
+    implementation ("com.intuit.sdp:sdp-android:1.1.0")
 
 }

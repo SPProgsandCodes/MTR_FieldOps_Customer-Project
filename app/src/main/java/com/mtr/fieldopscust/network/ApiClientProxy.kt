@@ -16,6 +16,7 @@ import com.mtr.fieldopscust.network.request.ForgetPassLinkResponse
 import com.mtr.fieldopscust.network.request.GetFileResponse
 import com.mtr.fieldopscust.network.request.GetMessageResponse
 import com.mtr.fieldopscust.network.request.GetTransactionHistoryResponse
+import com.mtr.fieldopscust.network.request.MessageResponse
 import com.mtr.fieldopscust.network.request.NotificationResponse
 import com.mtr.fieldopscust.network.request.PaymentIntentRequest
 import com.mtr.fieldopscust.network.request.PaymentIntentResponse
@@ -25,7 +26,6 @@ import com.mtr.fieldopscust.network.request.RequestHistoryResponse
 import com.mtr.fieldopscust.network.request.RequestServiceRequest
 import com.mtr.fieldopscust.network.request.RequestServiceResponse
 import com.mtr.fieldopscust.network.request.SendMessageRequest
-import com.mtr.fieldopscust.network.request.SendMessageResponse
 import com.mtr.fieldopscust.network.request.SignupRequest
 import com.mtr.fieldopscust.network.request.SignupResponse
 import com.mtr.fieldopscust.network.request.UpdateUserProfilePicResponse
@@ -123,14 +123,6 @@ object ApiClientProxy {
         return ApiClient.getServiceClient().getMessagesByUserId(domainId,  token)
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
-    }
-
-    fun sendMessage(sendTo: Int, message: String, token: String, domainId: Int): Observable<SendMessageResponse>{
-        val sendMessageRequest = SendMessageRequest(sendTo, message)
-        return ApiClient.getServiceClient().sendMessage(sendTo, message, domainId, token)
-            .subscribeOn(Schedulers.newThread())
-            .observeOn(AndroidSchedulers.mainThread())
-
     }
 
     fun uploadFile(file: Any, filename: String, token: String, domainId: Int): Observable<UploadFileResponse> {
@@ -300,6 +292,19 @@ object ApiClientProxy {
         chargeAmountRequest.currency = currency
         return ApiClient.getServiceClient().chargeAmount(domainId, token, chargeAmountRequest)
             .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun getchathistorywithuser(
+        userId: Int,
+        pageNumber: Int,
+        pageSize: Int,
+        token: String,
+        domainId: Int
+    ): Observable<MessageResponse> {
+        return ApiClient.getServiceClient()
+            .getchathistorywithuser(userId, pageNumber, pageSize, domainId, token)
+            .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
     }
 }

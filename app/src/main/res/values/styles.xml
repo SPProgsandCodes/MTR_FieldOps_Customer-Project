@@ -380,5 +380,9 @@
 
 </style>
 
+    <style name="progressDialogStyle">
+        <item name="colorAccent">@color/btn_color</item>
+    </style>
+
 
 </resources>

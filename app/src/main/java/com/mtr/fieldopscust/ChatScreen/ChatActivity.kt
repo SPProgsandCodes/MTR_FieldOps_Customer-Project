@@ -5,16 +5,17 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.mtr.fieldopscust.R
 import com.mtr.fieldopscust.Utils.ApplicationHelper
-import com.mtr.fieldopscust.Utils.ApplicationHelper.hideSystemUI
 import com.mtr.fieldopscust.Utils.Constants.Companion.DOMAIN_ID_KEY
 import com.mtr.fieldopscust.Utils.Constants.Companion.INTENT_MESSAGE_SEND_TO_USER_ID
 import com.mtr.fieldopscust.Utils.Constants.Companion.INTENT_MESSAGE_SEND_USER_FULL_NAME
@@ -22,42 +23,46 @@ import com.mtr.fieldopscust.Utils.Constants.Companion.LOGIN_PREFS
 import com.mtr.fieldopscust.Utils.Constants.Companion.TOKEN_KEY
 import com.mtr.fieldopscust.Utils.Constants.Companion.USER_ID_KEY
 import com.mtr.fieldopscust.Utils.Constants.Companion.USER_PHONE_NUMBER
+import com.mtr.fieldopscust.Utils.GlobalProgressBar
 import com.mtr.fieldopscust.databinding.ActivityChatBinding
-import com.mtr.fieldopscust.network.request.ResultMessageSended
-import com.mtr.fieldopscust.network.request.SendMessageResponse
+import com.mtr.fieldopscust.network.request.MessageItem
+import com.mtr.fieldopscust.network.request.MessageResponse
 import com.mtr.fieldopsemp.network.ApiClientProxy
-import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import java.net.SocketTimeoutException
+import java.util.concurrent.TimeUnit
 
 
 class ChatActivity : AppCompatActivity() {
     lateinit var binding: ActivityChatBinding
-    var chatScreenDisposable: Disposable? = null
     private var token: String? = null
-    private val messageList = mutableListOf<ResultMessageSended>()
-    private lateinit var chatAdapter: ChatAdapter
     private var currentUserId: Int? = null
     private var DOMAIN_ID: Int? = null
     private var phoneNumber: String? = null
+    private var disposable: Disposable? = null
+    private lateinit var chatAdapter: MessageAdapter
+    private var messageList = mutableListOf<MessageItem>()
+    private val pageSize = 20
+    private var currentPage = 1
+    private var isLoading = false
+    private var otherUserId: Int? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityChatBinding.inflate(getLayoutInflater())
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+
+        window.decorView.systemUiVisibility =
+            View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR //  set status text dark
+
+        window.statusBarColor =
+            ContextCompat.getColor(
+                this@ChatActivity,
+                R.color.white
+            ) // set status background white
+        binding = ActivityChatBinding.inflate(layoutInflater)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(binding.getRoot())
-        hideSystemUI(this@ChatActivity)
-        this.getWindow().setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )
-        val coroutineScope = CoroutineScope(Dispatchers.Main)
-        coroutineScope.launch {
-            delay(2000)
-            hideSystemUI(this@ChatActivity)
-        }
 
         val sharedPreferences = ApplicationHelper.getAppController()?.getSharedPreferences(
             LOGIN_PREFS, Context.MODE_PRIVATE
@@ -70,25 +75,22 @@ class ChatActivity : AppCompatActivity() {
             Log.d("TAG", "UserId for Chats: $token")
         }
 
-        // Initialize the adapter
-        chatAdapter = ChatAdapter(messageList, currentUserId!!)
-        binding.rvChatMessages.layoutManager = LinearLayoutManager(this)
-        binding.rvChatMessages.adapter = chatAdapter
-
-
-        val sendTo = intent.getIntExtra(INTENT_MESSAGE_SEND_TO_USER_ID, 0)
+         otherUserId = intent.getIntExtra(INTENT_MESSAGE_SEND_TO_USER_ID, 0)
         val sendToName = intent.getStringExtra(INTENT_MESSAGE_SEND_USER_FULL_NAME)
         val profileUrl = intent.getStringExtra("profile_url")
+
         Glide.with(this)
             .load(profileUrl)
             .placeholder(R.drawable.placeholder)
             .into(binding.imgProfilePicChatScreen)
+
         binding.txtProfileNameChats.text = sendToName
+
         binding.imageViewBackButtonChat.setOnClickListener {
             onClickBackButton()
         }
+
         binding.btnSendMessage.setOnClickListener {
-            sendMessage(sendTo, DOMAIN_ID!!)
         }
 
         binding.imgButtonCallPerson.setOnClickListener {
@@ -108,7 +110,17 @@ class ChatActivity : AppCompatActivity() {
 
 
         }
-//        sendMessage()
+
+
+        val layoutManager =
+            LinearLayoutManager(this@ChatActivity, LinearLayoutManager.VERTICAL, false)
+        binding.rvChatMessages.layoutManager = layoutManager
+
+        chatAdapter = MessageAdapter(messageList, currentUserId!!)
+        binding.rvChatMessages.adapter = chatAdapter
+        binding.rvChatMessages.setHasFixedSize(true)
+
+        fetchChatHistory(currentPage)
 
     }
 
@@ -122,47 +134,43 @@ class ChatActivity : AppCompatActivity() {
         }
     }
 
-    private fun sendMessage(sendTo: Int, domainId: Int) {
-
-        val sampleMessage = binding.editTextInputMsg.text.toString()
-//        val sendTo = 124 // Replace with the user ID you want to send the message to
-        // Send the message to the server
-        val bearerToken = "bearer $token"
-        chatScreenDisposable = ApiClientProxy.sendMessage(sendTo, sampleMessage, bearerToken, domainId)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                { response ->
-                    Log.d("API_RESPONSE", "Response: $response")
-                    onSendMessageSuccess(response)
-                },
-                { error ->
-                    Log.e("API_ERROR", "Error: ${error.message}", error)
-                    onSendMessageError(error)
-                }
-            )
-
+    private fun fetchChatHistory(currentPage: Int) {
+        GlobalProgressBar.show(this@ChatActivity)
+        disposable = ApiClientProxy.getchathistorywithuser(
+            otherUserId!!,
+            currentPage,
+            pageSize,
+            "Bearer " + token,
+            DOMAIN_ID!!
+        )
+            .retryWhen { error ->
+                error.zipWith(Observable.range(1, 3)) { error, retryCount ->
+                    if (error is SocketTimeoutException && retryCount < 3) {
+                        Observable.timer(2, TimeUnit.SECONDS) // Wait for 2 seconds before retrying
+                    } else {
+                        Observable.error<Throwable>(error)
+                    }
+                }.flatMap { it }
+            }.subscribe(this::onMessageSuccess, this::onErrorMessages)
     }
 
-    private fun onSendMessageSuccess(sendMessageResponse: SendMessageResponse?) {
-        if (sendMessageResponse != null) {
-            if (sendMessageResponse.isSuccess) {
-                Toast.makeText(this, sendMessageResponse.message, Toast.LENGTH_SHORT).show()
-
-                binding.rvChatMessages.layoutManager = LinearLayoutManager(this)
-
-                val messages: ResultMessageSended = sendMessageResponse.result
-                val updatedMessages = arrayListOf(messages)
-                chatAdapter.addMessage(messages) // Add the new message to the adapter
-
-            } else {
-                Toast.makeText(this, sendMessageResponse.message, Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-    private fun onSendMessageError(throwable: Throwable?) {
+    private fun onErrorMessages(throwable: Throwable?) {
+        GlobalProgressBar.dismiss()
+        isLoading = false
         if (throwable != null) {
-            Toast.makeText(this, "Error Sending Message", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Error: " + throwable.message.toString(), Toast.LENGTH_SHORT)
+                .show()
         }
     }
+
+    private fun onMessageSuccess(messageResponse: MessageResponse?) {
+        GlobalProgressBar.dismiss()
+        if (messageResponse!!.isSuccess) {
+
+            val newItems = messageResponse.result.items.toMutableList()
+            messageList.addAll(newItems)  //= messageResponse.result.items.toMutableList()//getAllMessages(messageResponse, currentUserId!!)
+            binding.rvChatMessages.scrollToPosition(messageList.size - 1)
+        }
+    }
+
 }
